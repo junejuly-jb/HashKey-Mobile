@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hashkey/screens/home.dart';
 import 'package:hashkey/screens/login.dart';
+import 'package:hashkey/screens/search.dart';
 import 'package:hashkey/screens/signup.dart';
 import 'package:hashkey/screens/welcome.dart';
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
             "/signup":(context) => const SignUpScreen(),
             "/welcome":(context) => const WelcomeScreen(),
             "/home":(context) => const Home(),
+            "/search":(context) => const SearchScreen(),
           },
         );
       }

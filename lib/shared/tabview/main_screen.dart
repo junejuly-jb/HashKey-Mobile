@@ -67,7 +67,7 @@ class Main extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
                         constraints: const BoxConstraints(),
                         icon: const FaIcon(FontAwesomeIcons.magnifyingGlass, size: 15, color: Colors.white,),
-                        onPressed: () {},
+                        onPressed: () => Navigator.pushNamed(context, '/search'),
                       ),
                     )
                   ],
