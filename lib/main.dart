@@ -2,18 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hashkey/provider/connection_provider.dart';
 import 'package:hashkey/screens/home.dart';
 import 'package:hashkey/screens/login.dart';
 import 'package:hashkey/screens/search.dart';
 import 'package:hashkey/screens/signup.dart';
 import 'package:hashkey/screens/welcome.dart';
+import 'package:provider/provider.dart';
 
 void main() {
    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
      statusBarColor: Colors.transparent,
      statusBarIconBrightness: Brightness.dark
    ));
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ConnectionProvider())
+      ],
+      child: const MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
