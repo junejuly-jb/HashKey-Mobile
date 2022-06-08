@@ -22,7 +22,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 SizedBox(height: 50.h,),
                 Row(
                   children: [
-                    Text('Search', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.sp, letterSpacing: 2),),
+                    Text('Search...', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.sp, letterSpacing: 2),),
                     const Spacer(),
                     IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close))
                   ],

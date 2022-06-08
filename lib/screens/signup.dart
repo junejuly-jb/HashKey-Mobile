@@ -16,13 +16,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   dynamic passwordController = TextEditingController();
   dynamic confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool isPassVisible = false;
 
   void onSignUp(){
-    print(nameController.text);
-    print(emailController.text);
-    print(passwordController.text);
-    print(confirmPasswordController.text);
-
     _formKey.currentState!.validate();
   }
 
@@ -107,6 +103,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           validator: (value) => value!.length < 5 ? "password too short" : null,
                           controller: passwordController,
                           decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                              child: Icon( isPassVisible ? Icons.visibility_off : Icons.visibility),
+                              onTap: () => setState(() => isPassVisible = !isPassVisible)
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20.r),
                               borderSide: BorderSide( color: Colors.transparent, width: 0.w)
