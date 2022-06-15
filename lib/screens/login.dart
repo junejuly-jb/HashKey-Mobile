@@ -21,7 +21,6 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   login(){
-    print('login');
     _formKey.currentState!.validate();
   }
 
@@ -42,8 +41,8 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  togglePassVisibility(bool val){
-    setState(() => isPassVisible = val);
+  togglePassVisibility(){
+    setState(() => isPassVisible = !isPassVisible);
   }
 
   @override

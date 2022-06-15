@@ -23,16 +23,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isConPassVisible = false;
 
   void onSignUp(){
-    print('parent callback');
     _formKey.currentState!.validate();
   }
 
-  togglePassVisibility(bool val){
-    setState(() => isPassVisible = val);
+  togglePassVisibility(){
+    setState(() => isPassVisible = !isPassVisible);
   }
 
-  toggleConPassVisibility(bool val){
-    setState(() => isConPassVisible = val);
+  toggleConPassVisibility(){
+    setState(() => isConPassVisible = !isConPassVisible);
   }
 
   isValidEmail(String? email) {

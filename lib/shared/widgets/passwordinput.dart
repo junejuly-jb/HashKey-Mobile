@@ -24,14 +24,7 @@ class CustomPasswordInputWidget extends StatelessWidget {
       decoration: InputDecoration(
         suffixIcon: GestureDetector(
           child: Icon( visible ? Icons.visibility_off : Icons.visibility),
-          onTap: (){
-            if(!visible){
-              toggler(true);
-            }
-            else{
-              toggler(false);
-            }
-          }
+          onTap: () => toggler()
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.r),
