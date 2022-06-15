@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/shared/widgets/input.dart';
+import 'package:hashkey/shared/widgets/large_buttons.dart';
+import 'package:hashkey/shared/widgets/passwordinput.dart';
 
 
 class SignUpScreen extends StatefulWidget {
@@ -17,15 +20,50 @@ class _SignUpScreenState extends State<SignUpScreen> {
   dynamic confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isPassVisible = false;
+  bool isConPassVisible = false;
 
   void onSignUp(){
+    print('parent callback');
     _formKey.currentState!.validate();
   }
 
-  bool isValidEmail(String? email) {
-    return RegExp(
+  togglePassVisibility(bool val){
+    setState(() => isPassVisible = val);
+  }
+
+  toggleConPassVisibility(bool val){
+    setState(() => isConPassVisible = val);
+  }
+
+  isValidEmail(String? email) {
+    bool isValid = RegExp(
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
         .hasMatch(email.toString());
+    if(!isValid){
+      return 'This is not a valid email';
+    }
+    return null;
+  }
+
+  isRequired(String? value){
+    if(value == null || value.isEmpty){
+      return 'This field is required';
+    }
+    return null;  
+  }
+
+  passwordValidator(String? value){
+    if(value!.length < 5){
+      return 'Password is too short';
+    }
+    return null;  
+  }
+
+  conPasswordValidator(String? value){
+    if(value != passwordController.text){
+      return 'Password mismatch';
+    }
+    return null;  
   }
 
   @override
@@ -58,123 +96,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     key: _formKey,
                     child: Column(
                       children: [
-                          TextFormField(
-                          validator: (val) => (val == null || val.isEmpty)
-                            ? 'Please enter a name'
-                            : null,
-                          controller: nameController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.r),
-                              borderSide: BorderSide( color: Colors.transparent, width: 0.w)
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.r),
-                              borderSide: BorderSide(color: Colors.transparent, width: 0.w)
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: "Name",
-                            contentPadding: EdgeInsets.symmetric(horizontal: 31.w, vertical: 15.h)
-                          ),
+                        CustomInputWidget(myController: nameController, hint: 'Name', validation: isRequired),
+                        SizedBox(height: 15.h,),
+                        CustomInputWidget(myController: emailController, hint: 'Email', validation: isValidEmail),
+                        SizedBox(height: 15.h,),
+                        CustomPasswordInputWidget(
+                          myController: passwordController, 
+                          hint: 'Password', 
+                          validation: passwordValidator, 
+                          visible: isPassVisible,
+                          toggler: togglePassVisibility
                         ),
                         SizedBox(height: 15.h,),
-                        TextFormField(
-                          validator: (val) => isValidEmail(val) ? null : 'Invalid email',
-                          controller: emailController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.r),
-                              borderSide: BorderSide( color: Colors.transparent, width: 0.w)
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.r),
-                              borderSide: BorderSide(color: Colors.transparent, width: 0.w)
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: "Email",
-                            contentPadding: EdgeInsets.symmetric(horizontal: 31.w, vertical: 15.h)
-                          ),
-                        ),
-                        SizedBox(height: 15.h,),
-                        TextFormField(
-                          obscureText: true,
-                          validator: (value) => value!.length < 5 ? "password too short" : null,
-                          controller: passwordController,
-                          decoration: InputDecoration(
-                            suffixIcon: GestureDetector(
-                              child: Icon( isPassVisible ? Icons.visibility_off : Icons.visibility),
-                              onTap: () => setState(() => isPassVisible = !isPassVisible)
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.r),
-                              borderSide: BorderSide( color: Colors.transparent, width: 0.w)
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.r),
-                              borderSide: BorderSide(color: Colors.transparent, width: 0.w)
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: "Password",
-                            contentPadding: EdgeInsets.symmetric(horizontal: 31.w, vertical: 15.h)
-                          ),
-                        ),
-                        SizedBox(height: 15.h,),
-                        TextFormField(
-                          obscureText: true,
-                          validator: (value) => value != passwordController.text ? "password mismatch" : null,
-                          controller: confirmPasswordController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.r),
-                              borderSide: BorderSide( color: Colors.transparent, width: 0.w)
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.r),
-                              borderSide: BorderSide(color: Colors.transparent, width: 0.w)
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: "Confirm Password",
-                            contentPadding: EdgeInsets.symmetric(horizontal: 31.w, vertical: 15.h)
-                          ),
+                        CustomPasswordInputWidget(
+                          myController: confirmPasswordController, 
+                          hint: 'Confirm password', 
+                          validation: conPasswordValidator, 
+                          visible: isConPassVisible,
+                          toggler: toggleConPassVisibility
                         ),
                         SizedBox(height: 100.h,),
-                        SizedBox(
-                          width: double.infinity,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.r),
-                              gradient: const LinearGradient(
-                                colors: [
-                                  Color.fromRGBO(106, 17, 203, 1),
-                                  Color.fromRGBO(37, 117, 252, 1),
-                                ],
-                                begin: Alignment(-1, 1),
-                                end: Alignment(1, -1),
-                                stops: [0.0, 1.0],
-                                tileMode: TileMode.clamp)
-                            ),
-                            child: TextButton(
-                              onPressed: () {
-                                onSignUp();
-                              }, 
-                              child: Text('Sign up', style: TextStyle( fontSize: 15.sp, fontWeight: FontWeight.w700 ),),
-                              style: ButtonStyle(
-                                // backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(34, 166, 255, 1)),
-                                foregroundColor: MaterialStateProperty.all(Colors.white),
-                                padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 13.h)),
-                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.r)
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        XtraLargeButton(title: 'Sign Up', callback: onSignUp)
                       ],
                     )
                   )
