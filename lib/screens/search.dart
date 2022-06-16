@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/shared/widgets/appbar.dart';
+import 'package:hashkey/shared/widgets/input.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({ Key? key }) : super(key: key);
@@ -9,6 +11,9 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+
+  dynamic searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,31 +25,9 @@ class _SearchScreenState extends State<SearchScreen> {
             child: Column(
               children: [
                 SizedBox(height: 50.h,),
-                Row(
-                  children: [
-                    Text('Search', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.sp, letterSpacing: 2),),
-                    const Spacer(),
-                    IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close))
-                  ],
-                ),
+                const CustomHeader(title: 'Search'),
                 SizedBox(height: 30.h,),
-                TextField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.r),
-                      borderSide: BorderSide( color: Colors.transparent, width: 0.w)
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.r),
-                      borderSide: BorderSide(color: Colors.transparent, width: 0.w)
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: "Search ...",
-                    contentPadding: EdgeInsets.symmetric(horizontal: 31.w, vertical: 15.h)
-                  ),
-                ),
+                CustomInputWidget(myController: searchController, hint: 'Search...', validation: null, autofocus: true)
               ],
             ),
           )

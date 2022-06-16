@@ -4,16 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomInputWidget extends StatelessWidget {
   final TextEditingController myController;
   final String hint;
-  final Function validation;
+  final Function? validation;
+  final bool autofocus;
   const CustomInputWidget({ Key? key, 
     required this.myController, 
     required this.hint, 
-    required this.validation }) : super(key: key);
+    required this.validation,
+    required this.autofocus }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator: (val) => validation(val),
+      autofocus: autofocus,
+      validator: (val) => validation!(val),
       controller: myController,
       decoration: InputDecoration(
         border: OutlineInputBorder(

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/services/auth.dart';
+import 'package:hashkey/shared/widgets/alert.dart';
+import 'package:hashkey/shared/widgets/alert_redirect.dart';
+import 'package:hashkey/shared/widgets/appbar.dart';
 import 'package:hashkey/shared/widgets/input.dart';
 import 'package:hashkey/shared/widgets/large_buttons.dart';
 import 'package:hashkey/shared/widgets/passwordinput.dart';
@@ -22,8 +26,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isPassVisible = false;
   bool isConPassVisible = false;
 
-  void onSignUp(){
-    _formKey.currentState!.validate();
+  onSignUp() async {
+    showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(type: 'loading', message: 'Signing up...',));
+    await Future.delayed(const Duration(seconds: 2));
+    if(_formKey.currentState!.validate()){
+      var result = await Auth().register(nameController.text, emailController.text, passwordController.text);
+      if(result['success']){
+        Navigator.pop(context);
+        showDialog(barrierDismissible: false, context: context, builder: (_) => CustomAlertWithRedirect(message: result['message'], redirect: '/login'));
+      }else{
+        Navigator.pop(context);
+        showDialog(barrierDismissible: false, context: context, builder: (_) => CustomAlert(type: 'error', message: result['message'],));
+      }
+    }
+    else{
+      Navigator.pop(context);
+    }
   }
 
   togglePassVisibility(){
@@ -81,13 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 50.h,),
-                  Row(
-                    children: [
-                      Text('SIGN UP', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.sp, letterSpacing: 2),),
-                      const Spacer(),
-                      IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close))
-                    ],
-                  ),
+                  const CustomHeader(title: 'Sign Up'),
                   SizedBox(height: 10.h,),
                   Text('Welcome to Hashkey!', style: TextStyle(fontSize: 16.sp, letterSpacing: 1),),
                   SizedBox(height: 50.h,),
@@ -95,9 +107,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        CustomInputWidget(myController: nameController, hint: 'Name', validation: isRequired),
+                        CustomInputWidget(myController: nameController, hint: 'Name', validation: isRequired, autofocus: false,),
                         SizedBox(height: 15.h,),
-                        CustomInputWidget(myController: emailController, hint: 'Email', validation: isValidEmail),
+                        CustomInputWidget(myController: emailController, hint: 'Email', validation: isValidEmail, autofocus: false),
                         SizedBox(height: 15.h,),
                         CustomPasswordInputWidget(
                           myController: passwordController, 

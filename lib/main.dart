@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/provider/connection_provider.dart';
 import 'package:hashkey/screens/home.dart';
 import 'package:hashkey/screens/login.dart';
@@ -18,7 +19,8 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ConnectionProvider())
+        ChangeNotifierProvider(create: (_) => ConnectionProvider()),
+        ChangeNotifierProvider(create: (_) => AppStateProvider())
       ],
       child: const MyApp(),
     )
