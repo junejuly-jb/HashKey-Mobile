@@ -4,11 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/provider/connection_provider.dart';
+import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/screens/home.dart';
 import 'package:hashkey/screens/login.dart';
 import 'package:hashkey/screens/search.dart';
 import 'package:hashkey/screens/signup.dart';
 import 'package:hashkey/screens/welcome.dart';
+import 'package:hashkey/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -20,7 +22,8 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ConnectionProvider()),
-        ChangeNotifierProvider(create: (_) => AppStateProvider())
+        ChangeNotifierProvider(create: (_) => AppStateProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider())
       ],
       child: const MyApp(),
     )
@@ -42,8 +45,9 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             fontFamily: GoogleFonts.poppins().fontFamily
           ),
-          initialRoute: '/welcome',
+          initialRoute: '/',
           routes: {
+            "/":(context) => const Wrapper(),
             "/login":(context) => const LoginPage(),
             "/signup":(context) => const SignUpScreen(),
             "/welcome":(context) => const WelcomeScreen(),

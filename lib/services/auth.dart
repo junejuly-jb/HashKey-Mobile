@@ -16,4 +16,16 @@ class Auth{
       print(e);
     }
   }
+
+  Future<dynamic> login(String email, String password) async{
+    try {
+      var url = Uri.parse('$baseURL/login');
+      var response = await http.post(url,
+          body: {'email': email, 'password': password});
+      Map decode = jsonDecode(response.body);
+      return decode;
+    } catch (e) {
+      print(e);
+    }
+  }
 }
