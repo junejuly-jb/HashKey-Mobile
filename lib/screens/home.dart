@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/shared/bottom_appbar.dart';
 import 'package:hashkey/shared/tabview/generate_screen.dart';
 import 'package:hashkey/shared/tabview/main_screen.dart';
 import 'package:hashkey/shared/tabview/qr_screen.dart';
 import 'package:hashkey/shared/tabview/settings_screen.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({ Key? key }) : super(key: key);
@@ -14,11 +16,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String appState = 'home';
+  // String appState = 'home';
 
-  void setAppState(String val){
-    setState(() => appState = val,);
-  }
+  // void setAppState(String val){
+  //   setState(() => appState = val,);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,8 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
           child: Builder(
             builder: (context){
-              switch (appState) {
+              final app = Provider.of<AppStateProvider>(context);
+              switch (app.appState) {
                 case 'home':
                   return const Main();
                 case 'generate':
@@ -68,7 +71,7 @@ class _HomeState extends State<Home> {
         onPressed: () {},
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomView(appState: appState, setAppState: setAppState),
+      bottomNavigationBar: const BottomView(),
     );
   }
 }

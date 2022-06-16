@@ -21,7 +21,9 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   login(){
-    _formKey.currentState!.validate();
+    if(_formKey.currentState!.validate()){
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+    }
   }
 
   passwordValidator(String? value){
@@ -78,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                       key: _formKey,
                       child: Column(
                       children: [
-                        CustomInputWidget(myController: emailController, hint: 'Email', validation: isValidEmail),
+                        CustomInputWidget(myController: emailController, hint: 'Email', validation: isValidEmail, autofocus: false),
                         SizedBox(height: 15.h,),
                         CustomPasswordInputWidget(
                           myController: passwordController, 
