@@ -23,7 +23,7 @@ class CustomAlertWithRedirect extends StatelessWidget {
         TextButton(onPressed: () {
           Navigator.pop(context);
           Navigator.of(context).pushReplacementNamed(redirect);
-        }, child: Text('Okay'))
+        }, child: const Text('Okay'))
       ],
     );
   }

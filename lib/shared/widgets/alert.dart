@@ -37,7 +37,7 @@ Widget widgetType(String val, String message, BuildContext context){
         SizedBox(height: 10.h,),
         Text(message),
         SizedBox(height: 10.h,),
-        Row(mainAxisAlignment: MainAxisAlignment.end, children: [TextButton(onPressed: () => Navigator.pop(context), child: Text('Okay'))],)
+        Row(mainAxisAlignment: MainAxisAlignment.end, children: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Okay'))],)
       ],
     );
   }

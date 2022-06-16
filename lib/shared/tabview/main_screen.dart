@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/shared/horizontal_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 
 class Main extends StatelessWidget {
@@ -11,6 +13,7 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -53,7 +56,7 @@ class Main extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: 5.w,),
-                          Text('June Amante', style: TextStyle( fontSize: 12.sp, color: Colors.white),),
+                          Text(user['name'], style: TextStyle( fontSize: 12.sp, color: Colors.white),),
                         ],
                       ),
                     ),

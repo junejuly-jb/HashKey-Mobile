@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hashkey/provider/app_state_provider.dart';
@@ -15,13 +16,7 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
-  // String appState = 'home';
-
-  // void setAppState(String val){
-  //   setState(() => appState = val,);
-  // }
-
+class _HomeState extends State<Home> {  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

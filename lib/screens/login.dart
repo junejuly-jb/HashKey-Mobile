@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/user_provider.dart';
+import 'package:hashkey/services/auth.dart';
+import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/large_buttons.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../shared/widgets/input.dart';
 import '../shared/widgets/passwordinput.dart';
@@ -20,9 +27,30 @@ class _LoginPageState extends State<LoginPage> {
   bool isPassVisible = false;
   final _formKey = GlobalKey<FormState>();
 
-  login(){
+  login() async{
+    showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(type: 'loading', message: 'Logging you in...',));
+    await Future.delayed(const Duration(seconds: 2));
     if(_formKey.currentState!.validate()){
-      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      var result = await Auth().login(emailController.text, passwordController.text);
+      if(result['success']){
+        final prefs = await SharedPreferences.getInstance();
+        final String? userData = prefs.getString('user');
+        if(userData != null){
+          await prefs.remove('user');
+        }
+        Map user = {
+          "token": result['token'],
+          "name": result['user']['name']
+        };
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setUserDetails(user);
+        await prefs.setString('user', jsonEncode(user));
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      }
+      else{
+        Navigator.pop(context);
+        showDialog(barrierDismissible: false, context: context, builder: (_) => CustomAlert(type: 'error', message: result['message'],));
+      }
     }
   }
 
