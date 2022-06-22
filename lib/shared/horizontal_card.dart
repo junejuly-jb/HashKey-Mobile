@@ -19,6 +19,18 @@ class Cards extends StatelessWidget {
         return FontAwesomeIcons.solidCreditCard;
       }
 
+      case 'contact': {
+        return FontAwesomeIcons.idBadge;
+      }
+
+      case 'license': {
+        return FontAwesomeIcons.idCard;
+      }
+
+      case 'notes': {
+        return FontAwesomeIcons.solidNoteSticky;
+      }
+
       default: {
         return FontAwesomeIcons.solidPenToSquare;
       }
@@ -46,6 +58,24 @@ class Cards extends StatelessWidget {
         "category": "payment",
         "icon": "card",
         "content": "3 cards"
+      },
+      {
+        "name": "Contacts",
+        "category": "contact",
+        "icon": "contact",
+        "content": "3 contacts"
+      },
+      {
+        "name": "License",
+        "category": "license",
+        "icon": "license",
+        "content": "2 licences"
+      },
+      {
+        "name": "Notes",
+        "category": "notes",
+        "icon": "notes",
+        "content": "10 notes"
       }
     ];
 
