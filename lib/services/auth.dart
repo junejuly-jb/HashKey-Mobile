@@ -22,6 +22,7 @@ class Auth{
       var url = Uri.parse('$baseURL/login');
       var response = await http.post(url,
           body: {'email': email, 'password': password});
+      print(response);
       Map decode = jsonDecode(response.body);
       return decode;
     } catch (e) {

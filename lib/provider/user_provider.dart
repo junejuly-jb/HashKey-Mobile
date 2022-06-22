@@ -31,4 +31,9 @@ class UserProvider with ChangeNotifier{
     _user = data;
     notifyListeners();
   }
-}
+
+  void updateBoolSetting(String type, bool val){
+    _user['settings'][type] = val;
+    notifyListeners();
+  }
+} 

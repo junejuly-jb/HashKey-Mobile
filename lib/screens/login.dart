@@ -38,9 +38,31 @@ class _LoginPageState extends State<LoginPage> {
         if(userData != null){
           await prefs.remove('user');
         }
+        late String profileType;
+        late String profile;
+        if(result['user']['profile']['link']){
+          profileType = 'link';
+          profile = result['user']['profile']['link'];
+        }
+        else if(result['user']['profile']['profile_photo'].isNotEmpty){
+          profileType = 'base64';
+          profile = result['user']['profile']['profile_photo'];
+        }
+        else{
+          profileType = 'initials';
+          profile = result['user']['initials'];
+        }
         Map user = {
           "token": result['token'],
-          "name": result['user']['name']
+          "name": result['user']['name'],
+          "profileType": profileType,
+          "profile": profile,
+          "settings": {
+            "pin": result['user']['user_settings']['ask_pin'],
+            "timeout": result['user']['user_settings']['vault_timeout'],
+            "timeoutAction": result['user']['user_settings']['vault_timeout_action'],
+            "easyaccess": result['user']['user_settings']['easy_access'],
+          }
         };
         final userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUserDetails(user);

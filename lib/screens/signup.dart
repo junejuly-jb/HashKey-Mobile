@@ -99,7 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 50.h,),
-                  const CustomHeader(title: 'Sign Up'),
+                  const CustomHeader(title: 'Sign Up', withBackButton: true),
                   SizedBox(height: 10.h,),
                   Text('Welcome to Hashkey!', style: TextStyle(fontSize: 16.sp, letterSpacing: 1),),
                   SizedBox(height: 50.h,),
