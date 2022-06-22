@@ -25,7 +25,7 @@ class _SearchScreenState extends State<SearchScreen> {
             child: Column(
               children: [
                 SizedBox(height: 50.h,),
-                const CustomHeader(title: 'Search'),
+                const CustomHeader(title: 'Search', withBackButton: true,),
                 SizedBox(height: 30.h,),
                 CustomInputWidget(myController: searchController, hint: 'Search...', validation: null, autofocus: true)
               ],

@@ -22,23 +22,20 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(241, 240, 247, 1),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
-          child: Builder(
-            builder: (context){
-              final app = Provider.of<AppStateProvider>(context);
-              switch (app.appState) {
-                case 'home':
-                  return const Main();
-                case 'generate':
-                  return const GenerateScreen();
-                case 'qrcode':
-                  return const QrScreen();
-                default:
-                  return const SettingsScreen();
-              }
+        child: Builder(
+          builder: (context){
+            final app = Provider.of<AppStateProvider>(context);
+            switch (app.appState) {
+              case 'home':
+                return const Main();
+              case 'generate':
+                return const GenerateScreen();
+              case 'qrcode':
+                return const QrScreen();
+              default:
+                return const SettingsScreen();
             }
-          ),
+          }
         )
       ),
       floatingActionButton: FloatingActionButton(
