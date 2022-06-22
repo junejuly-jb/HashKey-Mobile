@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth{
   final baseURL = 'http://10.0.2.2:5000/api';
@@ -25,6 +26,19 @@ class Auth{
       print(response);
       Map decode = jsonDecode(response.body);
       return decode;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future getToken() async{
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? a = prefs.getString('user');
+      if(a != null){
+        Map user = jsonDecode(a);
+        return user['token'];
+      }
     } catch (e) {
       print(e);
     }
