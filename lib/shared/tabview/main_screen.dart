@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
+import 'package:hashkey/services/app.dart';
 import 'package:hashkey/shared/horizontal_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skeletons/skeletons.dart';
 
 
@@ -25,16 +27,20 @@ class _MainState extends State<Main> {
     super.initState();
     initCards();
   }
-
   Future initCards() async{
-    // await Future.delayed(const Duration(seconds: 3));
-    // setState(() => isCardLoading = false,);
-    final cards = Provider.of<DataProvider>(context, listen: false).cards;
-    if(cards.isEmpty){
+    final data = Provider.of<DataProvider>(context, listen: false);
+    if(data.cards.isEmpty){
       setState(() => isCardLoading = true,);
+      Map result = await App().getCollectionLength();
+      if(result['success']){
+        data.setCards(result['categories']);
+        await Future.delayed(const Duration(seconds: 1));
+        setState(() => isCardLoading = false);
+      }
     }
     else{
       setState(() => isCardLoading = false);
+      // setState(() => isCardLoading = true,);
     }
     
   }

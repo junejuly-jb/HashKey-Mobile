@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hashkey/models/category.dart';
+import 'package:hashkey/provider/data_provider.dart';
+import 'package:provider/provider.dart';
 
 class Cards extends StatelessWidget {
   const Cards({ Key? key }) : super(key: key);
@@ -40,44 +43,7 @@ class Cards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    List categories = [
-      {
-        "name": "Passwords",
-        "category": "password",
-        "icon": "lock",
-        "content": "1 password"
-      },
-      {
-        "name": "Wifi",
-        "category": "wifi",
-        "icon": "wifi",
-        "content": "3 passwords"
-      },
-      {
-        "name": "Payments",
-        "category": "payment",
-        "icon": "card",
-        "content": "3 cards"
-      },
-      {
-        "name": "Contacts",
-        "category": "contact",
-        "icon": "contact",
-        "content": "3 contacts"
-      },
-      {
-        "name": "License",
-        "category": "license",
-        "icon": "license",
-        "content": "2 licences"
-      },
-      {
-        "name": "Notes",
-        "category": "notes",
-        "icon": "notes",
-        "content": "10 notes"
-      }
-    ];
+    final categories = Provider.of<DataProvider>(context).cards;
 
     return SizedBox(
       height: 120.h,
@@ -86,7 +52,7 @@ class Cards extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
         itemBuilder: (BuildContext context, int index){
-          Map myCategory = categories[index];
+          Category category = categories[index];
           return Container(
             width: 105.w,
             margin: EdgeInsets.symmetric(horizontal: 5.h),
@@ -106,12 +72,12 @@ class Cards extends StatelessWidget {
                   child: CircleAvatar(
                     backgroundColor: const Color.fromRGBO(231, 240, 253, 1),
                     radius: 15.r,
-                    child: FaIcon(getIconForName(myCategory['icon']), color: const Color.fromRGBO(172, 203, 238, 1),)
+                    child: FaIcon(getIconForName(category.icon), color: const Color.fromRGBO(172, 203, 238, 1),)
                   ),
                 ),
                 SizedBox(height: 7.h,),
-                Text(myCategory['name'], style: TextStyle( fontSize: 15.sp, fontWeight: FontWeight.bold),),
-                Text(myCategory['content'], style: TextStyle( fontSize: 12.sp, fontWeight: FontWeight.w400, color: Colors.grey[500]),)
+                Text(category.name, style: TextStyle( fontSize: 15.sp, fontWeight: FontWeight.bold),),
+                Text(category.content, style: TextStyle( fontSize: 12.sp, fontWeight: FontWeight.w400, color: Colors.grey[500]),)
               ],
             ),
           );
