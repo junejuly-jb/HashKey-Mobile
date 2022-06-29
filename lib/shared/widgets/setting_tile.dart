@@ -13,6 +13,7 @@ class SettingsTile extends StatelessWidget {
   final String? actionType;
   final String? stringVal;
   final bool? boolVal;
+  final Function? callback;
   const SettingsTile({ Key? key,
     required this.settingType,
     required this.backgroundColor,
@@ -22,6 +23,7 @@ class SettingsTile extends StatelessWidget {
     required this.subtitle,
     required this.actionType,
     required this.stringVal,
+    required this.callback,
     required this.boolVal }) : super(key: key);
 
   @override
@@ -70,7 +72,7 @@ class SettingsTile extends StatelessWidget {
               onPressed: (){}, child: Icon(Icons.keyboard_arrow_right_rounded, color: Colors.grey,)
             ),
           ) : 
-          CupertinoSwitch(value: boolVal!, onChanged: (val) => setting.updateBoolSetting(settingType, val)),
+          CupertinoSwitch(value: boolVal!, onChanged: (val) => callback!(val)),
         )
       ],
     );

@@ -71,6 +71,7 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.lock, 
               title: 'Pin', subtitle: null, actionType: 'switch',
               stringVal: null, boolVal: user['settings']['pin'],
+              callback: (val) => print(val),
             ),
             SizedBox(height: 15.h,),
             SettingsTile(
@@ -80,6 +81,7 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.lock_clock, 
               title: 'Vault Timeout', subtitle: '15 minutes', actionType: 'button',
               stringVal: user['settings']['timeout'], boolVal: null,
+              callback: null,
             ),
             SizedBox(height: 15.h,),
             SettingsTile(
@@ -89,6 +91,7 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.directions_run_rounded, 
               title: 'Vault Action', subtitle: 'Lock', actionType: 'button',
               stringVal: user['settings']['timeoutAction'], boolVal: null,
+              callback: null,
             ),
             SizedBox(height: 15.h,),
             SettingsTile(
@@ -98,6 +101,7 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.accessibility_new_rounded, 
               title: 'Easy Access', subtitle: null, actionType: 'switch',
               stringVal: null, boolVal: user['settings']['easyaccess'],
+              callback: (val) => print(val),
             ),
             SizedBox(height: 15.h,),
             Center(
