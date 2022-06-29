@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class XtraLargeButton extends StatelessWidget {
-  final String title;
+class SmallButton extends StatelessWidget {
+  final IconData icon;
   final Function callback;
-  const XtraLargeButton({ Key? key, required this.title, required this.callback }) : super(key: key);
+  const SmallButton({ Key? key, required this.icon, required this.callback }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.r),
+          borderRadius: BorderRadius.circular(5.r),
           gradient: const LinearGradient(
             colors: [
               Color.fromRGBO(106, 17, 203, 1),
@@ -27,11 +26,12 @@ class XtraLargeButton extends StatelessWidget {
           onPressed: () {
             callback();
           }, 
-          child: Text(title, style: TextStyle( fontSize: 15.sp, fontWeight: FontWeight.w700 ),),
+          child: Icon(icon, size: 15,),
           style: ButtonStyle(
-            // backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(34, 166, 255, 1)),
+            minimumSize: MaterialStateProperty.all(Size.zero),
+            padding:  MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 17.w, vertical: 5.h)),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             foregroundColor: MaterialStateProperty.all(Colors.white),
-            padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 13.h)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.r)
