@@ -23,7 +23,7 @@ class BottomView extends StatelessWidget {
           children: [
             Expanded(
               // padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-              child: IconButton(onPressed: () => app.setAppState('home'), 
+              child: IconButton(onPressed: () => app.updateStringState('_tabState', 'home'), 
                 icon: SvgPicture.asset(
                   'lib/assets/bottom_appbar_icons/${app.appState == 'home'? 'home' : 'home-outlined'}.svg', 
                   width: 19.w, 
@@ -33,7 +33,7 @@ class BottomView extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: IconButton(onPressed: () => app.setAppState('generate'), 
+              child: IconButton(onPressed: () => app.updateStringState('_tabState','generate'), 
                 icon: SvgPicture.asset(
                   'lib/assets/bottom_appbar_icons/${app.appState == 'generate' ? 'generate' : 'generate-outlined'}.svg', 
                   width: 19.w, 
@@ -44,7 +44,7 @@ class BottomView extends StatelessWidget {
             ),
             const Spacer(),
             Expanded(
-               child: IconButton(onPressed: () => app.setAppState('qrcode'), 
+               child: IconButton(onPressed: () => app.updateStringState('_tabState', 'qrcode'), 
                 icon: SvgPicture.asset(
                   'lib/assets/bottom_appbar_icons/${app.appState == 'qrcode' ? 'qrcode' : 'qrcode-outlined'}.svg', 
                   width: 19.w, 
@@ -54,7 +54,7 @@ class BottomView extends StatelessWidget {
               ),
             ),
             Expanded(
-               child: IconButton(onPressed: () => app.setAppState('settings'), 
+               child: IconButton(onPressed: () => app.updateStringState('_tabState', 'settings'), 
                 icon: SvgPicture.asset(
                   'lib/assets/bottom_appbar_icons/${app.appState == 'settings' ? 'settings' : 'settings-outlined'}.svg', 
                   width: 19.w, 
