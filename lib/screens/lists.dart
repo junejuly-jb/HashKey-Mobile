@@ -42,7 +42,7 @@ class _ListsState extends State<Lists> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                SizedBox(height: 50.h,),
+                SizedBox(height: 50.h,) ,
                 CustomHeader(title: arg['name'], withBackButton: true),
                 SizedBox(height: 25.h,),
                 Container(
