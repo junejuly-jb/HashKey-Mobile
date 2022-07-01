@@ -20,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 50.h,),
-            CustomHeader(title: 'Settings', withBackButton: false),
+            const CustomHeader(title: 'Settings', withBackButton: false),
             SizedBox(height: 40.h,),
             Text('Account', style: TextStyle( fontSize: 20.sp),),
             SizedBox(height: 22.h,),
@@ -32,10 +32,10 @@ class SettingsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(user['name'], style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),),
-                    Text('Personal Info'),
+                    const Text('Personal Info'),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 SizedBox(
                   width: 50.w,
                   height: 40.h,
@@ -56,7 +56,7 @@ class SettingsScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    onPressed: (){}, child: Icon(Icons.keyboard_arrow_right_rounded, color: Colors.grey,)
+                    onPressed: (){}, child: const Icon(Icons.keyboard_arrow_right_rounded, color: Colors.grey,)
                   ),
                 )
               ],
@@ -76,8 +76,8 @@ class SettingsScreen extends StatelessWidget {
             SizedBox(height: 15.h,),
             SettingsTile(
               settingType: 'timeout',
-              backgroundColor: Color.fromRGBO(236, 247, 254, 1), 
-              foregroundColor: Color.fromRGBO(66, 171, 237, 1), 
+              backgroundColor: const Color.fromRGBO(236, 247, 254, 1), 
+              foregroundColor: const Color.fromRGBO(66, 171, 237, 1), 
               icon: Icons.lock_clock, 
               title: 'Vault Timeout', subtitle: '15 minutes', actionType: 'button',
               stringVal: user['settings']['timeout'], boolVal: null,
@@ -86,8 +86,8 @@ class SettingsScreen extends StatelessWidget {
             SizedBox(height: 15.h,),
             SettingsTile(
               settingType: 'timeoutAction',
-              backgroundColor: Color.fromRGBO(236, 232, 255, 1), 
-              foregroundColor: Color.fromRGBO(82, 53, 223, 1), 
+              backgroundColor: const Color.fromRGBO(236, 232, 255, 1), 
+              foregroundColor: const Color.fromRGBO(82, 53, 223, 1), 
               icon: Icons.directions_run_rounded, 
               title: 'Vault Action', subtitle: 'Lock', actionType: 'button',
               stringVal: user['settings']['timeoutAction'], boolVal: null,
@@ -96,8 +96,8 @@ class SettingsScreen extends StatelessWidget {
             SizedBox(height: 15.h,),
             SettingsTile(
               settingType: 'easyaccess',
-              backgroundColor: Color.fromRGBO(254, 231, 240, 1), 
-              foregroundColor: Color.fromRGBO(197, 45, 90, 1), 
+              backgroundColor: const Color.fromRGBO(254, 231, 240, 1), 
+              foregroundColor: const Color.fromRGBO(197, 45, 90, 1), 
               icon: Icons.accessibility_new_rounded, 
               title: 'Easy Access', subtitle: null, actionType: 'switch',
               stringVal: null, boolVal: user['settings']['easyaccess'],

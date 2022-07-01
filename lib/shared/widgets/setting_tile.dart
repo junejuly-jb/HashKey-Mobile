@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hashkey/provider/user_provider.dart';
-import 'package:provider/provider.dart';
 
 class SettingsTile extends StatelessWidget {
   final String settingType;
@@ -28,7 +26,6 @@ class SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final setting = Provider.of<UserProvider>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -47,7 +44,7 @@ class SettingsTile extends StatelessWidget {
             )
           ],
         ),
-        Spacer(),
+        const Spacer(),
         Container(
           child: actionType == 'button' ? SizedBox(
             width: 50.w,
@@ -69,7 +66,7 @@ class SettingsTile extends StatelessWidget {
                   },
                 ),
               ),
-              onPressed: (){}, child: Icon(Icons.keyboard_arrow_right_rounded, color: Colors.grey,)
+              onPressed: (){}, child: const Icon(Icons.keyboard_arrow_right_rounded, color: Colors.grey,)
             ),
           ) : 
           CupertinoSwitch(value: boolVal!, onChanged: (val) => callback!(val)),

@@ -6,7 +6,6 @@ import 'package:hashkey/shared/widgets/appbar.dart';
 import 'package:hashkey/shared/widgets/large_buttons.dart';
 import 'package:hashkey/shared/widgets/small_buttons.dart';
 import 'package:provider/provider.dart';
-import 'package:random_password_generator/random_password_generator.dart';
 
 import '../widgets/setting_tile.dart';
 
@@ -65,8 +64,8 @@ class GenerateScreen extends StatelessWidget {
             SizedBox(height: 10.h,),
             SettingsTile(
               settingType: 'uppercase',
-              backgroundColor: Color.fromRGBO(236, 232, 255, 1), 
-              foregroundColor: Color.fromRGBO(82, 53, 223, 1),
+              backgroundColor: const Color.fromRGBO(236, 232, 255, 1), 
+              foregroundColor: const Color.fromRGBO(82, 53, 223, 1),
               icon: Icons.abc, 
               title: 'Uppercase', subtitle: null, actionType: 'switch',
               stringVal: null, boolVal: appState.upperCaseState,
@@ -75,8 +74,8 @@ class GenerateScreen extends StatelessWidget {
             SizedBox(height: 10.h,),
             SettingsTile(
               settingType: 'lowercase',
-              backgroundColor: Color.fromRGBO(236, 232, 255, 1), 
-              foregroundColor: Color.fromRGBO(82, 53, 223, 1),
+              backgroundColor: const Color.fromRGBO(236, 232, 255, 1), 
+              foregroundColor: const Color.fromRGBO(82, 53, 223, 1),
               icon: Icons.abc, 
               title: 'Lowercase', subtitle: null, actionType: 'switch',
               stringVal: null, boolVal: appState.lowerCaseState,
@@ -95,8 +94,8 @@ class GenerateScreen extends StatelessWidget {
             SizedBox(height: 10.h,),
             SettingsTile(
               settingType: 'symbols',
-              backgroundColor: Color.fromRGBO(254, 231, 240, 1), 
-              foregroundColor: Color.fromRGBO(197, 45, 90, 1),
+              backgroundColor: const Color.fromRGBO(254, 231, 240, 1), 
+              foregroundColor: const Color.fromRGBO(197, 45, 90, 1),
               icon: FontAwesomeIcons.exclamation, 
               title: 'Symbols', subtitle: null, actionType: 'switch',
               stringVal: null, boolVal: appState.symbolState,
