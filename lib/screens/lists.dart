@@ -45,12 +45,12 @@ class _ListsState extends State<Lists> {
                 SizedBox(height: 50.h,) ,
                 CustomHeader(title: arg['name'], withBackButton: true),
                 SizedBox(height: 25.h,),
-                Container(
+                SizedBox(
                   height: 470.h,
                   // color: Colors.amber,
                   child: isLoading ? SkeletonListView(
                     padding: EdgeInsets.zero,
-                  ) : Text('Hello'),
+                  ) : const Text('Hello'),
                 )
               ],
             ),

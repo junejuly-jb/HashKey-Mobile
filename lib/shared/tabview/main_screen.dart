@@ -6,7 +6,6 @@ import 'package:hashkey/services/app.dart';
 import 'package:hashkey/shared/horizontal_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skeletons/skeletons.dart';
 
 
@@ -121,7 +120,7 @@ class _MainState extends State<Main> {
                         height: 120.h, width: 105.w,
                         borderRadius: BorderRadius.circular(20.r)
                         ),
-                    ) : Cards(),
+                    ) : const Cards(),
                   )
                 ],
               ),
