@@ -4,7 +4,7 @@ import 'package:hashkey/services/auth.dart';
 import 'package:http/http.dart' as http;
 
 class App{
-  final baseURL = 'http://10.0.2.2:5000/api';
+  final baseURL = 'https://hashkey-api.vercel.app/api/v2';
 
   Future<dynamic> getCollectionLength() async{
     try {

@@ -19,12 +19,12 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {  
   @override
   Widget build(BuildContext context) {
+    final app = Provider.of<AppStateProvider>(context);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(241, 240, 247, 1),
       body: SafeArea(
         child: Builder(
           builder: (context){
-            final app = Provider.of<AppStateProvider>(context);
             switch (app.appState) {
               case 'home':
                 return const Main();
@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
           }
         )
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: app.appState == 'home' ? FloatingActionButton(
         child: Container(
           width: 60.w,
           height: 60.h,
@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
           ),
         ),
         onPressed: () {},
-      ),
+      ) : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: const BottomView(),
     );

@@ -42,7 +42,9 @@ class BottomView extends StatelessWidget {
                 )
               ),
             ),
-            const Spacer(),
+            if(app.appState == 'home') ...[
+              const Spacer(),
+            ],
             Expanded(
                child: IconButton(onPressed: () => app.updateStringState('_tabState', 'qrcode'), 
                 icon: SvgPicture.asset(
