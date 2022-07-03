@@ -21,9 +21,9 @@ class GenerateScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 30.h,),
+            SizedBox(height: 25.h,),
             const CustomHeader(title: 'Generate', withBackButton: false),
-            SizedBox(height: 15.h,),
+            SizedBox(height: 10.h,),
             Text('Password', style: TextStyle(fontSize: 15.sp, color: Colors.grey[700]),),
             SizedBox(height: 5.h,),
             Container(
@@ -49,7 +49,7 @@ class GenerateScreen extends StatelessWidget {
                 SmallButton(icon: FontAwesomeIcons.solidCopy, callback: () => print('hello'))
               ],
             ),
-            SizedBox(height: 20.h,),
+            // SizedBox(height: 15.h,),
             Text('Options', style: TextStyle(fontSize: 15.sp, color: Colors.grey[700]),),
             SizedBox(height: 10.h,),
             SettingsTile(
@@ -101,7 +101,7 @@ class GenerateScreen extends StatelessWidget {
               stringVal: null, boolVal: appState.symbolState,
               callback: (val) => appState.updateGenerateSetting('symbolState', 'bool', null, val),
             ),
-            SizedBox(height: 15.h,),
+            SizedBox(height: 25.h,),
             XtraLargeButton(title: 'Generate', callback: () => appState.generateRandomString())
           ],
         ),

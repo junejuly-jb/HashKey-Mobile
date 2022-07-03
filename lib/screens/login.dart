@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/services/auth.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
@@ -67,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
         final userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUserDetails(user);
         await prefs.setString('user', jsonEncode(user));
+        Provider.of<AppStateProvider>(context, listen: false).initGenerateSetting();
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       }
       else{

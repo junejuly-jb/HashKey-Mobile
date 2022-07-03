@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth{
-  final baseURL = 'http://10.0.2.2:5000/api';
+  final baseURL = 'https://hashkey-api.vercel.app/api/v2';
 
   Future<dynamic> register(String name, String email, String password) async{
     try {
