@@ -66,7 +66,7 @@ class SettingsTile extends StatelessWidget {
                   },
                 ),
               ),
-              onPressed: (){}, child: const Icon(Icons.keyboard_arrow_right_rounded, color: Colors.grey,)
+              onPressed: () => callback!(), child: const Icon(Icons.keyboard_arrow_right_rounded, color: Colors.grey,)
             ),
           ) : 
           CupertinoSwitch(value: boolVal!, onChanged: (val) => callback!(val)),

@@ -68,7 +68,6 @@ class _LoginPageState extends State<LoginPage> {
         final userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUserDetails(user);
         await prefs.setString('user', jsonEncode(user));
-        Provider.of<AppStateProvider>(context, listen: false).initGenerateSetting();
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       }
       else{
