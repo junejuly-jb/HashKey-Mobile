@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,16 +21,37 @@ class Auth{
   }
 
   Future<dynamic> login(String email, String password) async{
+    Map decode;
     try {
       var url = Uri.parse('$baseURL/login');
       var response = await http.post(url,
           body: {'email': email, 'password': password});
       print(response);
-      Map decode = jsonDecode(response.body);
-      return decode;
-    } catch (e) {
-      print(e);
+      decode = jsonDecode(response.body);
+    } 
+    on SocketException catch (e) {
+      decode = {
+        "success": false,
+        "message": e.message,
+        "status": 000
+      };
     }
+    on TimeoutException catch (e){
+     decode = {
+        "success": false,
+        "message": e.message,
+        "status": 000
+      };
+    }
+    on Error catch (e) {
+      decode = {
+        "success": false,
+        "message": 'Server error please try again later',
+        "status": 000
+      };
+    }
+
+    return decode;
   }
 
   Future getToken() async{

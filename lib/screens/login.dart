@@ -30,7 +30,6 @@ class _LoginPageState extends State<LoginPage> {
 
   login() async{
     showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(type: 'loading', message: 'Logging you in...',));
-    await Future.delayed(const Duration(seconds: 2));
     if(_formKey.currentState!.validate()){
       var result = await Auth().login(emailController.text, passwordController.text);
       if(result['success']){
