@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/services/app.dart';
@@ -10,8 +11,12 @@ import 'package:skeletons/skeletons.dart';
 
 
 class Main extends StatefulWidget {
+
+  final bool isCardLoading;
+
   const Main({
     Key? key,
+    required this.isCardLoading
   }) : super(key: key);
 
   @override
@@ -19,34 +24,11 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  late bool isCardLoading;
-
-  @override
-  void initState() {
-    super.initState();
-    initCards();
-  }
-  Future initCards() async{
-    final data = Provider.of<DataProvider>(context, listen: false);
-    if(data.cards.isEmpty){
-      setState(() => isCardLoading = true,);
-      Map result = await App().getCollectionLength();
-      if(result['success']){
-        data.setCards(result['categories']);
-        await Future.delayed(const Duration(seconds: 1));
-        setState(() => isCardLoading = false);
-      }
-    }
-    else{
-      setState(() => isCardLoading = false);
-      // setState(() => isCardLoading = true,);
-    }
-    
-  }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
+    final appState = Provider.of<AppStateProvider>(context);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
       child: Column(
@@ -115,7 +97,7 @@ class _MainState extends State<Main> {
                   Text('Your credentials.', style: TextStyle( fontSize: 20.sp, fontWeight: FontWeight.bold, color: Colors.white),),
                   SizedBox(height: 20.h,),
                   Container(
-                    child: isCardLoading ? SkeletonAvatar(
+                    child: widget.isCardLoading ? SkeletonAvatar(
                       style: SkeletonAvatarStyle(
                         height: 120.h, width: 105.w,
                         borderRadius: BorderRadius.circular(20.r)

@@ -37,7 +37,6 @@ class _WrapperState extends State<Wrapper> {
       }
       else{
         Provider.of<UserProvider>(context, listen: false).getUserDetails();
-        Provider.of<AppStateProvider>(context, listen: false).initGenerateSetting();
         Provider.of<AppStateProvider>(context, listen: false).generateRandomString();
         Navigator.pushReplacementNamed(context, '/home');
       }
