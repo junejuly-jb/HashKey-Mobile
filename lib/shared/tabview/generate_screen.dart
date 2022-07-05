@@ -137,7 +137,7 @@ class _GenerateScreenState extends State<GenerateScreen> {
               callback: (val) => appState.updateBoolState('symbolState', val),
             ),
             SizedBox(height: 25.h,),
-            XtraLargeButton(title: 'Generate', callback: () => appState.generateRandomString())
+            XtraLargeButton(title: 'Generate', isGradient: true, callback: () => appState.generateRandomString())
           ],
         ),
       ),

@@ -28,7 +28,7 @@ class Auth{
           body: {'email': email, 'password': password});
       print(response);
       decode = jsonDecode(response.body);
-    } 
+    }
     on SocketException catch (e) {
       decode = {
         "success": false,

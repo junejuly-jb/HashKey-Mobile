@@ -32,4 +32,14 @@ class UserProvider with ChangeNotifier{
     _user['settings'][type] = val;
     notifyListeners();
   }
+
+  void removeUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? user = prefs.getString('user');
+    if(user != null){
+      prefs.remove('user');
+      _user = {};
+    }
+    notifyListeners();
+  }
 } 

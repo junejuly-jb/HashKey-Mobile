@@ -54,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
         }
         Map user = {
           "token": result['token'],
+          "refreshToken": result['refreshToken'],
           "name": result['user']['name'],
           "profileType": profileType,
           "profile": profile,
@@ -67,7 +68,12 @@ class _LoginPageState extends State<LoginPage> {
         final userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUserDetails(user);
         await prefs.setString('user', jsonEncode(user));
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+        if(result['user']['safety_pin'] == null){
+          Navigator.pushNamedAndRemoveUntil(context, '/addPin', (route) => false);
+        }
+        else{
+          Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+        }
       }
       else{
         Navigator.pop(context);
@@ -148,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     SizedBox(height: 35.h,),
-                    XtraLargeButton(title: 'Login', callback: login),
+                    XtraLargeButton(title: 'Login', isGradient: true, callback: login),
                     SizedBox(height: 30.h),
                     Row(
                       children: [

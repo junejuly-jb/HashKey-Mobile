@@ -127,7 +127,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           toggler: toggleConPassVisibility
                         ),
                         SizedBox(height: 100.h,),
-                        XtraLargeButton(title: 'Sign Up', callback: onSignUp)
+                        XtraLargeButton(title: 'Sign Up',isGradient: true, callback: onSignUp)
                       ],
                     )
                   )
