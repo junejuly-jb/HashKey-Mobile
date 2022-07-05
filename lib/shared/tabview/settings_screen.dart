@@ -108,8 +108,9 @@ class SettingsScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () async{ 
                 final prefs = await SharedPreferences.getInstance();
-                final success = await prefs.remove('user');
-                if(success){
+                String? user = prefs.getString('user');
+                if(user != null){
+                  Provider.of<UserProvider>(context, listen: false).removeUser();
                   Navigator.pushReplacementNamed(context, '/login');
                 }
                 else{
