@@ -114,7 +114,7 @@ class SettingsScreen extends StatelessWidget {
                   Navigator.pushReplacementNamed(context, '/login');
                 }
                 else{
-                  const CustomAlert(message: 'Unable to log-out', type: 'error');
+                  CustomAlert(message: 'Unable to log-out', type: 'error', statusType: 'error', callback: () => Navigator.pop(context),);
                 }
               }, child: const Text('Logout', style: TextStyle(color: Colors.red),)),
             ),

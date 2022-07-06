@@ -27,7 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isConPassVisible = false;
 
   onSignUp() async {
-    showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(type: 'loading', message: 'Signing up...',));
+    showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(type: 'loading', message: 'Signing up...', statusType: null, callback: null,));
     await Future.delayed(const Duration(seconds: 2));
     if(_formKey.currentState!.validate()){
       var result = await Auth().register(nameController.text, emailController.text, passwordController.text);
@@ -36,7 +36,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         showDialog(barrierDismissible: false, context: context, builder: (_) => CustomAlertWithRedirect(message: result['message'], redirect: '/login'));
       }else{
         Navigator.pop(context);
-        showDialog(barrierDismissible: false, context: context, builder: (_) => CustomAlert(type: 'error', message: result['message'],));
+        showDialog(barrierDismissible: false, context: context, builder: (_) => 
+        CustomAlert(type: 'error', message: result['message'], statusType: 'error', callback: () => Navigator.pop(context),));
       }
     }
     else{

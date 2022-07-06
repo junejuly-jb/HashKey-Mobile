@@ -6,6 +6,7 @@ import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/provider/connection_provider.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
+import 'package:hashkey/screens/authenticate.dart';
 import 'package:hashkey/screens/createpin.dart';
 import 'package:hashkey/screens/home.dart';
 import 'package:hashkey/screens/lists.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
             "/search":(context) => const SearchScreen(),
             "/lists":(context) => const Lists(),
             "/addPin":(context) => const CreatePin(),
+            "/authenticate":(context) => const AuthenticateScreen(),
           },
         );
       }

@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   login() async{
-    showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(type: 'loading', message: 'Logging you in...',));
+    showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(type: 'loading', message: 'Logging you in...', statusType: null, callback: null,));
     if(_formKey.currentState!.validate()){
       var result = await Auth().login(emailController.text, passwordController.text);
       if(result['success']){
@@ -58,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
           "name": result['user']['name'],
           "profileType": profileType,
           "profile": profile,
+          "pin": result['user']['safety_pin'] == null ? false : true,
           "settings": {
             "pin": result['user']['user_settings']['ask_pin'],
             "timeout": result['user']['user_settings']['vault_timeout'],
@@ -65,8 +66,7 @@ class _LoginPageState extends State<LoginPage> {
             "easyaccess": result['user']['user_settings']['easy_access'],
           }
         };
-        final userProvider = Provider.of<UserProvider>(context, listen: false);
-        userProvider.setUserDetails(user);
+        Provider.of<UserProvider>(context, listen: false).setUserDetails(user);
         await prefs.setString('user', jsonEncode(user));
         if(result['user']['safety_pin'] == null){
           Navigator.pushNamedAndRemoveUntil(context, '/addPin', (route) => false);
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
       }
       else{
         Navigator.pop(context);
-        showDialog(barrierDismissible: false, context: context, builder: (_) => CustomAlert(type: 'error', message: result['message'],));
+        showDialog(barrierDismissible: false, context: context, builder: (_) => CustomAlert(type: 'error', message: result['message'], statusType: 'error', callback: () => Navigator.pop(context),));
       }
     }
   }
