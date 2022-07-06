@@ -29,8 +29,8 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   login() async{
-    showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(type: 'loading', message: 'Logging you in...', statusType: null, callback: null,));
     if(_formKey.currentState!.validate()){
+      showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(type: 'loading', message: 'Logging you in...', statusType: null, callback: null,));
       var result = await Auth().login(emailController.text, passwordController.text);
       if(result['success']){
         final prefs = await SharedPreferences.getInstance();

@@ -62,7 +62,7 @@ Widget actionType(String? statusType, Function callback){
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        TextButton(onPressed: () => callback, child: Text('OK')),
+        TextButton(onPressed: () => callback(), child: Text('OK')),
       ],
     );
   }
@@ -70,7 +70,7 @@ Widget actionType(String? statusType, Function callback){
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        TextButton(onPressed: () => callback, child: Text('OK')),
+        TextButton(onPressed: () => callback(), child: Text('OK')),
       ],
     );
   }
