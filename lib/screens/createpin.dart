@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hashkey/provider/user_provider.dart';
+import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
 import 'package:hashkey/shared/widgets/large_buttons.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -20,6 +21,7 @@ class _CreatePinState extends State<CreatePin> {
   String currentText = '';
   dynamic myController = new TextEditingController();
   StreamController<ErrorAnimationType> errorController = StreamController<ErrorAnimationType>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -72,8 +74,14 @@ class _CreatePinState extends State<CreatePin> {
                     return false;
                   },
                 ),
-                Spacer(),
-                XtraLargeButton(title: 'Next', isGradient: true, callback: () => print(myController.text)),
+                const Spacer(),
+                XtraLargeButton(title: 'Next', isGradient: true, callback: (){
+                  if(myController.text.length != 4){
+                    showDialog(context: context, builder: (_) => CustomAlert(message: 'Invalid pin code.', type: 'error', statusType: null, callback: () => Navigator.pop(context) ));
+                  }else{
+                    showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(message: 'Adding pin, please wait...', type: 'loading', statusType: null, callback: null));
+                  }
+                }),
                 SizedBox(height: 10.h),
                 XtraLargeButton(title: 'Cancel', isGradient: false, callback: () async {
                   Provider.of<UserProvider>(context, listen: false).removeUser();

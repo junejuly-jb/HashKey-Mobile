@@ -30,15 +30,28 @@ class _WrapperState extends State<Wrapper> {
     final String? user = prefs.getString('user');
     if(user != null){
       final Map userData = jsonDecode(user);
-      bool isExpired = JwtDecoder.isExpired(userData['token']);
-      if(userData['token'] == null || isExpired){
-        await prefs.remove('user');
-        Navigator.pushReplacementNamed(context, '/welcome');
-      }
-      else{
-        Provider.of<UserProvider>(context, listen: false).getUserDetails();
-        Provider.of<AppStateProvider>(context, listen: false).generateRandomString();
-        Navigator.pushReplacementNamed(context, '/home');
+      // bool isExpired = JwtDecoder.isExpired(userData['token']);
+      if(userData['token'] != null){
+        bool isExpired = JwtDecoder.isExpired(userData['refreshToken']);
+        if(isExpired){
+          if(userData['pin']){
+            Navigator.pushReplacementNamed(context, '/authenticate');
+          }
+          else{
+            Provider.of<UserProvider>(context, listen: false).removeUser();
+            Navigator.pushReplacementNamed(context, '/login');
+          }
+        }
+        else{
+          Provider.of<UserProvider>(context, listen: false).getUserDetails();
+          Provider.of<AppStateProvider>(context, listen: false).generateRandomString();
+          if(userData['pin']){
+            Navigator.pushReplacementNamed(context, '/home');
+          }
+          else{
+            Navigator.pushReplacementNamed(context, '/addPin');
+          }
+        }
       }
     }
     else{

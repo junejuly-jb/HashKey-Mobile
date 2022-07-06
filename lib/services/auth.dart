@@ -55,15 +55,12 @@ class Auth{
   }
 
   Future getToken() async{
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? a = prefs.getString('user');
-      if(a != null){
-        Map user = jsonDecode(a);
-        return user['token'];
-      }
-    } catch (e) {
-      print(e);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? a = prefs.getString('user');
+    if(a != null){
+      Map user = jsonDecode(a);
+      return user['token'];
     }
+    return null;
   }
 }
