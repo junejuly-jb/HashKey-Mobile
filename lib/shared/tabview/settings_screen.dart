@@ -110,8 +110,9 @@ class SettingsScreen extends StatelessWidget {
                 final prefs = await SharedPreferences.getInstance();
                 String? user = prefs.getString('user');
                 if(user != null){
-                  Provider.of<UserProvider>(context, listen: false).removeUser();
                   Navigator.pushReplacementNamed(context, '/login');
+                  Provider.of<UserProvider>(context, listen: false).removeUser();
+                  Provider.of<UserProvider>(context, listen: false).removeUserState();
                 }
                 else{
                   CustomAlert(message: 'Unable to log-out', type: 'error', statusType: 'error', callback: () => Navigator.pop(context),);

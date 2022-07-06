@@ -38,8 +38,22 @@ class UserProvider with ChangeNotifier{
     final String? user = prefs.getString('user');
     if(user != null){
       prefs.remove('user');
-      _user = {};
+    }
+  }
+
+  void setPinState() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? a = prefs.getString('user');
+    if(a != null){
+      Map user = jsonDecode(a);
+      user['pin'] = true;
+      _user['pin'] = true;
+      prefs.setString('user', jsonEncode(user));
     }
     notifyListeners();
+  }
+
+  void removeUserState() {
+    _user = {};
   }
 } 

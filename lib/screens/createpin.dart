@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hashkey/provider/user_provider.dart';
+import 'package:hashkey/services/app.dart';
+import 'package:hashkey/services/response.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
 import 'package:hashkey/shared/widgets/large_buttons.dart';
+import 'package:http/http.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
@@ -75,11 +78,22 @@ class _CreatePinState extends State<CreatePin> {
                   },
                 ),
                 const Spacer(),
-                XtraLargeButton(title: 'Next', isGradient: true, callback: (){
+                XtraLargeButton(title: 'Next', isGradient: true, callback: () async {
                   if(myController.text.length != 4){
                     showDialog(context: context, builder: (_) => CustomAlert(message: 'Invalid pin code.', type: 'error', statusType: null, callback: () => Navigator.pop(context) ));
                   }else{
                     showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(message: 'Adding pin, please wait...', type: 'loading', statusType: null, callback: null));
+                    var result = await App().addPin(myController.text);
+                    Navigator.pop(context);
+                    if(result['success']){
+                      Provider.of<UserProvider>(context, listen: false).setPinState();
+                      Navigator.pop(context);
+                      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                    }
+                    else{
+                      print(result);
+                      showDialog(context: context, builder: (_) => ResponseHandler().response(result, context));
+                    }
                   }
                 }),
                 SizedBox(height: 10.h),
