@@ -8,7 +8,6 @@ import 'package:hashkey/services/response.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
 import 'package:hashkey/shared/widgets/large_buttons.dart';
-import 'package:http/http.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +21,7 @@ class CreatePin extends StatefulWidget {
 
 class _CreatePinState extends State<CreatePin> {
   String currentText = '';
-  dynamic myController = new TextEditingController();
+  dynamic myController = TextEditingController();
   StreamController<ErrorAnimationType> errorController = StreamController<ErrorAnimationType>();
 
   @override
@@ -39,7 +38,7 @@ class _CreatePinState extends State<CreatePin> {
                 SizedBox(height: 50.h,),
                 const CustomHeader(title: 'Create Pin', withBackButton: false),
                 SizedBox(height: 25.h,),
-                Text('To protect the security of your vault, you must nominate 4 digit pin code.', style: TextStyle(color: Colors.grey),),
+                const Text('To protect the security of your vault, you must nominate 4 digit pin code.', style: TextStyle(color: Colors.grey),),
                 SizedBox(height: 60.h,),
                 PinCodeTextField(
                   keyboardType: TextInputType.number,

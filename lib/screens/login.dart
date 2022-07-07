@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/services/auth.dart';
 import 'package:hashkey/shared/widgets/alert.dart';

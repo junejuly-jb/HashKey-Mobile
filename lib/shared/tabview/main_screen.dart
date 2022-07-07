@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hashkey/provider/app_state_provider.dart';
-import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
-import 'package:hashkey/services/app.dart';
 import 'package:hashkey/shared/horizontal_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +25,6 @@ class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-    final appState = Provider.of<AppStateProvider>(context);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
       child: Column(

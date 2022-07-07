@@ -1,8 +1,6 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:random_password_generator/random_password_generator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AppStateProvider with ChangeNotifier{
 

@@ -43,6 +43,7 @@ class Auth{
         "status": 000
       };
     }
+    // ignore: unused_catch_clause
     on Error catch (e) {
       decode = {
         "success": false,
