@@ -35,6 +35,7 @@ class _WrapperState extends State<Wrapper> {
         bool isExpired = JwtDecoder.isExpired(userData['refreshToken']);
         if(isExpired){
           if(userData['pin']){
+            Provider.of<UserProvider>(context, listen: false).getUserDetails();
             Navigator.pushReplacementNamed(context, '/authenticate');
           }
           else{

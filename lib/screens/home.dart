@@ -29,6 +29,7 @@ class _HomeState extends State<Home> {
   }
 
   Future initCards() async{
+    isCardLoading = false;
     final data = Provider.of<DataProvider>(context, listen: false);
     if(data.cards.isEmpty){
       setState(() => isCardLoading = true,);
