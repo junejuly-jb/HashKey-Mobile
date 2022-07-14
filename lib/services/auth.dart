@@ -58,10 +58,48 @@ class Auth{
   Future getToken() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? a = prefs.getString('user');
+    print(a);
     if(a != null){
       Map user = jsonDecode(a);
       return user['token'];
     }
     return null;
+  }
+
+  Future<dynamic> reauthenticate(String type, String pin) async{
+    Map decode;
+    try {
+      var url = Uri.parse('$baseURL/reauthenticate');
+      String token = await getToken();
+      print(token);
+      var response = await http.post(url,
+        body: {'type': type, 'pin': pin },
+        headers: { 'Authorization': 'Bearer ' +token }
+      );
+      print('errorsssssss: ' + response.body);
+      decode = jsonDecode(response.body);
+    }
+    on SocketException catch (e) {
+      decode = {
+        "success": false,
+        "message": e.message,
+        "status": 000
+      };
+    }
+    on TimeoutException catch (e){
+     decode = {
+        "success": false,
+        "message": e.message,
+        "status": 000
+      };
+    }
+    on Error catch (e) {
+      decode = {
+        "success": false,
+        "message": e,
+        "status": 1
+      };
+    }
+    return decode;
   }
 }
