@@ -26,7 +26,6 @@ class Auth{
       var url = Uri.parse('$baseURL/login');
       var response = await http.post(url,
           body: {'email': email, 'password': password});
-      print(response);
       decode = jsonDecode(response.body);
     }
     on SocketException catch (e) {
@@ -63,5 +62,50 @@ class Auth{
       return user['token'];
     }
     return null;
+  }
+
+  Future getRefreshToken() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? a = prefs.getString('user');
+    if(a != null){
+      Map user = jsonDecode(a);
+      return user['token'];
+    }
+    return null;
+  }
+
+  Future<dynamic> reauthenticate(String type, String pin) async{
+    Map decode;
+    try {
+      var url = Uri.parse('$baseURL/reauthenticate');
+      String token = await getToken();
+      var response = await http.post(url,
+        body: {'type': type, 'pin': pin },
+        headers: { 'Authorization': 'Bearer ' +token }
+      );
+      decode = jsonDecode(response.body);
+    }
+    on SocketException catch (e) {
+      decode = {
+        "success": false,
+        "message": e.message,
+        "status": 000
+      };
+    }
+    on TimeoutException catch (e){
+     decode = {
+        "success": false,
+        "message": e.message,
+        "status": 000
+      };
+    }
+    on Error catch (e) {
+      decode = {
+        "success": false,
+        "message": e,
+        "status": 1
+      };
+    }
+    return decode;
   }
 }

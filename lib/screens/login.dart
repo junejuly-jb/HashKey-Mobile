@@ -63,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
             "timeout": result['user']['user_settings']['vault_timeout'],
             "timeoutAction": result['user']['user_settings']['vault_timeout_action'],
             "easyaccess": result['user']['user_settings']['easy_access'],
+            "biometric": result['user']['user_settings']['biometric'],
           }
         };
         Provider.of<UserProvider>(context, listen: false).setUserDetails(user);
@@ -194,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('no account?', style: TextStyle(fontSize: 12.sp),),
-                        GestureDetector(onTap: () => Navigator.pushReplacementNamed(context, '/signup'), child: Text(' sign up here', style: TextStyle(fontSize: 12.sp, color: Colors.blue),)),
+                        GestureDetector(onTap: () => Navigator.pushNamed(context, '/signup'), child: Text(' sign up here', style: TextStyle(fontSize: 12.sp, color: Colors.blue),)),
                       ],
                     )
                   ],

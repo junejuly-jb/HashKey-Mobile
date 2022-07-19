@@ -1,9 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hashkey/provider/app_state_provider.dart';
-import 'package:hashkey/provider/connection_provider.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/screens/authenticate.dart';
@@ -25,7 +25,6 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ConnectionProvider()),
         ChangeNotifierProvider(create: (_) => AppStateProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => DataProvider())
@@ -41,6 +40,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    var routes = {
+      "/":(context) => const Wrapper(),
+      "/login":(context) => const LoginPage(),
+      "/signup":(context) => const SignUpScreen(),
+      "/welcome":(context) => const WelcomeScreen(),
+      "/home":(context) => const Home(),
+      "/search":(context) => const SearchScreen(),
+      "/lists":(context) => const Lists(),
+      "/addPin":(context) => const CreatePin(),
+      "/authenticate":(context) => const AuthenticateScreen(),
+    };
+
     return ScreenUtilInit(
       designSize: const Size(360, 640),
       builder: (context, child) {
@@ -51,16 +62,8 @@ class MyApp extends StatelessWidget {
             fontFamily: GoogleFonts.poppins().fontFamily
           ),
           initialRoute: '/',
-          routes: {
-            "/":(context) => const Wrapper(),
-            "/login":(context) => const LoginPage(),
-            "/signup":(context) => const SignUpScreen(),
-            "/welcome":(context) => const WelcomeScreen(),
-            "/home":(context) => const Home(),
-            "/search":(context) => const SearchScreen(),
-            "/lists":(context) => const Lists(),
-            "/addPin":(context) => const CreatePin(),
-            "/authenticate":(context) => const AuthenticateScreen(),
+          onGenerateRoute: (settings){
+            return CupertinoPageRoute(builder: (context) => routes[settings.name]!(context));
           },
         );
       }

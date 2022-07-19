@@ -56,4 +56,16 @@ class UserProvider with ChangeNotifier{
   void removeUserState() {
     _user = {};
   }
+
+  Future updateRefreshToken(String newToken) async{
+    final prefs = await SharedPreferences.getInstance();
+    String? a = prefs.getString('user');
+    if(a != null){
+      Map user = jsonDecode(a);
+      user['refreshToken'] = newToken;
+      _user['settings']['refreshToken'] = newToken;
+      String newUser = jsonEncode(user);
+      prefs.setString('user', newUser);
+    }
+  }
 } 
