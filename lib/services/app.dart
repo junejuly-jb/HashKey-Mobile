@@ -11,7 +11,7 @@ class App{
   Future<dynamic> getCollectionLength() async{
     try {
       var url = Uri.parse('$baseURL/collection-length');
-      String token = await Auth().getToken();
+      String token = await Auth().getRefreshToken();
       var response = await http.get(url, headers: {'Authorization': 'Bearer $token'});
       Map decode = jsonDecode(response.body);
       return decode;
@@ -24,7 +24,7 @@ class App{
     Map decode;
     try {
       var url = Uri.parse('$baseURL/add-pin');
-      String? token = await Auth().getToken();
+      String? token = await Auth().getRefreshToken();
       if(token != null){
         var response = await http.post(url, 
           body: { 'pin': pin },

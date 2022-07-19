@@ -59,7 +59,6 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
         ),
       );
     } on PlatformException catch (e) {
-      print(e);
       setState(() {
         hasError = true;
         _start = 30;
@@ -76,13 +75,33 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
       Map result = await Auth().reauthenticate('fingerprint', '');
       Navigator.pop(context);
       if(result['success']){
-        print(result);
+        Provider.of<UserProvider>(context, listen: false).updateRefreshToken(result['data']);
+        Navigator.pushReplacementNamed(context, '/home');
+      }else{
+        showDialog(context: context, builder: (_) {
+          return CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pop(context));
+        });
       }
     }
   }
 
+  Future reauthPin() async {
+    showDialog(barrierDismissible: false, context: context, builder: (_){
+      return const CustomAlert(message: 'Authenticating...', type: 'loading', statusType: null, callback: null);
+    });
+    Map result = await Auth().reauthenticate('pin', myController.text);
+    Navigator.pop(context);
+    if(result['success']){
+      Provider.of<UserProvider>(context, listen: false).updateRefreshToken(result['data']);
+      Navigator.pushReplacementNamed(context, '/home');
+    }else{
+      showDialog(context: context, builder: (_) {
+        return CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pop(context));
+      });
+    }
+  }
+
   void startTimer() {
-    print('start');
     const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
@@ -104,7 +123,9 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
 
   @override
   void dispose() {
-    _timer!.cancel();
+    if(_timer != null){
+      _timer!.cancel();
+    }
     super.dispose();
   }
 
@@ -140,10 +161,12 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                       SizedBox(height: 20.h,),
                       Text('Hello ${user.user['name'].split(' ')[0]},', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23.sp, letterSpacing: 1),),
                       SizedBox(height: 20.h,),
-                      Text('Use your fingerprint to login', style: TextStyle(color: Colors.grey, fontSize: 15.sp),),
-                      Text('to your vault.', style: TextStyle(color: Colors.grey, fontSize: 15.sp),),
-                      SizedBox(height: 40.h,),
-                      Center(
+                      
+                      if(user.user['settings']['biometric']) ...[
+                        Text('Use your fingerprint to login', style: TextStyle(color: Colors.grey, fontSize: 15.sp),),
+                        Text('to your vault.', style: TextStyle(color: Colors.grey, fontSize: 15.sp),),
+                        SizedBox(height: 40.h,),
+                        Center(
                         child: AvatarGlow(
                           glowColor: Colors.blue,
                           endRadius: 100.0,
@@ -184,12 +207,12 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                             ),
                           ),
                         ),
-                      ),
+                      )],
                       Center(
                         child: hasError ? Text('Authentication error please try again in: $_start') : null,
                       ),
                       SizedBox(height: 30.h,),
-                      Text('Or just enter your 4 digit pin code.', style: TextStyle(color: Colors.grey, fontSize: 15.sp),),
+                      Text('${user.user['settings']['biometric'] ? 'Or just' : ''} enter your 4 digit pin code.', style: TextStyle(color: Colors.grey, fontSize: 15.sp),),
                       SizedBox(height: 20.h,),
                       Form(
                         key: _formKey,
@@ -208,7 +231,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                             ),
                             SizedBox(width: 15.w,),
                             RawMaterialButton(
-                              onPressed: () => startTimer(),
+                              onPressed: () => reauthPin(),
                               elevation: 0,
                               fillColor: Colors.indigo[700],
                               child: const Icon(

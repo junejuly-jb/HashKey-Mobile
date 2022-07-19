@@ -26,7 +26,6 @@ class Auth{
       var url = Uri.parse('$baseURL/login');
       var response = await http.post(url,
           body: {'email': email, 'password': password});
-      print(response);
       decode = jsonDecode(response.body);
     }
     on SocketException catch (e) {
@@ -58,7 +57,16 @@ class Auth{
   Future getToken() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? a = prefs.getString('user');
-    print(a);
+    if(a != null){
+      Map user = jsonDecode(a);
+      return user['token'];
+    }
+    return null;
+  }
+
+  Future getRefreshToken() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? a = prefs.getString('user');
     if(a != null){
       Map user = jsonDecode(a);
       return user['token'];
@@ -71,12 +79,10 @@ class Auth{
     try {
       var url = Uri.parse('$baseURL/reauthenticate');
       String token = await getToken();
-      print(token);
       var response = await http.post(url,
         body: {'type': type, 'pin': pin },
         headers: { 'Authorization': 'Bearer ' +token }
       );
-      print('errorsssssss: ' + response.body);
       decode = jsonDecode(response.body);
     }
     on SocketException catch (e) {
