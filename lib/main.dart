@@ -7,10 +7,12 @@ import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/screens/authenticate.dart';
+import 'package:hashkey/screens/create.dart';
 import 'package:hashkey/screens/createpin.dart';
 import 'package:hashkey/screens/home.dart';
 import 'package:hashkey/screens/lists.dart';
 import 'package:hashkey/screens/login.dart';
+import 'package:hashkey/screens/option_selection.dart';
 import 'package:hashkey/screens/search.dart';
 import 'package:hashkey/screens/signup.dart';
 import 'package:hashkey/screens/welcome.dart';
@@ -50,6 +52,8 @@ class MyApp extends StatelessWidget {
       "/lists":(context) => const Lists(),
       "/addPin":(context) => const CreatePin(),
       "/authenticate":(context) => const AuthenticateScreen(),
+      "/options":(context) => const OptionSelection(),
+      "/options/create":(context) => const CreateNew(),
     };
 
     return ScreenUtilInit(
@@ -66,7 +70,8 @@ class MyApp extends StatelessWidget {
             switch (settings.name) {
               case '/lists':
                 return CupertinoPageRoute(builder: (context) => const Lists(), settings: settings);
-                
+              case '/options/create':
+                return CupertinoPageRoute(builder: (context) => const CreateNew(), settings: settings);
               default:
                 return CupertinoPageRoute(builder: (context) => routes[settings.name]!(context));
                
