@@ -59,7 +59,7 @@ class _QRViewExampleState extends State<QRViewExample> {
             child: Center(
               child: (result != null)
                   ? Text(
-                      'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
+                      'Data: ${result!.code}')
                   : const Text('Scanning...'),
             ),
           )

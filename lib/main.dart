@@ -63,7 +63,14 @@ class MyApp extends StatelessWidget {
           ),
           initialRoute: '/',
           onGenerateRoute: (settings){
-            return CupertinoPageRoute(builder: (context) => routes[settings.name]!(context));
+            switch (settings.name) {
+              case '/lists':
+                return CupertinoPageRoute(builder: (context) => const Lists(), settings: settings);
+                
+              default:
+                return CupertinoPageRoute(builder: (context) => routes[settings.name]!(context));
+               
+            }
           },
         );
       }
