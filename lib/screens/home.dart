@@ -87,7 +87,9 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
-        onPressed: () {},
+        onPressed: () { 
+          Navigator.pushNamed(context, '/options');
+        },
       ) : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: const BottomView(),
