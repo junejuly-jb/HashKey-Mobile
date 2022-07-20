@@ -33,7 +33,7 @@ class _ListsState extends State<Lists> {
 
   @override
   Widget build(BuildContext context) {
-    final arg = ModalRoute.of(context)!.settings.arguments as Map;
+    final arg = ModalRoute.of(context)?.settings.arguments as Map;
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -42,7 +42,7 @@ class _ListsState extends State<Lists> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                SizedBox(height: 50.h,) ,
+                SizedBox(height: 50.h,),
                 CustomHeader(title: arg['name'], withBackButton: true),
                 SizedBox(height: 25.h,),
                 SizedBox(

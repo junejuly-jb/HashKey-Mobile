@@ -58,6 +58,7 @@ class Cards extends StatelessWidget {
               "type": category.category,
               "name": category.name
             } ),
+            // onTap: () { print(category.name);},
             child: Container(
               width: 105.w,
               margin: EdgeInsets.symmetric(horizontal: 5.h),

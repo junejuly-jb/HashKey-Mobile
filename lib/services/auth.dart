@@ -17,7 +17,7 @@ class Auth{
       return decode;
     } catch (e) {
       print(e);
-    }
+    } 
   }
 
   Future<dynamic> login(String email, String password) async{
