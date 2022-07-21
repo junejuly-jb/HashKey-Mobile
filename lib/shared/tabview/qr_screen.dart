@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hashkey/shared/widgets/qr_view.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QrScreen extends StatelessWidget {
   const QrScreen({ Key? key }) : super(key: key);

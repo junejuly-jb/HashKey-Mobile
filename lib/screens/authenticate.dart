@@ -24,9 +24,6 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
   bool isPinVisible = false;
 
   final LocalAuthentication auth = LocalAuthentication();
-  List<BiometricType>? _availableBiometrics;
-  String _authorized = 'Not Authorized';
-  bool _isAuthenticating = false;
   int _start = 10;
   Timer? _timer;
   bool hasError = false;
@@ -46,8 +43,6 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
     bool authenticated = false;
     try {
       setState(() {
-        _isAuthenticating = true;
-        _authorized = 'Authenticating';
       });
       authenticated = await auth.authenticate(
         localizedReason:
@@ -58,12 +53,10 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
           biometricOnly: true,
         ),
       );
-    } on PlatformException catch (e) {
+    } on PlatformException {
       setState(() {
         hasError = true;
         _start = 30;
-        _isAuthenticating = false;
-        _authorized = 'Error - ${e.message}';
       });
       startTimer();
       return;

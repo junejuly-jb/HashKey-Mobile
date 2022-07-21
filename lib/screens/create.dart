@@ -11,7 +11,7 @@ class CreateNew extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            children: [
+            children: const [
               Text('data'),
               Text('data'),
               Text('data'),
