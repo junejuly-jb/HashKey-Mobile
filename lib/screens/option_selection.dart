@@ -81,7 +81,7 @@ class _OptionSelectionState extends State<OptionSelection> {
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               XtraLargeButton(
                 title: 'Next', 
                 callback: () => Navigator.pushNamed(context, '/options/create', arguments: selected), 

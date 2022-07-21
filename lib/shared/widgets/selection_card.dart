@@ -21,7 +21,7 @@ class SelectionCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.0),
           splashColor: Colors.blue,
           onTap: (){ callback(name); },
-          child: Container(
+          child: SizedBox(
             width: 120.w,
             height: 100.h,
             child: Column(
