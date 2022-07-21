@@ -16,7 +16,7 @@ class CustomInputWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       autofocus: autofocus,
-      validator: (val) => validation!(val),
+      validator: (val) => validation != null ? validation!(val) : null,
       controller: myController,
       decoration: InputDecoration(
         border: OutlineInputBorder(

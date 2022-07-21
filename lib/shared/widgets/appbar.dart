@@ -10,10 +10,13 @@ class CustomHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.sp, letterSpacing: 2),),
+        Expanded(flex: 4,child: Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.sp, letterSpacing: 2),)),
         const Spacer(),
-        Container(
-          child: withBackButton ? IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close)) : null,
+        Expanded(
+          flex: 1,
+          child: Container(
+            child: withBackButton ? IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close)) : null,
+          ),
         )
       ],
     );
