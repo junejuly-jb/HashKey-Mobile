@@ -73,4 +73,8 @@ class AppStateProvider with ChangeNotifier{
     passLength = val;
     notifyListeners();
   }
+
+  void setAppStateOnLogout(){
+    _tabState = 'home';
+  }
 }

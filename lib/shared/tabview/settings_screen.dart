@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/app_state_provider.dart';
+import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
@@ -113,6 +115,8 @@ class SettingsScreen extends StatelessWidget {
                   Navigator.pushReplacementNamed(context, '/login');
                   Provider.of<UserProvider>(context, listen: false).removeUser();
                   Provider.of<UserProvider>(context, listen: false).removeUserState();
+                  Provider.of<DataProvider>(context, listen: false).setEmpty();
+                  Provider.of<AppStateProvider>(context, listen: false).setAppStateOnLogout();
                 }
                 else{
                   CustomAlert(message: 'Unable to log-out', type: 'error', statusType: 'error', callback: () => Navigator.pop(context),);

@@ -3,7 +3,7 @@ import 'package:hashkey/models/category.dart';
 import 'package:hashkey/models/password.dart';
 
 class DataProvider with ChangeNotifier{
-  final List<Category> cards = [];
+  List<Category> cards = [];
   final List<Password> passwords = [];
 
   setCards(List collectionList){
@@ -12,5 +12,9 @@ class DataProvider with ChangeNotifier{
       cards.add(category);
     }
     notifyListeners();
+  }
+
+  setEmpty(){
+    cards = [];
   }
 }
