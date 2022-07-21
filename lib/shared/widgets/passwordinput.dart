@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomPasswordInputWidget extends StatelessWidget {
   final TextEditingController myController;
   final String hint;
-  final Function validation;
+  final Function? validation;
   final bool visible;
   final Function toggler;
   const CustomPasswordInputWidget({ Key? key, 
@@ -21,7 +21,7 @@ class CustomPasswordInputWidget extends StatelessWidget {
       keyboardType: hint == 'Pin' ? TextInputType.number : TextInputType.text,
       maxLength: hint == 'Pin' ? 4 : 20,
       obscureText: visible ? false : true,
-      validator: (value) => validation(value),
+      validator: (value) => validation != null ? validation!(value) : null,
       controller: myController,
       decoration: InputDecoration(
         suffixIcon: GestureDetector(
