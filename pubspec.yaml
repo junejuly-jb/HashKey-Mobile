@@ -52,6 +52,7 @@ dependencies:
   local_auth: ^2.1.0
   avatar_glow: ^2.0.2
   qr_code_scanner: ^1.0.0
+  timeago: ^3.2.2
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/shared/horizontal_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,6 +28,7 @@ class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
+    final recents = Provider.of<DataProvider>(context).recents;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
       child: Column(
@@ -111,19 +113,56 @@ class _MainState extends State<Main> {
             child: Column(
               children: [
                 SizedBox(height: 20.h,),
-                Text('Recently Added', style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),),
+                Row(
+                  children: [
+                    Text('Recently Added', style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),),
+                    Spacer(),
+                    if(recents.isEmpty) Icon(Icons.refresh_rounded)
+                  ],
+                ),
                 SizedBox(height: 15.h,),
               ],
             ),
           ),
           Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.w),
-              child: widget.isRecentLoading ? SkeletonListView() : RecentList(),
-            ),
+            child: widgetType(widget.isRecentLoading, recents),
           )
         ],
       ),
     );
+  }
+}
+
+
+Widget widgetType(bool isLoading, List recents){
+  if(isLoading){
+    return SkeletonListView();
+  }
+  else if(!isLoading && recents.isEmpty){
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(FontAwesomeIcons.folderOpen, size: 40,),
+          SizedBox(height: 20.h,),
+          Text(
+            'Your vault is empty',
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.bold
+            ),
+          ),
+          SizedBox(height: 5.h,),
+          Text('Add credentials by pressing \'+\'',
+            style: TextStyle(
+              color: Colors.grey[500]
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  else{
+    return const RecentList();
   }
 }

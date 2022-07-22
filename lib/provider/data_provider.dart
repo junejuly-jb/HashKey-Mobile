@@ -18,6 +18,7 @@ class DataProvider with ChangeNotifier{
 
   setEmpty(){
     cards = [];
+    recents = [];
   }
 
   setRecents(List recentList){
