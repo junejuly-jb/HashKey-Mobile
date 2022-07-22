@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/shared/horizontal_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/shared/widgets/recent_list.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -10,10 +11,11 @@ import 'package:skeletons/skeletons.dart';
 class Main extends StatefulWidget {
 
   final bool isCardLoading;
+  final bool isRecentLoading;
 
   const Main({
     Key? key,
-    required this.isCardLoading
+    required this.isCardLoading, required this.isRecentLoading
   }) : super(key: key);
 
   @override
@@ -110,10 +112,16 @@ class _MainState extends State<Main> {
               children: [
                 SizedBox(height: 20.h,),
                 Text('Recently Added', style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),),
-                SizedBox(height: 20.h,),
+                SizedBox(height: 15.h,),
               ],
             ),
           ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
+              child: widget.isRecentLoading ? SkeletonListView() : RecentList(),
+            ),
+          )
         ],
       ),
     );

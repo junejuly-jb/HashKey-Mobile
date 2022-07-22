@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hashkey/models/category.dart';
 import 'package:hashkey/models/password.dart';
+import 'package:hashkey/models/recent.dart';
 
 class DataProvider with ChangeNotifier{
   List<Category> cards = [];
+  List<Recent> recents = [];
   final List<Password> passwords = [];
 
   setCards(List collectionList){
@@ -17,4 +19,13 @@ class DataProvider with ChangeNotifier{
   setEmpty(){
     cards = [];
   }
+
+  setRecents(List recentList){
+    for(var el in recentList){
+      Recent recent = Recent.fromJson(el);
+      recents.add(recent);
+    }
+    notifyListeners();
+  }
+
 }
