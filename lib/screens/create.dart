@@ -23,7 +23,7 @@ class CreateNew extends StatelessWidget {
                   SizedBox(height: 50.h,),
                   CustomHeader(title: 'Add New $arg', withBackButton: true),
                   SizedBox(height: 40.h,),
-                  PasswordInput()
+                  formType(arg)
                 ],
               ),
             ),
@@ -31,5 +31,14 @@ class CreateNew extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Widget formType(String type){
+  if(type == 'Password'){
+    return const PasswordInput();
+  }
+  else{
+    return Container();
   }
 }

@@ -21,11 +21,13 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   late bool isCardLoading;
+  late bool isRecentLoading;
 
   @override
   void initState() {
-    super.initState();
     initCards();
+    initRecents();
+    super.initState();
   }
 
   Future initCards() async{
@@ -44,6 +46,23 @@ class _HomeState extends State<Home> {
     }
   }
 
+
+  Future initRecents() async{
+    isRecentLoading = false;
+    final data = Provider.of<DataProvider>(context, listen: false);
+    if(data.recents.isEmpty){
+      setState(() => isRecentLoading = true,);
+      Map result = await App().getRecentList();
+      if(result['success']){
+        data.setRecents(result['data']);
+        setState(() => isRecentLoading = false,);
+      }
+      else{
+        setState(() => isRecentLoading = false,);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final app = Provider.of<AppStateProvider>(context);
@@ -54,7 +73,7 @@ class _HomeState extends State<Home> {
           builder: (context){
             switch (app.appState) {
               case 'home':
-                return Main(isCardLoading: isCardLoading,);
+                return Main(isCardLoading: isCardLoading, isRecentLoading: isRecentLoading,);
               case 'generate':
                 return const GenerateScreen();
               case 'qrcode':

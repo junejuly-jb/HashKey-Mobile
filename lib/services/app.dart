@@ -66,4 +66,48 @@ class App{
     }
     return decode;
   }
+
+  Future<dynamic> getRecentList() async {
+    Map decode;
+    try {
+      var url = Uri.parse('$baseURL/recents');
+      String? token = await Auth().getRefreshToken();
+      if(token != null){
+        var response = await http.get(url,
+          headers: {'Authorization': 'Bearer $token'}
+        );
+        decode = jsonDecode(response.body);
+      }
+      else{
+        decode = {
+          "success": false,
+          "status": 401,
+          "message": "Invalid token"
+        };
+      }
+    }
+    on SocketException catch (e) {
+      decode = {
+        "success": false,
+        "message": e.message,
+        "status": 000
+      };
+    }
+    on TimeoutException catch (e){
+      decode = {
+        "success": false,
+        "message": e.message,
+        "status": 000
+      };
+    }
+    // ignore: unused_catch_clause
+    on Error catch (e){
+      decode = {
+        "success": false,
+        "message": 'Server error please try again later',
+        "status": 000
+      };
+    }
+    return decode;
+  }
 }
