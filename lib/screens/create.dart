@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hashkey/shared/forms/password.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
+import 'package:hashkey/shared/widgets/large_buttons.dart';
 
 class CreateNew extends StatelessWidget {
   const CreateNew({Key? key}) : super(key: key);
@@ -9,7 +10,6 @@ class CreateNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final arg = ModalRoute.of(context)?.settings.arguments as String;
-    print(arg);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -29,7 +29,14 @@ class CreateNew extends StatelessWidget {
             ),
           ),
         ),
+        bottomNavigationBar: Container(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 15.h),
+            child: XtraLargeButton(title: 'Save', callback: () => print('test'), isGradient: true),
+          )
+        ),
       ),
+      
     );
   }
 }
