@@ -35,15 +35,14 @@ class RecentList extends StatelessWidget {
           ),
           title: Text(
             recent.name,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold
             )
           ),
           subtitle: Text(
             'added ${timeago.format(recent.createdAt)}',
             style: TextStyle(
-              fontSize: 12.sp,
-              fontStyle: FontStyle.italic
+              fontSize: 11.sp,
             ),  
           ),
         );

@@ -237,6 +237,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                           ],
                         )
                       ),
+                      TextButton(onPressed: (){}, child: const Text('Logout', style: TextStyle( color: Colors.red ),))
                     ],
                   ),
                 ),
