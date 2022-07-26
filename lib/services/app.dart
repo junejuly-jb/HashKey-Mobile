@@ -114,7 +114,7 @@ class App{
   Future saveCredential(Map data) async {
     Map decode;
     try {
-      var url = Uri.parse('$baseURL/add-password');
+      var url = Uri.parse('$baseURL/${data['endpoint']}');
       String? token = await Auth().getRefreshToken();
       if(token != null){
         var response = await http.post(url,

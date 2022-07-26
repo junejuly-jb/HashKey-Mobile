@@ -69,7 +69,7 @@ class Auth{
     String? a = prefs.getString('user');
     if(a != null){
       Map user = jsonDecode(a);
-      return user['token'];
+      return user['refreshToken'];
     }
     return null;
   }

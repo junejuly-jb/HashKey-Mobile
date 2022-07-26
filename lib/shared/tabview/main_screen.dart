@@ -116,8 +116,8 @@ class _MainState extends State<Main> {
                 Row(
                   children: [
                     Text('Recently Added', style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),),
-                    Spacer(),
-                    if(recents.isEmpty) Icon(Icons.refresh_rounded)
+                    const Spacer(),
+                    if(recents.isEmpty) const Icon(Icons.refresh_rounded)
                   ],
                 ),
                 SizedBox(height: 15.h,),
@@ -143,7 +143,7 @@ Widget widgetType(bool isLoading, List recents){
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(FontAwesomeIcons.folderOpen, size: 40,),
+          const Icon(FontAwesomeIcons.folderOpen, size: 40,),
           SizedBox(height: 20.h,),
           Text(
             'Your vault is empty',
