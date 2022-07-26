@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/services/app.dart';
 import 'package:hashkey/shared/forms/password.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
 import 'package:hashkey/shared/widgets/large_buttons.dart';
+import 'package:provider/provider.dart';
 
 class CreateNew extends StatefulWidget {
   const CreateNew({Key? key}) : super(key: key);
@@ -30,7 +32,9 @@ class _CreateNewState extends State<CreateNew> {
     Map credData = dataSegregation(type);
     Map result = await App().saveCredential(credData);
     Navigator.pop(context);
+    print(result);
     if(result['success']){
+      Provider.of<DataProvider>(context, listen: false).setRecent(result['recent']);
       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       Fluttertoast.showToast(msg: result['message']);
     }else{
@@ -38,7 +42,7 @@ class _CreateNewState extends State<CreateNew> {
         showDialog(
           barrierDismissible: false,
           context: context, builder: (_) => 
-          CustomAlert(message: result['message'], type: 'error', statusType: null, callback: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false))
+          CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false))
         );
       }
       else{

@@ -29,4 +29,19 @@ class DataProvider with ChangeNotifier{
     notifyListeners();
   }
 
+  setRecent(Map data){
+    Recent recent = Recent(
+      id: data['_id'], 
+      credentialType: data['credential_type'], 
+      parentId: data['parentID'],
+      owner: data['owner'], 
+      name: data['name'],
+      icon: '', 
+      createdAt: DateTime.parse(data['createdAt']), 
+      updatedAt: DateTime.parse(data['updatedAt'])
+    );
+    recents.insert(0, recent);
+    notifyListeners();
+  }
+
 }
