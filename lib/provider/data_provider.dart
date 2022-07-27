@@ -1,14 +1,16 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:hashkey/models/category.dart';
 import 'package:hashkey/models/password.dart';
 import 'package:hashkey/models/recent.dart';
+import 'package:hashkey/models/wifi.dart';
 
 class DataProvider with ChangeNotifier{
   List<Category> cards = [];
   List<Recent> recents = [];
+  
   final List<Password> passwords = [];
+  final List<Wifi> wifis = [];
 
   setCards(List collectionList){
     for(var el in collectionList){
@@ -44,6 +46,22 @@ class DataProvider with ChangeNotifier{
     }
     else{
       cards[indx].count = cards[indx].count - 1;
+    }
+    notifyListeners();
+  }
+
+  getPasswords(List data){
+    for(var el in data){
+      Password password = Password.fromJson(el);
+      passwords.add(password);
+    }
+    notifyListeners();
+  }
+
+  getWifis(List data){
+    for(var el in data){
+      Wifi wifi = Wifi.fromJson(el);
+      wifis.add(wifi);
     }
     notifyListeners();
   }
