@@ -34,7 +34,9 @@ class _CreateNewState extends State<CreateNew> {
     Navigator.pop(context);
     print(result);
     if(result['success']){
-      Provider.of<DataProvider>(context, listen: false).setRecent(result['recent']);
+      Map<String, dynamic> recent = result['recent'];
+      Provider.of<DataProvider>(context, listen: false).setRecent(recent);
+      Provider.of<DataProvider>(context, listen: false).incrementCategoryCount(type.toLowerCase(), 'increment');
       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       Fluttertoast.showToast(msg: result['message']);
     }else{

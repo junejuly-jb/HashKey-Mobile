@@ -83,7 +83,7 @@ class Cards extends StatelessWidget {
                   ),
                   SizedBox(height: 7.h,),
                   Text(category.name, style: TextStyle( fontSize: 15.sp, fontWeight: FontWeight.bold),),
-                  Text(category.content, style: TextStyle( fontSize: 12.sp, fontWeight: FontWeight.w400, color: Colors.grey[500]),)
+                  Text(category.count.toString() + " " +category.content, style: TextStyle( fontSize: 12.sp, fontWeight: FontWeight.w400, color: Colors.grey[500]),)
                 ],
               ),
             ),
