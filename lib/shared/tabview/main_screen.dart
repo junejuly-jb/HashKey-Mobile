@@ -1,3 +1,4 @@
+import 'package:hashkey/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/provider/data_provider.dart';
@@ -117,7 +118,12 @@ class _MainState extends State<Main> {
                   children: [
                     Text('Recently Added', style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),),
                     const Spacer(),
-                    if(recents.isEmpty) const Icon(Icons.refresh_rounded)
+                    IconButton(
+                      onPressed: (){
+                        
+                      }, 
+                      icon: const Icon(Icons.refresh_rounded,)
+                    )
                   ],
                 ),
                 SizedBox(height: 15.h,),

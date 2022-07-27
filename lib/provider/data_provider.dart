@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:hashkey/models/category.dart';
 import 'package:hashkey/models/password.dart';
@@ -29,18 +31,20 @@ class DataProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  setRecent(Map data){
-    Recent recent = Recent(
-      id: data['_id'], 
-      credentialType: data['credential_type'], 
-      parentId: data['parentID'],
-      owner: data['owner'], 
-      name: data['name'],
-      icon: '', 
-      createdAt: DateTime.parse(data['createdAt']), 
-      updatedAt: DateTime.parse(data['updatedAt'])
-    );
+  setRecent(Map<String, dynamic> data){
+    Recent recent = Recent.fromJson(data);
     recents.insert(0, recent);
+    notifyListeners();
+  }
+
+  incrementCategoryCount(String type, String action){
+    int indx = cards.indexWhere((element) => element.category == type);
+    if(action == 'increment'){
+      cards[indx].count = cards[indx].count + 1;
+    }
+    else{
+      cards[indx].count = cards[indx].count - 1;
+    }
     notifyListeners();
   }
 
