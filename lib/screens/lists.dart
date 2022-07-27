@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hashkey/provider/data_provider.dart';
+import 'package:hashkey/services/app.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
@@ -13,22 +14,49 @@ class Lists extends StatefulWidget {
 }
 
 class _ListsState extends State<Lists> {
-  late bool isLoading;
+  bool isLoading = false;
+  late Map arg;
 
   @override
   void initState() {
     super.initState();
-    initPasswords();
+    Future.delayed(Duration.zero, (){
+      setState(() {
+        arg = ModalRoute.of(context)?.settings.arguments as Map;
+      });
+      initCredential(arg);
+    });
   }
 
-  Future initPasswords() async {
-    final passwords = Provider.of<DataProvider>(context, listen: false).passwords;
-    if(passwords.isEmpty){
-      setState(() => isLoading = true,);
+  Future initCredential(Map data) async {
+    String endpoint = getEndpoint(data);
+    Map result = await App().getCredentials(endpoint);
+    print(result);
+  }
+
+  String getEndpoint(Map data){
+    String endpoint = '';
+    switch (data['type']) {
+      case 'password':
+        endpoint = 'passwords';
+        break;
+      case 'wifi':
+        endpoint = 'wifis';
+        break;
+      case 'notes':
+        endpoint = 'notes';
+        break;
+      case 'payment':
+        endpoint = 'cards';
+        break;
+      case 'license':
+        endpoint = 'licenses';
+        break;
+      case 'contact':
+        endpoint = 'contacts';
+        break;
     }
-    else{
-      setState(() => isLoading = false,);
-    }
+    return endpoint;
   }
 
   @override

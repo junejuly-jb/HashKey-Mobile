@@ -19,31 +19,35 @@ class RecentList extends StatelessWidget {
       itemCount: recents.length,
       itemBuilder: (BuildContext context, int index){
         Recent recent = recents[index];
-        return ListTile(
-          minLeadingWidth: 55.w,
-          leading: Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(100.r)
+        return InkWell(
+          splashColor: Colors.blue[200],
+          onTap: () => print('Test'),
+          child: ListTile(
+            minLeadingWidth: 55.w,
+            leading: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(100.r)
+              ),
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 15.r,
+                child: FaIcon(getIcon(recent.credentialType), color: Colors.grey[700], size: 20,)
+              ),
             ),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 15.r,
-              child: FaIcon(getIcon(recent.credentialType), color: Colors.grey[700], size: 20,)
+            title: Text(
+              recent.name,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold
+              )
             ),
-          ),
-          title: Text(
-            recent.name,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold
-            )
-          ),
-          subtitle: Text(
-            'added ${timeago.format(recent.createdAt)}',
-            style: TextStyle(
-              fontSize: 11.sp,
-            ),  
+            subtitle: Text(
+              'added ${timeago.format(recent.createdAt)}',
+              style: TextStyle(
+                fontSize: 11.sp,
+              ),  
+            ),
           ),
         );
       }
