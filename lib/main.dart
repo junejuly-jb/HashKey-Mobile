@@ -74,7 +74,6 @@ class MyApp extends StatelessWidget {
                 return CupertinoPageRoute(builder: (context) => const CreateNew(), settings: settings);
               default:
                 return CupertinoPageRoute(builder: (context) => routes[settings.name]!(context));
-               
             }
           },
         );
