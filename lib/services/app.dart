@@ -116,11 +116,14 @@ class App{
     try {
       var url = Uri.parse('$baseURL/${data['endpoint']}');
       String? token = await Auth().getRefreshToken();
+
       if(token != null){
+         print('test');
         var response = await http.post(url,
           body: data,
           headers: {'Authorization': 'Bearer $token'}
         );
+        print(response.body);
         decode = jsonDecode(response.body);
       }
       else{
@@ -147,6 +150,7 @@ class App{
     }
     // ignore: unused_catch_clause
     on Error catch (e){
+      print(e);
       decode = {
         "success": false,
         "message": 'Server error please try again later',
@@ -161,7 +165,6 @@ class App{
     Map decode;
     try {
       var url = Uri.parse('$baseURL/$endpoint');
-      print(url);
       String? token = await Auth().getRefreshToken();
       if(token != null){
         var response = await http.get(url,

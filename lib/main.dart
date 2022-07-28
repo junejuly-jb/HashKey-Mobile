@@ -18,6 +18,8 @@ import 'package:hashkey/screens/signup.dart';
 import 'package:hashkey/screens/welcome.dart';
 import 'package:hashkey/screens/wrapper.dart';
 import 'package:provider/provider.dart';
+import 'package:month_year_picker/month_year_picker.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -60,6 +62,10 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 640),
       builder: (context, child) {
         return MaterialApp(
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            MonthYearPickerLocalizations.delegate,
+          ],
           title: 'Hashkey',
           theme: ThemeData(
             primarySwatch: Colors.blue,

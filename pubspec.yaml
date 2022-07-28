@@ -53,6 +53,7 @@ dependencies:
   avatar_glow: ^2.0.2
   qr_code_scanner: ^1.0.0
   timeago: ^3.2.2
+  month_year_picker: ^0.2.0+1
 
 dev_dependencies:
   flutter_test:
