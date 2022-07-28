@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hashkey/models/password.dart';
+import 'package:hashkey/models/wifi.dart';
+import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/services/app.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
+import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
 class Lists extends StatefulWidget {
@@ -14,6 +19,7 @@ class Lists extends StatefulWidget {
 
 class _ListsState extends State<Lists> {
   bool isLoading = false;
+  late List myArray = [];
   late Map arg;
 
   @override
@@ -28,32 +34,44 @@ class _ListsState extends State<Lists> {
   }
 
   Future initCredential(Map data) async {
-    // String dataType = getProviderData(data['type']);
-    // final provider = Provider.of<DataProvider>(context, listen: false);
-    // List arrays = provider;
-
-    // todo: GET DATAPROVIDER DATA VIA FUNCTION 
-    String endpoint = getEndpoint(data);
-    Map result = await App().getCredentials(endpoint);
-    if(result['success']){
-      print('success');
-    }
-    else{
-      if(result['status'] == 401){
-        showDialog(
-          barrierDismissible: false,
-          context: context, builder: (_) => 
-          CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false))
-        );
+    setState(() => isLoading = true,);
+    List array = Provider.of<DataProvider>(context, listen: false).getCategoryType(data['type']);
+    setState( () => myArray = array );
+    if(array.isEmpty){
+      String endpoint = getEndpoint(data);
+      Map result = await App().getCredentials(endpoint);
+      setState(() => isLoading = false,);
+      if(result['success']){
+        switch (data['type']) {
+          case 'password':
+            Provider.of<DataProvider>(context, listen: false).getPasswords(result['data']);
+            break;
+          case 'wifi':
+            Provider.of<DataProvider>(context, listen: false).getWifis(result['data']);
+            break;
+        }
       }
       else{
-         showDialog(
-          context: context, builder: (_) => 
-          CustomAlert(message: result['message'], type: 'error', statusType: null, callback: () => Navigator.pop(context))
-        );
+        if(result['status'] == 401){
+          showDialog(
+            barrierDismissible: false,
+            context: context, builder: (_) => 
+            CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false))
+          );
+        }
+        else{
+          showDialog(
+            context: context, builder: (_) => 
+            CustomAlert(message: result['message'], type: 'error', statusType: null, callback: () => Navigator.pop(context))
+          );
+        }
       }
     }
-    print(result);
+    else{
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   String getEndpoint(Map data){
@@ -81,36 +99,11 @@ class _ListsState extends State<Lists> {
     return endpoint;
   }
 
-
-  String getProviderData(String type){
-    String datatype = '';
-    switch (type) {
-      case 'password':
-        datatype = 'passwords';
-        break;
-      case 'wifi':
-        datatype = 'wifis';
-        break;
-      case 'notes':
-        datatype = 'notes';
-        break;
-      case 'payment':
-        datatype = 'cards';
-        break;
-      case 'license':
-        datatype = 'licenses';
-        break;
-      case 'contact':
-        datatype = 'contacts';
-        break;
-    }
-    return datatype;
-  }
-
   @override
   Widget build(BuildContext context) {
     final arg = ModalRoute.of(context)?.settings.arguments as Map;
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(241, 240, 247, 1),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -120,13 +113,25 @@ class _ListsState extends State<Lists> {
               children: [
                 SizedBox(height: 50.h,),
                 CustomHeader(title: arg['name'], withBackButton: true),
-                SizedBox(height: 25.h,),
+                SizedBox(height: 5.h,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: (){}, 
+                      icon: Icon(Icons.sort)
+                    ),
+                    IconButton(
+                      onPressed: (){}, 
+                      icon: Icon(Icons.refresh_rounded)
+                    )
+                  ],
+                ),
+                SizedBox(height: 5.h,),
                 SizedBox(
                   height: 470.h,
                   // color: Colors.amber,
-                  child: isLoading ? SkeletonListView(
-                    padding: EdgeInsets.zero,
-                  ) : const Text('Hello'),
+                  child: widgetType(isLoading, myArray, arg['type']),
                 )
               ],
             ),
@@ -135,4 +140,99 @@ class _ListsState extends State<Lists> {
       ),
     );
   }
+
+  Widget widgetType(bool state, List array, String type){
+    if(state){
+      return SkeletonListView(padding: EdgeInsets.zero);
+    }
+    else if(!state && array.isEmpty){
+      return const Text('No Data Found');
+    }
+    else{
+      return listViewType(type);
+    }
+  }
+
+  Widget listViewType(String type){
+    var arrayList = Provider.of<DataProvider>(context, listen: false).getCategoryType(type);
+    if(type == 'password'){
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: arrayList.length,
+        itemBuilder: (BuildContext context, int index){
+          Password password = arrayList[index];
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 5.h),
+            child: InkWell(
+              splashColor: Colors.blue[200],
+              onTap: () => print('Test'),
+              child: ListTile(
+                minLeadingWidth: 55.w,
+                leading: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(100.r)
+                  ),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 15.r,
+                    child: FaIcon(FontAwesomeIcons.lock, color: Colors.grey[700], 
+                    size: 20,), 
+                    
+                  )
+                ),
+                title: Text(
+                  password.logName,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold
+                  )
+                ),
+              ),
+            ),
+          );
+        }
+      );
+    }
+    else{
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: arrayList.length,
+        itemBuilder: (BuildContext context, int index){
+          Wifi wifi = arrayList[index];
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 5.h),
+            child: InkWell(
+              splashColor: Colors.blue[200],
+              onTap: () => print('Test'),
+              child: ListTile(
+                minLeadingWidth: 55.w,
+                leading: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(100.r)
+                  ),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 15.r,
+                    child: FaIcon(FontAwesomeIcons.wifi, color: Colors.grey[700], 
+                    size: 20,), 
+                    
+                  )
+                ),
+                title: Text(
+                  wifi.wifiSsid,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold
+                  )
+                ),
+              ),
+            ),
+          );
+        }
+      );
+    }
+  }
 }
+

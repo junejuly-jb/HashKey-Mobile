@@ -9,8 +9,8 @@ class DataProvider with ChangeNotifier{
   List<Category> cards = [];
   List<Recent> recents = [];
   
-  final List<Password> passwords = [];
-  final List<Wifi> wifis = [];
+  List<Password> passwords = [];
+  List<Wifi> wifis = [];
 
   setCards(List collectionList){
     for(var el in collectionList){
@@ -23,6 +23,8 @@ class DataProvider with ChangeNotifier{
   setEmpty(){
     cards = [];
     recents = [];
+    passwords = [];
+    wifis = [];
   }
 
   setRecents(List recentList){
@@ -64,6 +66,15 @@ class DataProvider with ChangeNotifier{
       wifis.add(wifi);
     }
     notifyListeners();
+  }
+
+  getCategoryType(String type){
+    if(type == 'password'){
+       return passwords;
+    }
+    else{
+      return wifis;
+    }
   }
 
 }
