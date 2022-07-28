@@ -19,7 +19,7 @@ class CustomPasswordInputWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: hint == 'Pin' ? TextInputType.number : TextInputType.text,
-      maxLength: hint == 'Pin' ? 4 : 20,
+      maxLength: hint == 'Pin' ? 4 : null,
       obscureText: visible ? false : true,
       validator: (value) => validation != null ? validation!(value) : null,
       controller: myController,
