@@ -69,10 +69,10 @@ class _WifiFormState extends State<WifiForm> {
           SizedBox(height: 15.h,),
           Row(
             children: [
-              Text('Wifi visibility:'),
+              const Text('Wifi visibility:'),
               SizedBox(width: 5.w,),
-              Text(widget.isVisible ? "Hidden" : "Visible", style: TextStyle( fontWeight: FontWeight.bold),),
-              Spacer(),
+              Text(widget.isVisible ? "Hidden" : "Visible", style: const TextStyle( fontWeight: FontWeight.bold),),
+              const Spacer(),
               CupertinoSwitch(value: widget.isVisible, onChanged: (val){ 
                 widget.callback2(val);
               })
