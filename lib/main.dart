@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 640),
       builder: (context, child) {
         return MaterialApp(
-          localizationsDelegates: [
+          localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
             MonthYearPickerLocalizations.delegate,
           ],

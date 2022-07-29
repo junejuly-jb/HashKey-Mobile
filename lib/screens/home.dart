@@ -1,13 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/services/app.dart';
-import 'package:hashkey/shared/bottom_appbar.dart';
 import 'package:hashkey/shared/tabview/generate_screen.dart';
 import 'package:hashkey/shared/tabview/main_screen.dart';
-import 'package:hashkey/shared/tabview/qr_screen.dart';
 import 'package:hashkey/shared/tabview/settings_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -18,15 +17,21 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   late bool isCardLoading;
   late bool isRecentLoading;
+  late TabController controller = TabController(length: 3, vsync: this);
+
+  
 
   @override
   void initState() {
     initCards();
     initRecents();
+    controller.addListener((){
+        print(controller.index);
+    });
     super.initState();
   }
 
@@ -69,20 +74,14 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(241, 240, 247, 1),
       body: SafeArea(
-        child: Builder(
-          builder: (context){
-            switch (app.appState) {
-              case 'home':
-                return Main(isCardLoading: isCardLoading, isRecentLoading: isRecentLoading,);
-              case 'generate':
-                return const GenerateScreen();
-              case 'qrcode':
-                return const QrScreen();
-              default:
-                return const SettingsScreen();
-            }
-          }
-        )
+        child: TabBarView(
+          controller: controller,
+          children: [
+            Main(isCardLoading: isCardLoading, isRecentLoading: isRecentLoading,),
+            const GenerateScreen(),
+            const SettingsScreen()
+          ],
+        ),
       ),
       floatingActionButton: app.appState == 'home' ? FloatingActionButton(
         child: Container(
@@ -110,8 +109,15 @@ class _HomeState extends State<Home> {
           Navigator.pushNamed(context, '/options');
         },
       ) : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: const BottomView(),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: TabBar(
+        controller: controller,
+        tabs: const  [
+          Tab(icon: Icon(FontAwesomeIcons.house)),
+          Tab(icon: Icon(Icons.directions_transit)),
+          Tab(icon: Icon(Icons.directions_bike)),
+        ],
+      ),
     );
   }
 }

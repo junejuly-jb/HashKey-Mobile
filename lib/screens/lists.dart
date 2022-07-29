@@ -119,11 +119,11 @@ class _ListsState extends State<Lists> {
                   children: [
                     IconButton(
                       onPressed: (){}, 
-                      icon: Icon(Icons.sort)
+                      icon: const Icon(Icons.sort)
                     ),
                     IconButton(
                       onPressed: (){}, 
-                      icon: Icon(Icons.refresh_rounded)
+                      icon: const Icon(Icons.refresh_rounded)
                     )
                   ],
                 ),

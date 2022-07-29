@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hashkey/shared/widgets/input.dart';
 import 'package:month_year_picker/month_year_picker.dart';
@@ -25,14 +22,14 @@ class _CardFormState extends State<CardForm> {
         children: [
           Row(
             children: [
-              Text('Card color:'),
+              const Text('Card color:'),
               SizedBox(width: 15.w,),
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 15,
                 backgroundColor: Colors.grey,
               ),
-              Spacer(),
-              IconButton(onPressed: (){}, icon: Icon(Icons.colorize_rounded)),
+              const Spacer(),
+              IconButton(onPressed: (){}, icon: const Icon(Icons.colorize_rounded)),
             ],
           ),
           SizedBox(height: 15.h,),
