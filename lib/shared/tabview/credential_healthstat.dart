@@ -6,13 +6,11 @@ class CredentialHealthStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          SizedBox(height: 50.h,),
-          Text('Test'),
-        ],
-      ),
+    return Column(
+      children: [
+        SizedBox(height: 50.h,),
+        const Text('Test'),
+      ],
     );
   }
 }
