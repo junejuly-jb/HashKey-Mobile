@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/services/app.dart';
+import 'package:hashkey/shared/tabview/credential_healthstat.dart';
 import 'package:hashkey/shared/tabview/generate_screen.dart';
 import 'package:hashkey/shared/tabview/main_screen.dart';
 import 'package:hashkey/shared/tabview/settings_screen.dart';
@@ -21,7 +22,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   late bool isCardLoading;
   late bool isRecentLoading;
-  late TabController controller = TabController(length: 3, vsync: this);
+  late TabController controller = TabController(length: 4, vsync: this);
 
   
 
@@ -79,6 +80,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           children: [
             Main(isCardLoading: isCardLoading, isRecentLoading: isRecentLoading,),
             const GenerateScreen(),
+            const CredentialHealthStatus(),
             const SettingsScreen()
           ],
         ),
@@ -110,13 +112,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         },
       ) : null,
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: TabBar(
-        controller: controller,
-        tabs: const  [
-          Tab(icon: Icon(FontAwesomeIcons.house)),
-          Tab(icon: Icon(Icons.directions_transit)),
-          Tab(icon: Icon(Icons.directions_bike)),
-        ],
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.fromLTRB(0,0,0,MediaQuery.of(context).padding.bottom),
+        child: TabBar(
+          controller: controller,
+          tabs: const  [
+            Tab(icon: Icon(FontAwesomeIcons.house)),
+            Tab(icon: Icon(Icons.directions_transit)),
+            Tab(icon: Icon(FontAwesomeIcons.heart)),
+            Tab(icon: Icon(Icons.directions_bike)),
+          ],
+        ),
       ),
     );
   }
