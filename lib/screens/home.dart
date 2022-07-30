@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/services/app.dart';
 import 'package:hashkey/shared/tabview/credential_healthstat.dart';
@@ -23,15 +22,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   late bool isCardLoading;
   late bool isRecentLoading;
   late TabController controller = TabController(length: 4, vsync: this);
-
+  int tabIndex = 0;
   
-
   @override
   void initState() {
     initCards();
     initRecents();
     controller.addListener((){
-        print(controller.index);
+      setState(() => tabIndex = controller.index,);
     });
     super.initState();
   }
@@ -71,7 +69,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final app = Provider.of<AppStateProvider>(context);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(241, 240, 247, 1),
       body: SafeArea(
@@ -85,7 +82,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           ],
         ),
       ),
-      floatingActionButton: app.appState == 'home' ? FloatingActionButton(
+      floatingActionButton: tabIndex == 0 ? FloatingActionButton(
         child: Container(
           width: 60.w,
           height: 60.h,
@@ -116,11 +113,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         padding: EdgeInsets.fromLTRB(0,0,0,MediaQuery.of(context).padding.bottom),
         child: TabBar(
           controller: controller,
-          tabs: const  [
-            Tab(icon: Icon(FontAwesomeIcons.house)),
-            Tab(icon: Icon(Icons.directions_transit)),
-            Tab(icon: Icon(FontAwesomeIcons.heart)),
-            Tab(icon: Icon(Icons.directions_bike)),
+          tabs: [
+            Tab(icon: Icon(FontAwesomeIcons.house, color: tabIndex == 0 ? const Color.fromRGBO(106, 17, 203, 1) : Colors.grey,)),
+            Tab(icon: Icon(FontAwesomeIcons.arrowsRotate, color: tabIndex == 1 ? const Color.fromRGBO(106, 17, 203, 1) : Colors.grey)),
+            Tab(icon: Icon(FontAwesomeIcons.heartPulse, color: tabIndex == 2 ? const Color.fromRGBO(106, 17, 203, 1) : Colors.grey)),
+            Tab(icon: Icon(FontAwesomeIcons.gears, color: tabIndex == 3 ? const Color.fromRGBO(106, 17, 203, 1) : Colors.grey)),
           ],
         ),
       ),
