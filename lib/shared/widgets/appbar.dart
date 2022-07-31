@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomHeader extends StatelessWidget {
   final String title;
@@ -10,7 +9,7 @@ class CustomHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(flex: 4,child: Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.sp, letterSpacing: 2),)),
+        Expanded(flex: 4,child: Text(title, style: Theme.of(context).textTheme.headline1!)),
         const Spacer(),
         Expanded(
           flex: 1,

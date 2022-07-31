@@ -54,6 +54,7 @@ dependencies:
   qr_code_scanner: ^1.0.0
   timeago: ^3.2.2
   month_year_picker: ^0.2.0+1
+  tab_indicator_styler: ^2.0.0
 
 dev_dependencies:
   flutter_test:
