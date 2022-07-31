@@ -105,16 +105,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               Icons.add,
               size: 40,
             ),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(
-                colors: theme == 'light' ? [
-                  const Color.fromRGBO(106, 17, 203, 1),
-                  const Color.fromRGBO(37, 117, 252, 1),
-                ] : [
-                  const Color.fromRGBO(54, 54, 54, 1),
-                  const Color.fromRGBO(54, 54, 54, 1),
-
+                colors: [
+                   Color.fromRGBO(106, 17, 203, 1),
+                   Color.fromRGBO(37, 117, 252, 1),
                 ],
                 begin: const Alignment(-1, 1),
                 end: const Alignment(1, -1),

@@ -40,8 +40,8 @@ class _MainState extends State<Main> {
               gradient:  LinearGradient(
                 colors: user.theme == 'dark' ? 
                 [
-                  const Color.fromRGBO(19, 26, 32, 1),
-                  const Color.fromRGBO(84, 82, 80, 1),
+                  const Color.fromRGBO(54, 54, 54, 1),
+                  const Color.fromRGBO(54, 54, 54, 1),
                 ] :
                 [
                   const Color.fromRGBO(106, 17, 203, 1),

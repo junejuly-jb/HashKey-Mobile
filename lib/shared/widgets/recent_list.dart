@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/models/recent.dart';
 import 'package:hashkey/provider/data_provider.dart';
+import 'package:hashkey/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -13,6 +14,7 @@ class RecentList extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final recents = Provider.of<DataProvider>(context).recents;
+    final theme = Provider.of<UserProvider>(context).theme;
 
     return ListView.builder(
       shrinkWrap: true,
@@ -27,26 +29,22 @@ class RecentList extends StatelessWidget {
             leading: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme == 'light' ? Colors.white : const Color.fromRGBO(54, 54, 54, 1),
                 borderRadius: BorderRadius.circular(100.r)
               ),
               child: CircleAvatar(
-                backgroundColor: Colors.white,
+                backgroundColor: theme == 'light' ? Colors.white : const Color.fromRGBO(54, 54, 54, 1),
                 radius: 15.r,
-                child: FaIcon(getIcon(recent.credentialType), color: Colors.grey[700], size: 20,)
+                child: Icon(getIcon(recent.credentialType), color: Theme.of(context).iconTheme.color, size: 20,)
               ),
             ),
             title: Text(
               recent.name,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold
-              )
+              style: Theme.of(context).textTheme.bodyText1
             ),
             subtitle: Text(
               'added ${timeago.format(recent.createdAt)}',
-              style: TextStyle(
-                fontSize: 11.sp,
-              ),  
+              style: Theme.of(context).textTheme.subtitle1,  
             ),
           ),
         );

@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             textTheme: TextTheme(
               headline1: TextStyle(
-                color: theme == 'dark' ? Colors.grey : Colors.black,
+                color: theme == 'dark' ? Colors.white : Colors.black,
                 fontWeight: FontWeight.bold,
                 fontSize: 22.sp,
                 letterSpacing: 2
@@ -81,13 +81,18 @@ class MyApp extends StatelessWidget {
                 fontSize: 20.sp,
               ),
               bodyText1: TextStyle(
-                fontSize: 14.sp, 
+                fontSize: 15.sp, 
                 fontWeight: FontWeight.bold,
+                color: theme == 'dark' ? Colors.white : Colors.black,
+              ),
+              subtitle1: TextStyle(
                 color: theme == 'dark' ? Colors.grey : Colors.black,
+                fontSize: 11.sp
               )
             ),
-            scaffoldBackgroundColor: theme == 'dark' ? const Color.fromRGBO(47, 47, 47, 1) : const Color.fromRGBO(241, 240, 247, 1),
-            fontFamily: GoogleFonts.poppins().fontFamily
+            scaffoldBackgroundColor: theme == 'dark' ? const Color.fromRGBO(42, 42, 42, 1) : const Color.fromRGBO(241, 240, 247, 1),
+            fontFamily: GoogleFonts.poppins().fontFamily,
+            iconTheme: IconThemeData(color: theme == 'light' ? Colors.grey : Colors.white),
           ),
           initialRoute: '/',
           onGenerateRoute: (settings){
