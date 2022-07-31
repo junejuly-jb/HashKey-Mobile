@@ -9,6 +9,7 @@ class UserProvider with ChangeNotifier{
   Map _user = {};
 
   Map get user => _user;
+  String theme = 'dark';
 
   Future getUserDetails() async{
     final prefs = await SharedPreferences.getInstance();
@@ -67,5 +68,15 @@ class UserProvider with ChangeNotifier{
       String newUser = jsonEncode(user);
       prefs.setString('user', newUser);
     }
+  }
+
+  setTheme(){
+    if(theme == 'dark'){
+      theme = 'light';
+    }
+    else{
+      theme = 'dark';
+    }
+    notifyListeners();
   }
 } 

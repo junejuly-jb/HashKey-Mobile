@@ -14,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
+    final user = Provider.of<UserProvider>(context);
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 40.w),
@@ -23,17 +23,17 @@ class SettingsScreen extends StatelessWidget {
           children: [
             SizedBox(height: 50.h,),
             const CustomHeader(title: 'Settings', withBackButton: false),
-            SizedBox(height: 40.h,),
-            Text('Account', style: TextStyle( fontSize: 20.sp),),
+            SizedBox(height: 30.h,),
+            Text('Account', style: Theme.of(context).textTheme.headline2,),
             SizedBox(height: 22.h,),
             Row(
               children: [
-                profileType(user['profileType'], user['profile']),
+                profileType(user.user['profileType'], user.user['profile']),
                 SizedBox(width: 20.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(user['name'], style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),),
+                    Text(user.user['name'], style: Theme.of(context).textTheme.bodyText1,),
                     const Text('Personal Info'),
                   ],
                 ),
@@ -64,7 +64,7 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 22.h,),
-            Text('Preferences', style: TextStyle( fontSize: 20.sp),),
+            Text('Preferences', style: Theme.of(context).textTheme.headline2,),
             SizedBox(height: 22.h,),
             SettingsTile(
               settingType: 'pin',
@@ -72,7 +72,7 @@ class SettingsScreen extends StatelessWidget {
               foregroundColor: const Color.fromRGBO(211, 130, 95, 1), 
               icon: Icons.lock, 
               title: 'Pin', subtitle: null, actionType: 'switch',
-              stringVal: null, boolVal: user['settings']['pin'],
+              stringVal: null, boolVal: user.user['settings']['pin'],
               callback: (val) => print(val),
             ),
             SizedBox(height: 15.h,),
@@ -82,7 +82,7 @@ class SettingsScreen extends StatelessWidget {
               foregroundColor: const Color.fromRGBO(66, 171, 237, 1), 
               icon: Icons.lock_clock, 
               title: 'Vault Timeout', subtitle: '15 minutes', actionType: 'button',
-              stringVal: user['settings']['timeout'], boolVal: null,
+              stringVal: user.user['settings']['timeout'], boolVal: null,
               callback: null,
             ),
             SizedBox(height: 15.h,),
@@ -92,7 +92,7 @@ class SettingsScreen extends StatelessWidget {
               foregroundColor: const Color.fromRGBO(82, 53, 223, 1), 
               icon: Icons.directions_run_rounded, 
               title: 'Vault Action', subtitle: 'Lock', actionType: 'button',
-              stringVal: user['settings']['timeoutAction'], boolVal: null,
+              stringVal: user.user['settings']['timeoutAction'], boolVal: null,
               callback: null,
             ),
             SizedBox(height: 15.h,),
@@ -102,8 +102,18 @@ class SettingsScreen extends StatelessWidget {
               foregroundColor: const Color.fromRGBO(197, 45, 90, 1), 
               icon: Icons.accessibility_new_rounded, 
               title: 'Easy Access', subtitle: null, actionType: 'switch',
-              stringVal: null, boolVal: user['settings']['easyaccess'],
+              stringVal: null, boolVal: user.user['settings']['easyaccess'],
               callback: (val) => print(val),
+            ),
+            SizedBox(height: 15.h,),
+            SettingsTile(
+              settingType: 'easyaccess',
+              backgroundColor: const Color.fromRGBO(254, 231, 240, 1), 
+              foregroundColor: const Color.fromRGBO(197, 45, 90, 1), 
+              icon: user.theme == 'dark' ? Icons.dark_mode : Icons.light, 
+              title: 'Dark Mode', subtitle: null, actionType: 'switch',
+              stringVal: null, boolVal: user.theme == 'dark' ? true : false,
+              callback: (val) => user.setTheme(),
             ),
             SizedBox(height: 15.h,),
             Center(

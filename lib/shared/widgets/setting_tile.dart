@@ -38,7 +38,7 @@ class SettingsTile extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),),
+            Text(title, style: Theme.of(context).textTheme.bodyText1,),
             Container(
               child: subtitle != null ? Text(subtitle.toString()) : null,
             )

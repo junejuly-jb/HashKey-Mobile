@@ -27,7 +27,7 @@ class _MainState extends State<Main> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
+    final user = Provider.of<UserProvider>(context);
     final recents = Provider.of<DataProvider>(context).recents;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
@@ -37,14 +37,19 @@ class _MainState extends State<Main> {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30.r),
-              gradient: const LinearGradient(
-                colors: [
-                  Color.fromRGBO(106, 17, 203, 1),
-                  Color.fromRGBO(37, 117, 252, 1),
+              gradient:  LinearGradient(
+                colors: user.theme == 'dark' ? 
+                [
+                  const Color.fromRGBO(19, 26, 32, 1),
+                  const Color.fromRGBO(84, 82, 80, 1),
+                ] :
+                [
+                  const Color.fromRGBO(106, 17, 203, 1),
+                  const Color.fromRGBO(37, 117, 252, 1),
                 ],
-                begin: Alignment(-1, 1),
-                end: Alignment(1, -1),
-                stops: [0.0, 1.0],
+                begin: const Alignment(-1, 1),
+                end: const Alignment(1, -1),
+                stops: const [0.0, 1.0],
                 tileMode: TileMode.clamp
               ),
             ),
@@ -73,7 +78,7 @@ class _MainState extends State<Main> {
                               ),
                             ),
                             SizedBox(width: 5.w,),
-                            Text(user['name'], style: TextStyle( fontSize: 12.sp, color: Colors.white),),
+                            Text(user.user['name'], style: TextStyle( fontSize: 12.sp, color: Colors.white),),
                           ],
                         ),
                       ),
@@ -112,10 +117,13 @@ class _MainState extends State<Main> {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Column(
               children: [
-                SizedBox(height: 20.h,),
+                SizedBox(height: 15.h,),
                 Row(
                   children: [
-                    Text('Recently Added', style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),),
+                    Text(
+                      'Recently Added',
+                      style: Theme.of(context).textTheme.headline2,
+                    ),
                     const Spacer(),
                     IconButton(
                       onPressed: (){
@@ -125,7 +133,7 @@ class _MainState extends State<Main> {
                     )
                   ],
                 ),
-                SizedBox(height: 15.h,),
+                SizedBox(height: 10.h,),
               ],
             ),
           ),
