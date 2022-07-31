@@ -34,7 +34,7 @@ class SettingsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(user.user['name'], style: Theme.of(context).textTheme.bodyText1,),
-                    const Text('Personal Info'),
+                    Text('Personal Info', style: Theme.of(context).textTheme.subtitle1,),
                   ],
                 ),
                 const Spacer(),
@@ -43,7 +43,8 @@ class SettingsScreen extends StatelessWidget {
                   height: 40.h,
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: user.theme == 'light' ? 
+                      MaterialStateProperty.all<Color>(Colors.white) : MaterialStateProperty.all<Color>(const Color.fromRGBO(54, 54, 54, 1)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.r),

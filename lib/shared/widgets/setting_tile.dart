@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class SettingsTile extends StatelessWidget {
   final String settingType;
@@ -26,6 +28,7 @@ class SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<UserProvider>(context).theme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -40,7 +43,7 @@ class SettingsTile extends StatelessWidget {
           children: [
             Text(title, style: Theme.of(context).textTheme.bodyText1,),
             Container(
-              child: subtitle != null ? Text(subtitle.toString()) : null,
+              child: subtitle != null ? Text(subtitle.toString(), style: Theme.of(context).textTheme.subtitle1,) : null,
             )
           ],
         ),
@@ -51,7 +54,8 @@ class SettingsTile extends StatelessWidget {
             height: 40.h,
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                backgroundColor: theme == 'light' ? MaterialStateProperty.all<Color>(Colors.white) : 
+                MaterialStateProperty.all<Color>(const Color.fromRGBO(54, 54, 54, 1)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.r),

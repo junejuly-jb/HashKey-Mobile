@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/provider/app_state_provider.dart';
+import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
 import 'package:hashkey/shared/widgets/large_buttons.dart';
 import 'package:hashkey/shared/widgets/small_buttons.dart';
@@ -23,6 +24,7 @@ class _GenerateScreenState extends State<GenerateScreen> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppStateProvider>(context);
+    final theme = Provider.of<UserProvider>(context).theme;
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 40.w),
@@ -37,7 +39,7 @@ class _GenerateScreenState extends State<GenerateScreen> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.r),
-                color: Colors.white
+                color: theme == 'light' ? Colors.white : const Color.fromRGBO(54, 54, 54, 1)
               ),
               height: 64.h,
               width: double.infinity,
@@ -46,7 +48,7 @@ class _GenerateScreenState extends State<GenerateScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(appState.randomString == '' ? '-' : appState.randomString, style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold, letterSpacing: 2),),
+                  Text(appState.randomString == '' ? '-' : appState.randomString, style: Theme.of(context).textTheme.headline2,),
                 ],
               ),
             ),
