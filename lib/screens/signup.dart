@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/services/auth.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/alert_redirect.dart';
@@ -7,6 +8,7 @@ import 'package:hashkey/shared/widgets/appbar.dart';
 import 'package:hashkey/shared/widgets/input.dart';
 import 'package:hashkey/shared/widgets/large_buttons.dart';
 import 'package:hashkey/shared/widgets/passwordinput.dart';
+import 'package:provider/provider.dart';
 
 
 class SignUpScreen extends StatefulWidget {
@@ -95,12 +97,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(241, 240, 247, 1),
         body: SingleChildScrollView(
           child: SafeArea(
             child: Padding(
@@ -111,7 +113,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(height: 50.h,),
                   const CustomHeader(title: 'Sign Up', withBackButton: true),
                   SizedBox(height: 10.h,),
-                  Text('Welcome to Hashkey!', style: TextStyle(fontSize: 16.sp, letterSpacing: 1),),
+                  Text('Welcome to Hashkey!',
+                    style: TextStyle(fontSize: 16.sp, letterSpacing: 1, color: theme == 'dark' ? Colors.grey : Colors.grey[500]),
+                  ),
                   SizedBox(height: 50.h,),
                   Form(
                     key: _formKey,

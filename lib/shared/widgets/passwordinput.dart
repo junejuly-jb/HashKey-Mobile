@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class CustomPasswordInputWidget extends StatelessWidget {
   final TextEditingController myController;
@@ -17,15 +19,25 @@ class CustomPasswordInputWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return TextFormField(
+      style: TextStyle(
+        color: theme == 'dark' ? Colors.white : Colors.black
+      ),
       keyboardType: hint == 'Pin' ? TextInputType.number : TextInputType.text,
       maxLength: hint == 'Pin' ? 4 : null,
       obscureText: visible ? false : true,
       validator: (value) => validation != null ? validation!(value) : null,
       controller: myController,
       decoration: InputDecoration(
+        hintStyle: TextStyle(
+          color: theme == 'dark' ? Colors.white : Colors.black
+        ),
         suffixIcon: GestureDetector(
-          child: Icon( visible ? Icons.visibility_off : Icons.visibility),
+          child: Icon( 
+            visible ? Icons.visibility_off : Icons.visibility,
+            color: theme == 'dark' ? Colors.grey : Colors.black,
+          ),
           onTap: () => toggler()
         ),
         border: OutlineInputBorder(
@@ -37,7 +49,7 @@ class CustomPasswordInputWidget extends StatelessWidget {
           borderSide: BorderSide(color: Colors.transparent, width: 0.w)
         ),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
         hintText: hint,
         contentPadding: EdgeInsets.symmetric(horizontal: 31.w, vertical: 15.h)
       ),
