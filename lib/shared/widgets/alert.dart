@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:provider/provider.dart';
 
 class CustomAlert extends StatelessWidget {
   final String message;
@@ -11,11 +13,13 @@ class CustomAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return AlertDialog(
+      backgroundColor: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
       shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(32.0))),
       content: Container(
-        child: widgetType(type, message, context)
+        child: widgetType(type, message, context, theme)
       ),
       actions: statusType == null ? null : [
         actionType(statusType, callback!)
@@ -24,13 +28,13 @@ class CustomAlert extends StatelessWidget {
   }
 }
 
-Widget widgetType(String val, String message, BuildContext context){
+Widget widgetType(String val, String message, BuildContext context, String theme){
   if(val == 'loading'){
     return Row(
       children: [
         LoadingAnimationWidget.threeRotatingDots(color: Colors.indigo, size: 40),
         SizedBox(width: 20.w,),
-        Expanded(child: Text(message))
+        Expanded(child: Text(message, style: TextStyle(color: theme == 'dark' ? Colors.white : Colors.black),))
       ],
     );
   }
@@ -40,7 +44,7 @@ Widget widgetType(String val, String message, BuildContext context){
       children: [
         const Icon(Icons.check_circle, color: Colors.green, size: 40,),
         SizedBox(height: 10.h,),
-        Text(message)  
+        Text(message, style: TextStyle(color: theme == 'dark' ? Colors.white : Colors.black))  
       ],
     );
   }
@@ -50,7 +54,7 @@ Widget widgetType(String val, String message, BuildContext context){
       children: [
         const Icon(Icons.error_outline, color: Colors.red, size: 40,),
         SizedBox(height: 10.h,),
-        Text(message)
+        Text(message, style: TextStyle(color: theme == 'dark' ? Colors.white : Colors.black))
       ],
     );
   }

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/services/auth.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
@@ -112,10 +114,10 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(241, 240, 247, 1),
         body: SingleChildScrollView(
           child: SafeArea(
             child: SingleChildScrollView(
@@ -133,11 +135,14 @@ class _LoginPageState extends State<LoginPage> {
                           width: 25.w,
                         ),
                         SizedBox(width: 8.w,),
-                        Text('HASHKEY', style: TextStyle( letterSpacing: 2, fontSize: 25.sp, fontWeight: FontWeight.bold),)
+                        Text('HASHKEY', style: Theme.of(context).textTheme.headlineLarge,)
                       ],
                     ),
                     SizedBox(height: 7.h,),
-                    Center(child: Text('Your all in one vault for''\n your credentials.', textAlign: TextAlign.center, style: TextStyle( fontSize: 16.sp),)),
+                    Center(child: Text('Your all in one vault for''\n your credentials.', textAlign: TextAlign.center, style: TextStyle(
+                       fontSize: 16.sp,
+                       color: theme == 'dark' ? Colors.grey : Colors.black,
+                    ),)),
                     SizedBox(height: 34.h,),
                     Form(
                       key: _formKey,
@@ -157,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        TextButton(onPressed: (){}, child: Text('Forgot password?', style: TextStyle(fontSize: 12.sp, color: Colors.grey[900]),)),
+                        TextButton(onPressed: (){}, child: Text('Forgot password?', style: TextStyle(fontSize: 12.sp, color: theme == 'dark' ? Colors.grey : Colors.grey[900]),)),
                       ],
                     ),
                     SizedBox(height: 35.h,),
@@ -165,11 +170,11 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 30.h),
                     Row(
                       children: [
-                        const Expanded(child: Divider( thickness: 2,)),
+                        Expanded(child: Divider( thickness: 2, color: theme == 'dark' ? Colors.grey : Colors.grey[300])),
                         SizedBox(width: 8.w),
-                        Text('or continue with', style: TextStyle(fontSize: 12.sp, color: Colors.grey[700]),),
+                        Text('or continue with', style: TextStyle(fontSize: 12.sp, color: theme == 'dark' ? Colors.grey : Colors.grey[700]),),
                         SizedBox(width: 8.w),
-                        const Expanded(child: Divider(thickness: 2,))
+                        Expanded(child: Divider(thickness: 2, color: theme == 'dark' ? Colors.grey : Colors.grey[300]))
                       ],
                     ),
                     SizedBox(height: 30.h),
@@ -181,7 +186,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: 81.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(color: Colors.white, width: 3)
+                            border: Border.all(color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white, width: 3)
                           ),
                           child: Image.asset('lib/assets/icons/google.png'),
                         ),
@@ -191,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: 81.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(color: Colors.white, width: 3)
+                            border: Border.all(color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white, width: 3)
                           ),
                           child: Image.asset('lib/assets/icons/facebook.png'),
                         )
@@ -201,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('no account?', style: TextStyle(fontSize: 12.sp),),
+                        Text('no account?', style: Theme.of(context).textTheme.subtitle1),
                         GestureDetector(onTap: () => Navigator.pushNamed(context, '/signup'), child: Text(' sign up here', style: TextStyle(fontSize: 12.sp, color: Colors.blue),)),
                       ],
                     )

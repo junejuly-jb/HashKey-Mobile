@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(241, 240, 247, 1),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -41,6 +43,7 @@ class WelcomeScreen extends StatelessWidget {
                 Text(
                   'Security is in your fingertips.',
                   style: TextStyle(
+                    color: theme == 'dark' ? Colors.white : Colors.black,
                     fontSize: 23.sp,
                     fontWeight: FontWeight.bold
                   ),
@@ -50,6 +53,7 @@ class WelcomeScreen extends StatelessWidget {
                   'Manage your credentials through''\n the cloud.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
+                    color: theme == 'dark' ? Colors.grey : Colors.black,
                     fontSize: 16.sp,
                   ),
                 ),

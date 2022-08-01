@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class CustomInputWidget extends StatelessWidget {
   final TextEditingController myController;
@@ -14,11 +16,18 @@ class CustomInputWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return TextFormField(
+      style: TextStyle(
+        color: theme == 'dark' ? Colors.white : Colors.black
+      ),
       autofocus: autofocus,
       validator: (val) => validation != null ? validation!(val) : null,
       controller: myController,
       decoration: InputDecoration(
+        hintStyle: TextStyle(
+          color: theme == 'dark' ? Colors.white : Colors.black
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.r),
           borderSide: BorderSide( color: Colors.transparent, width: 0.w)
@@ -28,7 +37,7 @@ class CustomInputWidget extends StatelessWidget {
           borderSide: BorderSide(color: Colors.transparent, width: 0.w)
         ),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
         hintText: hint,
         contentPadding: EdgeInsets.symmetric(horizontal: 31.w, vertical: 15.h)
       ),
