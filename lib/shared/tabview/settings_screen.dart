@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/provider/data_provider.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
@@ -15,6 +16,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
+    final themeP = Provider.of<ThemeProvider>(context);
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 40.w),
@@ -43,7 +45,7 @@ class SettingsScreen extends StatelessWidget {
                   height: 40.h,
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: user.theme == 'light' ? 
+                      backgroundColor: themeP.theme == 'light' ? 
                       MaterialStateProperty.all<Color>(Colors.white) : MaterialStateProperty.all<Color>(const Color.fromRGBO(54, 54, 54, 1)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
@@ -111,10 +113,10 @@ class SettingsScreen extends StatelessWidget {
               settingType: 'easyaccess',
               backgroundColor: const Color.fromRGBO(254, 231, 240, 1), 
               foregroundColor: const Color.fromRGBO(197, 45, 90, 1), 
-              icon: user.theme == 'dark' ? Icons.dark_mode : Icons.light, 
+              icon: themeP.theme == 'dark' ? Icons.dark_mode : Icons.light, 
               title: 'Dark Mode', subtitle: null, actionType: 'switch',
-              stringVal: null, boolVal: user.theme == 'dark' ? true : false,
-              callback: (val) => user.setTheme(),
+              stringVal: null, boolVal: themeP.theme == 'dark' ? true : false,
+              callback: (val) => themeP.setTheme(),
             ),
             SizedBox(height: 15.h,),
             Center(

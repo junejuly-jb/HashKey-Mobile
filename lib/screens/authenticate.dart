@@ -148,11 +148,11 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                             width: 25.w,
                           ),
                           SizedBox(width: 8.w,),
-                          Text('HASHKEY', style: TextStyle( letterSpacing: 2, fontSize: 25.sp, fontWeight: FontWeight.bold),),
+                          Text('HASHKEY', style: Theme.of(context).textTheme.headlineLarge,),
                         ],
                       ),
                       SizedBox(height: 20.h,),
-                      Text('Hello ${user.user['name'].split(' ')[0]},', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23.sp, letterSpacing: 1),),
+                      Text('Hello ${user.user['name'].split(' ')[0]},', style: Theme.of(context).textTheme.headline1,),
                       SizedBox(height: 20.h,),
                       
                       if(user.user['settings']['biometric']) ...[
