@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/provider/app_state_provider.dart';
-import 'package:hashkey/provider/user_provider.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
 import 'package:hashkey/shared/widgets/large_buttons.dart';
 import 'package:hashkey/shared/widgets/small_buttons.dart';
@@ -24,7 +24,7 @@ class _GenerateScreenState extends State<GenerateScreen> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppStateProvider>(context);
-    final theme = Provider.of<UserProvider>(context).theme;
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 40.w),

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hashkey/provider/user_provider.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class SettingsTile extends StatelessWidget {
@@ -28,7 +28,7 @@ class SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<UserProvider>(context).theme;
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
