@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/models/recent.dart';
 import 'package:hashkey/provider/data_provider.dart';
-import 'package:hashkey/provider/user_provider.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -14,7 +14,7 @@ class RecentList extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final recents = Provider.of<DataProvider>(context).recents;
-    final theme = Provider.of<UserProvider>(context).theme;
+    final theme = Provider.of<ThemeProvider>(context).theme;
 
     return ListView.builder(
       shrinkWrap: true,

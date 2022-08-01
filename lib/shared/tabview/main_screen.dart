@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/provider/data_provider.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/shared/horizontal_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,6 +30,7 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
     final recents = Provider.of<DataProvider>(context).recents;
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
       child: Column(
@@ -38,7 +40,7 @@ class _MainState extends State<Main> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30.r),
               gradient:  LinearGradient(
-                colors: user.theme == 'dark' ? 
+                colors: theme == 'dark' ? 
                 [
                   const Color.fromRGBO(54, 54, 54, 1),
                   const Color.fromRGBO(54, 54, 54, 1),

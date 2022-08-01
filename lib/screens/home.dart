@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/provider/data_provider.dart';
-import 'package:hashkey/provider/user_provider.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/services/app.dart';
 import 'package:hashkey/shared/tabview/credential_healthstat.dart';
 import 'package:hashkey/shared/tabview/generate_screen.dart';
@@ -73,7 +73,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
 
-    final theme = Provider.of<UserProvider>(context).theme;
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         // For Android.
