@@ -112,9 +112,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                    Color.fromRGBO(106, 17, 203, 1),
                    Color.fromRGBO(37, 117, 252, 1),
                 ],
-                begin: const Alignment(-1, 1),
-                end: const Alignment(1, -1),
-                stops: const [0.0, 1.0],
+                begin: Alignment(-1, 1),
+                end: Alignment(1, -1),
+                stops: [0.0, 1.0],
                 tileMode: TileMode.clamp
               ),
             ),

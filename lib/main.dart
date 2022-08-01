@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hashkey/provider/app_state_provider.dart';
 import 'package:hashkey/provider/data_provider.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/screens/authenticate.dart';
 import 'package:hashkey/screens/create.dart';
@@ -19,18 +21,27 @@ import 'package:hashkey/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  //  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-  //    statusBarColor: Colors.transparent,
-  //   //  statusBarIconBrightness: Provider.of<UserProvider>(context, listen:false).theme == 'dark' ? Brightness.light : Brightness.dark
-  //  ));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  //  statusBarIconBrightness: Provider.of<UserProvider>(context, listen:false).theme == 'dark' ? Brightness.light : Brightness.dark
+  ));
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? theme = prefs.getString('theme');
+  theme ??= 'light';
+  prefs.setString('theme', theme);
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AppStateProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => DataProvider())
+        ChangeNotifierProvider(create: (_) => DataProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider(theme.toString()))
       ],
       child: const MyApp(),
     )
@@ -44,7 +55,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final theme = Provider.of<UserProvider>(context).theme;
+    final theme = Provider.of<ThemeProvider>(context).theme;
+
     var routes = {
       "/":(context) => const Wrapper(),
       "/login":(context) => const LoginPage(),
@@ -70,6 +82,7 @@ class MyApp extends StatelessWidget {
           title: 'Hashkey',
           theme: ThemeData(
             textTheme: TextTheme(
+              headlineLarge: TextStyle( color: theme == 'dark' ? Colors.white : Colors.black, letterSpacing: 2, fontSize: 25.sp, fontWeight: FontWeight.bold),
               headline1: TextStyle(
                 color: theme == 'dark' ? Colors.white : Colors.black,
                 fontWeight: FontWeight.bold,
