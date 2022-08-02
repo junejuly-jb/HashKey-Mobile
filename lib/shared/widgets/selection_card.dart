@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class SelectionCard extends StatelessWidget {
   final String name;
@@ -10,10 +12,10 @@ class SelectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return Container(
       decoration: BoxDecoration(
-        color: !isSelected ? Colors.white : Colors.blue,
+        color: getColor(isSelected, theme),
         borderRadius: BorderRadius.circular(20.0)
       ),
       child: Material(
@@ -37,5 +39,17 @@ class SelectionCard extends StatelessWidget {
         color: Colors.transparent,
       ),
     );
+  }
+
+  Color getColor(bool isSelected, String theme){
+    if(isSelected){
+      return Colors.blue;
+    }
+    else if(theme == 'dark' && !isSelected){
+      return const Color.fromRGBO(54, 54, 54, 1);
+    }
+    else{
+      return Colors.white;
+    }
   }
 }

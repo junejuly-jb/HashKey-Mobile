@@ -17,7 +17,6 @@ class _OptionSelectionState extends State<OptionSelection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(241, 240, 247, 1),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 35.w),
