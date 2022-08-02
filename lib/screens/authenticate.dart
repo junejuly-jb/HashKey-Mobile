@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/services/auth.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
@@ -125,6 +126,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -246,18 +248,19 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
+          color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
           elevation: 0,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 35.w, vertical: 15.h),
             child: Row(
               children: [
                 const Icon(Icons.warning_rounded, size: 50,),
-                SizedBox(width: 15.w,),
+                SizedBox(width: 20.w,),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Trouble logging in?'),
+                    Text('Trouble logging in?', style: TextStyle(color: theme == 'dark' ? Colors.white : Colors.grey),),
                     TextButton(
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,

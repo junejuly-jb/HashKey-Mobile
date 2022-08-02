@@ -5,6 +5,7 @@ import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/provider/user_provider.dart';
 import 'package:hashkey/shared/horizontal_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/shared/widgets/horizontal_skeletons.dart';
 import 'package:hashkey/shared/widgets/recent_list.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
@@ -104,12 +105,7 @@ class _MainState extends State<Main> {
                   Text('Your credentials.', style: TextStyle( fontSize: 20.sp, fontWeight: FontWeight.bold, color: Colors.white),),
                   SizedBox(height: 20.h,),
                   Container(
-                    child: widget.isCardLoading ? SkeletonAvatar(
-                      style: SkeletonAvatarStyle(
-                        height: 120.h, width: 105.w,
-                        borderRadius: BorderRadius.circular(20.r)
-                        ),
-                    ) : const Cards(),
+                    child: widget.isCardLoading ? const HorizontalSkeleton() : const Cards(),
                   )
                 ],
               ),
@@ -140,7 +136,7 @@ class _MainState extends State<Main> {
             ),
           ),
           Expanded(
-            child: widgetType(widget.isRecentLoading, recents),
+            child: widgetType(widget.isRecentLoading, recents, theme),
           )
         ],
       ),
@@ -149,9 +145,13 @@ class _MainState extends State<Main> {
 }
 
 
-Widget widgetType(bool isLoading, List recents){
+Widget widgetType(bool isLoading, List recents, String theme){
   if(isLoading){
-    return SkeletonListView();
+    // return 
+    return SkeletonTheme(
+      themeMode: theme == 'dark' ? ThemeMode.dark : ThemeMode.light,
+      child: SkeletonListView()
+    );
   }
   else if(!isLoading && recents.isEmpty){
     return Center(

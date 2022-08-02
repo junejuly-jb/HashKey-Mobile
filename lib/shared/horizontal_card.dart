@@ -64,7 +64,7 @@ class Cards extends StatelessWidget {
             // onTap: () { print(category.name);},
             child: Container(
               width: 105.w,
-              margin: EdgeInsets.symmetric(horizontal: 5.h),
+              margin: EdgeInsets.symmetric(horizontal: 5.w),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.r),
                 color: theme == 'light' ? Colors.white : const Color.fromRGBO(42, 42, 42, 1)
