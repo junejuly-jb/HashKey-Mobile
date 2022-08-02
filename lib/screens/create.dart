@@ -96,13 +96,16 @@ class _CreateNewState extends State<CreateNew> {
     setState(() => bool1 = val);
   }
 
+  changeS2(String val){
+    setState(() => string2 = val);
+  }
+
   @override
   Widget build(BuildContext context) {
     final arg = ModalRoute.of(context)?.settings.arguments as String;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(241, 240, 247, 1),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
@@ -159,10 +162,18 @@ class _CreateNewState extends State<CreateNew> {
     );
   }
   else if(type == 'Payment'){
+    if(s2.isEmpty){
+      s2 = 'card_orange';
+    }
     return CardForm(
+      color: s2,
       controller1: c1,
       controller2: c2,
       controller3: c3,
+      callback: (data){
+        print(data);
+        changeS2(data);
+      }
     );
   }
   else{
