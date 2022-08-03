@@ -46,9 +46,9 @@ class _CardFormState extends State<CardForm> {
             ],
           ),
           SizedBox(height: 15.h,),
-          CustomInputWidget(myController: widget.controller1, hint: 'Card name', validation: null, autofocus: false),
+          CustomInputWidget(myController: widget.controller1, hint: 'Card name', validation: null, autofocus: false, keyboardType: 'text',),
           SizedBox(height: 15.h,),
-          CustomInputWidget(myController: widget.controller2, hint: 'Card number', validation: null, autofocus: false),
+          CustomInputWidget(myController: widget.controller2, hint: 'Card number', validation: null, autofocus: false,  keyboardType: 'number',),
           SizedBox(height: 15.h,),
           Row(
             children: [
@@ -100,7 +100,7 @@ class _CardFormState extends State<CardForm> {
             ],
           ),
           SizedBox(height: 15.h,),
-          CustomInputWidget(myController: widget.controller4, hint: 'CCV', validation: null, autofocus: false)
+          CustomInputWidget(myController: widget.controller4, hint: 'CCV', validation: null, autofocus: false,  keyboardType: 'number',)
         ],
       )
     );

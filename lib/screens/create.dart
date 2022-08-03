@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/services/app.dart';
+import 'package:hashkey/shared/forms/contact.dart';
 import 'package:hashkey/shared/forms/password.dart';
 import 'package:hashkey/shared/forms/payment.dart';
 import 'package:hashkey/shared/forms/wifi.dart';
@@ -91,6 +92,15 @@ class _CreateNewState extends State<CreateNew> {
         data['card_number'] = controller2.text;
         data['card_expiry'] = controller3.text;
         data['card_ccv'] = controller4.text;
+        break;
+      case 'Contact':
+        List colors = ['red', 'pink', 'purple', 'indigo', 'blue', 'cyan', 'teal', 'green', 'lime', 'orange', 'brown'];
+        data['endpoint'] = 'add-contact';
+        data['c_fname'] = controller1.text;
+        data['c_lname'] = controller2.text;
+        data['c_contact'] = controller3.text;
+        data['c_email'] = controller4.text;
+        data['c_avatar_color'] = (colors.toList()..shuffle()).first;
         break;
     }
     return data;
@@ -182,6 +192,14 @@ class _CreateNewState extends State<CreateNew> {
         print(data);
         changeS2(data);
       }
+    );
+  }
+  else if(type == 'Contact'){
+    return ContactForm(
+      controller1: c1,
+      controller2: c2,
+      controller3: c3,
+      controller4: c4
     );
   }
   else{

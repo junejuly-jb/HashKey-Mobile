@@ -63,6 +63,9 @@ IconData getIcon(String credType){
   else if(credType == 'payment'){
     return FontAwesomeIcons.solidCreditCard;
   }
+  else if(credType == 'contact'){
+    return FontAwesomeIcons.idBadge;
+  }
   else{
     return FontAwesomeIcons.buildingLock;
   }

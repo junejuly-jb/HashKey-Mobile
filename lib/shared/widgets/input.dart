@@ -8,16 +8,18 @@ class CustomInputWidget extends StatelessWidget {
   final String hint;
   final Function? validation;
   final bool autofocus;
+  final String keyboardType;
   const CustomInputWidget({ Key? key, 
     required this.myController, 
     required this.hint, 
     required this.validation,
-    required this.autofocus }) : super(key: key);
+    required this.autofocus, required this.keyboardType }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context).theme;
     return TextFormField(
+      keyboardType: keyboardType == 'number' ? TextInputType.number : TextInputType.text,
       style: TextStyle(
         color: theme == 'dark' ? Colors.white : Colors.black
       ),
