@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/services/app.dart';
 import 'package:hashkey/shared/forms/contact.dart';
+import 'package:hashkey/shared/forms/note.dart';
 import 'package:hashkey/shared/forms/password.dart';
 import 'package:hashkey/shared/forms/payment.dart';
 import 'package:hashkey/shared/forms/wifi.dart';
@@ -101,6 +102,12 @@ class _CreateNewState extends State<CreateNew> {
         data['c_contact'] = controller3.text;
         data['c_email'] = controller4.text;
         data['c_avatar_color'] = (colors.toList()..shuffle()).first;
+        break;
+      case 'Note':
+        data['endpoint'] = 'add-note';
+        data['note_color'] = string2;
+        data['note_title'] = controller1.text;
+        data['note_content'] = controller2.text;
         break;
     }
     return data;
@@ -201,6 +208,12 @@ class _CreateNewState extends State<CreateNew> {
       controller3: c3,
       controller4: c4
     );
+  }
+  else if(type == 'Note'){
+    if(s2.isEmpty){
+      s2 = 'custom_red';
+    }
+    return NoteForm(color: s2, controller1: c1, controller2: c2, onChooseColor: (val) => changeS2(val),);
   }
   else{
     return Container();
