@@ -39,7 +39,7 @@ class _CreateNewState extends State<CreateNew> {
       CustomAlert(message: 'Adding $type, Please wait', type: 'loading', statusType: null, callback: null)
     );
     Map credData = dataSegregation(type);
-    print(credData);
+    // print(credData);
     Map result = await App().saveCredential(credData);
     print(result);
     Navigator.pop(context);
@@ -83,6 +83,14 @@ class _CreateNewState extends State<CreateNew> {
         data['w_pass'] = controller2.text;
         data['w_security'] = constantString;
         data['w_status'] = bool1.toString();
+        break;
+      case 'Payment':
+        data['endpoint'] = 'add-card';
+        data['card_color'] = string2.isEmpty ? 'card_orange' : string2;
+        data['card_name'] = controller1.text;
+        data['card_number'] = controller2.text;
+        data['card_expiry'] = controller3.text;
+        data['card_ccv'] = controller4.text;
         break;
     }
     return data;
@@ -131,14 +139,13 @@ class _CreateNewState extends State<CreateNew> {
   }
 
   Widget formType(
-  String type, 
-  TextEditingController c1,  
-  TextEditingController c2,  
-  TextEditingController c3,  
-  TextEditingController c4,
-  String constString, String s2, bool bool1, bool bool2
-){
-  print(type);
+    String type, 
+    TextEditingController c1,  
+    TextEditingController c2,  
+    TextEditingController c3,  
+    TextEditingController c4,
+    String constString, String s2, bool bool1, bool bool2
+  ){
   if(type == 'Password'){
     return PasswordInput(
       controller1: c1,
@@ -170,6 +177,7 @@ class _CreateNewState extends State<CreateNew> {
       controller1: c1,
       controller2: c2,
       controller3: c3,
+      controller4: c4,
       callback: (data){
         print(data);
         changeS2(data);

@@ -60,6 +60,9 @@ IconData getIcon(String credType){
   else if(credType == 'wifi'){
     return FontAwesomeIcons.wifi;
   }
+  else if(credType == 'payment'){
+    return FontAwesomeIcons.solidCreditCard;
+  }
   else{
     return FontAwesomeIcons.buildingLock;
   }

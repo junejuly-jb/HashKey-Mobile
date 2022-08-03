@@ -5,14 +5,16 @@ import 'package:hashkey/shared/widgets/card_color_picker.dart';
 import 'package:hashkey/shared/widgets/input.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class CardForm extends StatefulWidget {
   final String color;
   final TextEditingController controller1;
   final TextEditingController controller2;
   final TextEditingController controller3;
+  final TextEditingController controller4;
   final Function callback;
-  const CardForm({Key? key, required this.controller1, required this.controller2, required this.controller3, required this.color, required this.callback}) : super(key: key);
+  const CardForm({Key? key, required this.controller1, required this.controller2, required this.controller3, required this.color, required this.callback, required this.controller4}) : super(key: key);
 
   @override
   State<CardForm> createState() => _CardFormState();
@@ -56,9 +58,13 @@ class _CardFormState extends State<CardForm> {
                   style: TextStyle(
                     color: theme == 'dark' ? Colors.white : Colors.black
                   ),
-                  enabled: false,
+                  readOnly: true,
                   controller: widget.controller3,
                   decoration: InputDecoration(
+                    suffixIcon: widget.controller3.text.isNotEmpty ? GestureDetector(
+                      onTap: () => widget.controller3.text = '',
+                      child: Icon(Icons.close, color: theme == 'light' ? Colors.grey : Colors.white,)
+                    ) : null,
                     hintStyle: TextStyle(
                       color: theme == 'dark' ? Colors.white : Colors.black
                     ),
@@ -85,13 +91,16 @@ class _CardFormState extends State<CardForm> {
                   firstDate: DateTime(2022),
                   lastDate: DateTime(2030),
                 );
-                print(selected);
+                if(selected != null){ 
+                  String formattedDate = DateFormat("yyyy-MM").format(selected);
+                  widget.controller3.text = formattedDate;
+                }
               }, 
               icon: const Icon(Icons.date_range)))
             ],
           ),
           SizedBox(height: 15.h,),
-          CustomInputWidget(myController: widget.controller2, hint: 'CCV', validation: null, autofocus: false)
+          CustomInputWidget(myController: widget.controller4, hint: 'CCV', validation: null, autofocus: false)
         ],
       )
     );
