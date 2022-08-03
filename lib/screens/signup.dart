@@ -121,9 +121,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        CustomInputWidget(myController: nameController, hint: 'Name', validation: isRequired, autofocus: false,),
+                        CustomInputWidget(myController: nameController, hint: 'Name', validation: isRequired, autofocus: false, keyboardType: 'text',),
                         SizedBox(height: 15.h,),
-                        CustomInputWidget(myController: emailController, hint: 'Email', validation: isValidEmail, autofocus: false),
+                        CustomInputWidget(myController: emailController, hint: 'Email', validation: isValidEmail, autofocus: false, keyboardType: 'text',),
                         SizedBox(height: 15.h,),
                         CustomPasswordInputWidget(
                           myController: passwordController, 

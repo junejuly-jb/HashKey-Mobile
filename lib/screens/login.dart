@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                       key: _formKey,
                       child: Column(
                       children: [
-                        CustomInputWidget(myController: emailController, hint: 'Email', validation: isValidEmail, autofocus: false),
+                        CustomInputWidget(myController: emailController, hint: 'Email', validation: isValidEmail, autofocus: false, keyboardType: 'text',),
                         SizedBox(height: 15.h,),
                         CustomPasswordInputWidget(
                           myController: passwordController, 

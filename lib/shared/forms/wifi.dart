@@ -29,7 +29,7 @@ class _WifiFormState extends State<WifiForm> {
     return Form(
       child: Column(
         children: [
-          CustomInputWidget(myController: widget.controller1, hint: 'WiFi SSID', validation: null, autofocus: false,),
+          CustomInputWidget(myController: widget.controller1, hint: 'WiFi SSID', validation: null, autofocus: false, keyboardType: 'text',),
           SizedBox(height: 15.h,),
           CustomPasswordInputWidget(
             myController: widget.controller2, 

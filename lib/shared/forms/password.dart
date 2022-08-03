@@ -30,11 +30,11 @@ class _PasswordInputState extends State<PasswordInput> {
     return Form(
       child: Column(
         children: [
-          CustomInputWidget(myController: widget.controller1, hint: 'Name', validation: null, autofocus: false,),
+          CustomInputWidget(myController: widget.controller1, hint: 'Name', validation: null, autofocus: false, keyboardType: 'text',),
           SizedBox(height: 15.h,),
-          CustomInputWidget(myController: widget.controller2, hint: 'Url', validation: null, autofocus: false),
+          CustomInputWidget(myController: widget.controller2, hint: 'Url', validation: null, autofocus: false, keyboardType: 'text',),
           SizedBox(height: 15.h,),
-          CustomInputWidget(myController: widget.controller3, hint: 'Username/Email', validation: null, autofocus: false),
+          CustomInputWidget(myController: widget.controller3, hint: 'Username/Email', validation: null, autofocus: false, keyboardType: 'text',),
           SizedBox(height: 15.h,),
           CustomPasswordInputWidget(
             myController: widget.controller4, 
