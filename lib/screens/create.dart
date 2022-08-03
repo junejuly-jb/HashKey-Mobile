@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/services/app.dart';
 import 'package:hashkey/shared/forms/contact.dart';
+import 'package:hashkey/shared/forms/license.dart';
 import 'package:hashkey/shared/forms/note.dart';
 import 'package:hashkey/shared/forms/password.dart';
 import 'package:hashkey/shared/forms/payment.dart';
@@ -214,6 +215,9 @@ class _CreateNewState extends State<CreateNew> {
       s2 = 'custom_red';
     }
     return NoteForm(color: s2, controller1: c1, controller2: c2, onChooseColor: (val) => changeS2(val),);
+  }
+  else if(type == 'License'){
+    return LicenseForm(controller1: c1, controller2: c2, controller3: c3,);
   }
   else{
     return Container();
