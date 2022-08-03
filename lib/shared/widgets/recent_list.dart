@@ -66,6 +66,9 @@ IconData getIcon(String credType){
   else if(credType == 'contact'){
     return FontAwesomeIcons.idBadge;
   }
+  else if(credType == 'notes'){
+    return FontAwesomeIcons.solidNoteSticky;
+  }
   else{
     return FontAwesomeIcons.buildingLock;
   }
