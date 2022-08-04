@@ -81,6 +81,7 @@ class MyApp extends StatelessWidget {
           ],
           title: 'Hashkey',
           theme: ThemeData(
+            canvasColor: theme == 'dark' ? const Color.fromRGBO(42, 42, 42, 1) : const Color.fromRGBO(241, 240, 247, 1),
             textTheme: TextTheme(
               headlineLarge: TextStyle( color: theme == 'dark' ? Colors.white : Colors.black, letterSpacing: 2, fontSize: 25.sp, fontWeight: FontWeight.bold),
               headline1: TextStyle(

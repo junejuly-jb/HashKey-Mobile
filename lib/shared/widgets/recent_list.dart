@@ -70,6 +70,6 @@ IconData getIcon(String credType){
     return FontAwesomeIcons.solidNoteSticky;
   }
   else{
-    return FontAwesomeIcons.buildingLock;
+    return FontAwesomeIcons.idCard;
   }
 }

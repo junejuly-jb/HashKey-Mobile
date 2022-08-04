@@ -34,6 +34,12 @@ class _CreateNewState extends State<CreateNew> {
 
   bool bool1 = false;
   bool bool2 = false;
+  
+
+  Future getCountries() async {
+    List list = await App().getCountries();
+    return list;
+  }
 
   Future onSaveCredential(String type) async {
     showDialog(
@@ -110,6 +116,14 @@ class _CreateNewState extends State<CreateNew> {
         data['note_title'] = controller1.text;
         data['note_content'] = controller2.text;
         break;
+      case 'License':
+        data['endpoint'] = 'add-driver-license';
+        data['name'] = controller1.text;
+        data['number'] = controller2.text;
+        data['exp_date'] = controller3.text;
+        data['country'] = string2;
+        data['flag'] = string3;
+        break;
     }
     return data;
   }
@@ -124,6 +138,10 @@ class _CreateNewState extends State<CreateNew> {
 
   changeS2(String val){
     setState(() => string2 = val);
+  }
+
+  changeS3(String val){
+    setState(() => string3 = val);
   }
 
   @override
@@ -141,7 +159,33 @@ class _CreateNewState extends State<CreateNew> {
                   SizedBox(height: 50.h,),
                   CustomHeader(title: 'Add New $arg', withBackButton: true),
                   SizedBox(height: 40.h,),
-                  formType(arg, controller1, controller2, controller3, controller4, constantString, string2, bool1, bool2)
+                  if(arg != 'License')
+                    formType(arg, controller1, controller2, controller3, controller4, constantString, string2, bool1, bool2)
+                  else  
+                    FutureBuilder(
+                      future: getCountries(),
+                      builder: (context, AsyncSnapshot snapshot){
+                        if (snapshot.hasData) {
+                          if(string2.isEmpty || string3.isEmpty){
+                            string2 = snapshot.data[0]['name']['common'];
+                            string3 = snapshot.data[0]['flags']['png'];
+                          }
+                          return LicenseForm(
+                            controller1: controller1, 
+                            controller2: controller2, 
+                            controller3: controller3, 
+                            items: snapshot.data,
+                            string2: string2,
+                            string3: string3,
+                            callback1: (val) => changeS2(val),
+                            callback2: (val) => changeS3(val) 
+                          );
+                        }
+                        else{
+                           return const CircularProgressIndicator();
+                        }
+                      }
+                    )
                 ],
               ),
             ),
@@ -163,7 +207,7 @@ class _CreateNewState extends State<CreateNew> {
     TextEditingController c3,  
     TextEditingController c4,
     String constString, String s2, bool bool1, bool bool2
-  ){
+  ) {
   if(type == 'Password'){
     return PasswordInput(
       controller1: c1,
@@ -215,9 +259,6 @@ class _CreateNewState extends State<CreateNew> {
       s2 = 'custom_red';
     }
     return NoteForm(color: s2, controller1: c1, controller2: c2, onChooseColor: (val) => changeS2(val),);
-  }
-  else if(type == 'License'){
-    return LicenseForm(controller1: c1, controller2: c2, controller3: c3,);
   }
   else{
     return Container();
