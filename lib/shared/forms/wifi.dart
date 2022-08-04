@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/shared/widgets/input.dart';
 import 'package:hashkey/shared/widgets/passwordinput.dart';
+import 'package:provider/provider.dart';
 
 class WifiForm extends StatefulWidget {
   final TextEditingController controller1;
@@ -26,6 +28,7 @@ class _WifiFormState extends State<WifiForm> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return Form(
       child: Column(
         children: [
@@ -50,7 +53,7 @@ class _WifiFormState extends State<WifiForm> {
                 borderSide: BorderSide(color: Colors.transparent, width: 0.w)
               ),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
               contentPadding: EdgeInsets.symmetric(horizontal: 31.w, vertical: 15.h)
             ),
             isExpanded: true,
@@ -69,9 +72,9 @@ class _WifiFormState extends State<WifiForm> {
           SizedBox(height: 15.h,),
           Row(
             children: [
-              const Text('Wifi visibility:'),
+              Text('Wifi visibility:', style: Theme.of(context).textTheme.subtitle1,),
               SizedBox(width: 5.w,),
-              Text(widget.isVisible ? "Hidden" : "Visible", style: const TextStyle( fontWeight: FontWeight.bold),),
+              Text(widget.isVisible ? "Hidden" : "Visible", style: Theme.of(context).textTheme.bodyText1,),
               const Spacer(),
               CupertinoSwitch(value: widget.isVisible, onChanged: (val){ 
                 widget.callback2(val);

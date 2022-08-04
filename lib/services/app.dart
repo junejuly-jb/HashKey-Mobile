@@ -204,4 +204,20 @@ class App{
     }
     return decode;
   }
+
+
+
+  Future getCountries() async {
+    List myList = [];
+    try {
+      var url = Uri.parse('https://restcountries.com/v3.1/all');
+      var response = await http.get(url);
+      myList = jsonDecode(response.body);
+    }
+    // ignore: unused_catch_clause
+    on Error catch (e){
+      myList = [];
+    }
+    return myList;
+  }
 }
