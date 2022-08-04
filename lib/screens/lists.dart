@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/models/password.dart';
 import 'package:hashkey/models/wifi.dart';
 import 'package:hashkey/provider/data_provider.dart';
+import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/services/app.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
@@ -102,8 +103,8 @@ class _ListsState extends State<Lists> {
   @override
   Widget build(BuildContext context) {
     final arg = ModalRoute.of(context)?.settings.arguments as Map;
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(241, 240, 247, 1),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -131,7 +132,7 @@ class _ListsState extends State<Lists> {
                 SizedBox(
                   height: 470.h,
                   // color: Colors.amber,
-                  child: widgetType(isLoading, myArray, arg['type']),
+                  child: widgetType(isLoading, myArray, arg['type'], theme),
                 )
               ],
             ),
@@ -141,9 +142,12 @@ class _ListsState extends State<Lists> {
     );
   }
 
-  Widget widgetType(bool state, List array, String type){
+  Widget widgetType(bool state, List array, String type, String theme){
     if(state){
-      return SkeletonListView(padding: EdgeInsets.zero);
+      return SkeletonTheme(
+        themeMode: theme == 'dark' ? ThemeMode.dark : ThemeMode.light,
+        child: SkeletonListView(padding: EdgeInsets.zero)
+      );
     }
     else if(!state && array.isEmpty){
       return const Text('No Data Found');
