@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hashkey/models/category.dart';
 import 'package:hashkey/models/password.dart';
+import 'package:hashkey/models/payment.dart';
 import 'package:hashkey/models/recent.dart';
 import 'package:hashkey/models/wifi.dart';
 
@@ -11,6 +12,7 @@ class DataProvider with ChangeNotifier{
   
   List<Password> passwords = [];
   List<Wifi> wifis = [];
+  List<Payment> payments = [];
 
   setCards(List collectionList){
     for(var el in collectionList){
@@ -68,12 +70,23 @@ class DataProvider with ChangeNotifier{
     notifyListeners();
   }
 
+  getPayments(List data){
+    for(var el in data){
+      Payment payment = Payment.fromJson(el);
+      payments.add(payment);
+    }
+    notifyListeners();
+  }
+
   getCategoryType(String type){
     if(type == 'password'){
        return passwords;
     }
-    else{
+    else if(type == 'wifi'){
       return wifis;
+    }
+    else{
+      return payments;
     }
   }
 

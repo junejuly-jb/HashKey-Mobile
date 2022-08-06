@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hashkey/models/password.dart';
-import 'package:hashkey/models/wifi.dart';
+import 'package:hashkey/lists/password_list.dart';
+import 'package:hashkey/lists/payment_list.dart';
+import 'package:hashkey/lists/wifi_list.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/services/app.dart';
@@ -49,6 +50,9 @@ class _ListsState extends State<Lists> {
             break;
           case 'wifi':
             Provider.of<DataProvider>(context, listen: false).getWifis(result['data']);
+            break;
+          case 'payment':
+            Provider.of<DataProvider>(context, listen: false).getPayments(result['data']);
             break;
         }
       }
@@ -143,6 +147,7 @@ class _ListsState extends State<Lists> {
   }
 
   Widget widgetType(bool state, List array, String type, String theme){
+    // print(array);
     if(state){
       return SkeletonTheme(
         themeMode: theme == 'dark' ? ThemeMode.dark : ThemeMode.light,
@@ -150,9 +155,25 @@ class _ListsState extends State<Lists> {
       );
     }
     else if(!state && array.isEmpty){
-      return const Text('No Data Found');
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(FontAwesomeIcons.folderOpen, size: 40,),
+            SizedBox(height: 20.h,),
+            Text(
+              'Your vault is empty',
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold
+              ),
+            )
+          ],
+        ),
+      );
     }
     else{
+      print(array);
       return listViewType(type);
     }
   }
@@ -160,82 +181,16 @@ class _ListsState extends State<Lists> {
   Widget listViewType(String type){
     var arrayList = Provider.of<DataProvider>(context, listen: false).getCategoryType(type);
     if(type == 'password'){
-      return ListView.builder(
-        shrinkWrap: true,
-        itemCount: arrayList.length,
-        itemBuilder: (BuildContext context, int index){
-          Password password = arrayList[index];
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 5.h),
-            child: InkWell(
-              splashColor: Colors.blue[200],
-              onTap: () => print('Test'),
-              child: ListTile(
-                minLeadingWidth: 55.w,
-                leading: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(100.r)
-                  ),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 15.r,
-                    child: FaIcon(FontAwesomeIcons.lock, color: Colors.grey[700], 
-                    size: 20,), 
-                    
-                  )
-                ),
-                title: Text(
-                  password.logName,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold
-                  )
-                ),
-              ),
-            ),
-          );
-        }
-      );
+      return PasswordList(arrayList: arrayList);
+    }
+    else if(type == 'wifi'){
+      return WifiList(arrayList: arrayList);
+    }
+    else if(type == 'payment'){
+      return PaymentList();
     }
     else{
-      return ListView.builder(
-        shrinkWrap: true,
-        itemCount: arrayList.length,
-        itemBuilder: (BuildContext context, int index){
-          Wifi wifi = arrayList[index];
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 5.h),
-            child: InkWell(
-              splashColor: Colors.blue[200],
-              onTap: () => print('Test'),
-              child: ListTile(
-                minLeadingWidth: 55.w,
-                leading: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(100.r)
-                  ),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 15.r,
-                    child: FaIcon(FontAwesomeIcons.wifi, color: Colors.grey[700], 
-                    size: 20,), 
-                    
-                  )
-                ),
-                title: Text(
-                  wifi.wifiSsid,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold
-                  )
-                ),
-              ),
-            ),
-          );
-        }
-      );
+      return Container();
     }
   }
 }
