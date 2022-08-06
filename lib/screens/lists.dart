@@ -72,6 +72,7 @@ class _ListsState extends State<Lists> {
         }
       }
     }
+    //TODO: check if the localdata and server data is on the same length s
     else{
       setState(() {
         isLoading = false;
@@ -189,6 +190,7 @@ class _ListsState extends State<Lists> {
     else if(type == 'payment'){
       return const PaymentList();
     }
+    //TODO - add listviews on license, notes and contacts
     else{
       return Container();
     }
