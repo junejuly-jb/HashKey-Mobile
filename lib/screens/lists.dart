@@ -188,7 +188,7 @@ class _ListsState extends State<Lists> {
       return WifiList(arrayList: arrayList);
     }
     else if(type == 'payment'){
-      return const PaymentList();
+      return PaymentList(arrayList: arrayList);
     }
     //TODO - add listviews on license, notes and contacts
     else{
