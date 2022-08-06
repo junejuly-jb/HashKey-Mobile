@@ -6,6 +6,9 @@ class PaymentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Test');
+    return Container(
+      color: Colors.red,
+      child: const Text('hello'),
+    );
   }
 }

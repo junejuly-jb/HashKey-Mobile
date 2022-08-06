@@ -1,6 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:hashkey/models/category.dart';
+import 'package:hashkey/models/contact.dart';
+import 'package:hashkey/models/license.dart';
+import 'package:hashkey/models/note.dart';
 import 'package:hashkey/models/password.dart';
 import 'package:hashkey/models/payment.dart';
 import 'package:hashkey/models/recent.dart';
@@ -13,6 +16,9 @@ class DataProvider with ChangeNotifier{
   List<Password> passwords = [];
   List<Wifi> wifis = [];
   List<Payment> payments = [];
+  List<Contact> contacts = [];
+  List<License> licenses = [];
+  List<Note> notes = [];
 
   setCards(List collectionList){
     for(var el in collectionList){
@@ -54,7 +60,7 @@ class DataProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  getPasswords(List data){
+  setPasswords(List data){
     for(var el in data){
       Password password = Password.fromJson(el);
       passwords.add(password);
@@ -62,7 +68,7 @@ class DataProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  getWifis(List data){
+  setWifis(List data){
     for(var el in data){
       Wifi wifi = Wifi.fromJson(el);
       wifis.add(wifi);
@@ -70,7 +76,7 @@ class DataProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  getPayments(List data){
+  setPayments(List data){
     for(var el in data){
       Payment payment = Payment.fromJson(el);
       payments.add(payment);
@@ -87,6 +93,35 @@ class DataProvider with ChangeNotifier{
     }
     else{
       return payments;
+    }
+  }
+
+  setNewData(Map<String, dynamic> data, String type){
+    switch (type) {
+      case 'Password':
+        Password password = Password.fromJson(data);
+        passwords.insert(0, password);
+        break;
+      case 'Wifi':
+        Wifi wifi = Wifi.fromJson(data);
+        wifis.insert(0, wifi);
+        break;
+      case 'Payment':
+        Payment payment = Payment.fromJson(data);
+        payments.insert(0, payment);
+        break;
+      case 'Contact':
+        Contact contact = Contact.fromJson(data);
+        contacts.insert(0, contact);
+        break;
+      case 'License':
+        License license = License.fromJson(data);
+        licenses.insert(0, license);
+        break;
+      case 'Note':
+        Note note = Note.fromJson(data);
+        notes.insert(0, note);
+        break;
     }
   }
 
