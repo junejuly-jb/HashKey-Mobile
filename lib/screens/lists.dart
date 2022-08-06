@@ -46,13 +46,13 @@ class _ListsState extends State<Lists> {
       if(result['success']){
         switch (data['type']) {
           case 'password':
-            Provider.of<DataProvider>(context, listen: false).getPasswords(result['data']);
+            Provider.of<DataProvider>(context, listen: false).setPasswords(result['data']);
             break;
           case 'wifi':
-            Provider.of<DataProvider>(context, listen: false).getWifis(result['data']);
+            Provider.of<DataProvider>(context, listen: false).setWifis(result['data']);
             break;
           case 'payment':
-            Provider.of<DataProvider>(context, listen: false).getPayments(result['data']);
+            Provider.of<DataProvider>(context, listen: false).setPayments(result['data']);
             break;
         }
       }
@@ -187,7 +187,7 @@ class _ListsState extends State<Lists> {
       return WifiList(arrayList: arrayList);
     }
     else if(type == 'payment'){
-      return PaymentList();
+      return const PaymentList();
     }
     else{
       return Container();
