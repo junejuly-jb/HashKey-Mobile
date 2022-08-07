@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hashkey/lists/contact_list.dart';
 import 'package:hashkey/lists/password_list.dart';
 import 'package:hashkey/lists/payment_list.dart';
 import 'package:hashkey/lists/wifi_list.dart';
@@ -41,7 +42,9 @@ class _ListsState extends State<Lists> {
     setState( () => myArray = array );
     if(array.isEmpty){
       String endpoint = getEndpoint(data);
+      print(endpoint);
       Map result = await App().getCredentials(endpoint);
+      print(result);
       setState(() => isLoading = false,);
       if(result['success']){
         switch (data['type']) {
@@ -53,6 +56,15 @@ class _ListsState extends State<Lists> {
             break;
           case 'payment':
             Provider.of<DataProvider>(context, listen: false).setPayments(result['data']);
+            break;
+          case 'contact':
+            Provider.of<DataProvider>(context, listen: false).setContacts(result['data']);
+            break;
+          case 'license':
+            Provider.of<DataProvider>(context, listen: false).setLicenses(result['data']);
+            break;
+          case 'note':
+            Provider.of<DataProvider>(context, listen: false).setNotes(result['data']);
             break;
         }
       }
@@ -191,7 +203,10 @@ class _ListsState extends State<Lists> {
     else if(type == 'payment'){
       return PaymentList(arrayList: arrayList);
     }
-    //TODO - add listviews on license, notes and contacts
+    else if(type == 'contact'){
+      return ContactList(arrayList: arrayList);
+    }
+    //TODO - add listviews on license and notes
     else{
       return Container();
     }

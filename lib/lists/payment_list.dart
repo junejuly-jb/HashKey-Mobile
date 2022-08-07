@@ -1,6 +1,7 @@
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hashkey/models/payment.dart';
 
@@ -12,7 +13,6 @@ class PaymentList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(arrayList);
-    //TODO: add icon on top for context menu
     return ListView.builder(
       shrinkWrap: true,
         itemCount: arrayList.length,
@@ -32,18 +32,31 @@ class PaymentList extends StatelessWidget {
             ),
             padding: EdgeInsets.symmetric(vertical: 5.w),
             child:  Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 25.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    payment.cardName,
-                    style: TextStyle(
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        payment.cardName,
+                        style: TextStyle(
+                          fontSize: 17.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                        ),
+                      ),
+                      const Spacer(),
+                      // TODO: ADD CONTEXT MENU
+                      IconButton(
+                        onPressed: (){},
+                        icon: const Icon(FontAwesomeIcons.ellipsisVertical),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                      )
+                    ],
                   ),
+                  
                   SizedBox(height: 25.h,),
                   Text(
                     getCardNumber(payment.cardNumber),
