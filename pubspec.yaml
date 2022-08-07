@@ -55,6 +55,7 @@ dependencies:
   timeago: ^3.2.2
   month_year_picker: ^0.2.0+1
   tab_indicator_styler: ^2.0.0
+  basic_utils: ^4.5.2
 
 dev_dependencies:
   flutter_test:

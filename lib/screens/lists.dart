@@ -152,6 +152,7 @@ class _ListsState extends State<Lists> {
     if(state){
       return SkeletonTheme(
         themeMode: theme == 'dark' ? ThemeMode.dark : ThemeMode.light,
+        //TODO: Configure skeleton listview on each category
         child: SkeletonListView(padding: EdgeInsets.zero)
       );
     }

@@ -19,6 +19,7 @@ class CustomInputWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context).theme;
     return TextFormField(
+      maxLength: hint == 'Card number' ? 16 : null,
       maxLines: hint == 'Note' ? 12 : 1,
       keyboardType: keyboardType == 'number' ? TextInputType.number : TextInputType.text,
       style: TextStyle(
