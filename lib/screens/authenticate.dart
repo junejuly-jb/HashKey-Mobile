@@ -127,149 +127,159 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
     final theme = Provider.of<ThemeProvider>(context).theme;
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 35.w),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 30.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            child: Image.asset('lib/assets/icons/logo.png'),
-                            height: 32.h,
-                            width: 25.w,
-                          ),
-                          SizedBox(width: 8.w,),
-                          Text('HASHKEY', style: Theme.of(context).textTheme.headlineLarge,),
-                        ],
-                      ),
-                      SizedBox(height: 20.h,),
-                      Text('Hello ${user.user['name'].split(' ')[0]},', style: Theme.of(context).textTheme.headline1,),
-                      SizedBox(height: 20.h,),
-                      
-                      if(user.user['settings']['biometric']) ...[
-                        Text('Use your fingerprint to login', style: TextStyle(color: Colors.grey, fontSize: 15.sp),),
-                        Text('to your vault.', style: TextStyle(color: Colors.grey, fontSize: 15.sp),),
-                        SizedBox(height: 40.h,),
-                        Center(
-                        child: AvatarGlow(
-                          glowColor: Colors.blue,
-                          endRadius: 100.0,
-                          duration: const Duration(milliseconds: 2000),
-                          repeat: true,
-                          repeatPauseDuration: const Duration(milliseconds: 100),
-                          child: DecoratedBox(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color:Colors.white,
-                              // borderRadius: BorderRadius.circular(15.r),
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color.fromRGBO(106, 17, 203, 1),
-                                  Color.fromRGBO(37, 117, 252, 1),
-                                ],
-                                begin: Alignment(-1, 1),
-                                end: Alignment(1, -1),
-                                stops: [0.0, 1.0],
-                                tileMode: TileMode.clamp)
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        // For Android.
+        // Use [light] for white status bar and [dark] for black status bar.
+        statusBarIconBrightness: theme == 'dark' ? Brightness.light : Brightness.dark,
+        // For iOS.
+        // Use [dark] for white status bar and [light] for black status bar.
+        statusBarBrightness: theme == 'dark' ? Brightness.dark : Brightness.light,
+      ),
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 35.w),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 30.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              child: Image.asset('lib/assets/icons/logo.png'),
+                              height: 32.h,
+                              width: 25.w,
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(35),
-                              child: TextButton(
-                                onPressed: () => _authenticate(), 
-                                child: const Icon(Icons.fingerprint_rounded, size: 70,),
-                                style: ButtonStyle(
-                                  // backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(34, 166, 255, 1)),
-                                  foregroundColor: MaterialStateProperty.all(Colors.white),
-                                  padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 13.h)),
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15.r)
+                            SizedBox(width: 8.w,),
+                            Text('HASHKEY', style: Theme.of(context).textTheme.headlineLarge,),
+                          ],
+                        ),
+                        SizedBox(height: 20.h,),
+                        Text('Hello ${user.user['name'].split(' ')[0]},', style: Theme.of(context).textTheme.headline1,),
+                        SizedBox(height: 20.h,),
+                        
+                        if(user.user['settings']['biometric']) ...[
+                          Text('Use your fingerprint to login', style: TextStyle(color: Colors.grey, fontSize: 15.sp),),
+                          Text('to your vault.', style: TextStyle(color: Colors.grey, fontSize: 15.sp),),
+                          SizedBox(height: 40.h,),
+                          Center(
+                          child: AvatarGlow(
+                            glowColor: Colors.blue,
+                            endRadius: 100.0,
+                            duration: const Duration(milliseconds: 2000),
+                            repeat: true,
+                            repeatPauseDuration: const Duration(milliseconds: 100),
+                            child: DecoratedBox(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color:Colors.white,
+                                // borderRadius: BorderRadius.circular(15.r),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color.fromRGBO(106, 17, 203, 1),
+                                    Color.fromRGBO(37, 117, 252, 1),
+                                  ],
+                                  begin: Alignment(-1, 1),
+                                  end: Alignment(1, -1),
+                                  stops: [0.0, 1.0],
+                                  tileMode: TileMode.clamp)
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(35),
+                                child: TextButton(
+                                  onPressed: () => _authenticate(), 
+                                  child: const Icon(Icons.fingerprint_rounded, size: 70,),
+                                  style: ButtonStyle(
+                                    // backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(34, 166, 255, 1)),
+                                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                                    padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 13.h)),
+                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15.r)
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
+                        )],
+                        Center(
+                          child: hasError ? Text('Authentication error please try again in: $_start') : null,
                         ),
-                      )],
-                      Center(
-                        child: hasError ? Text('Authentication error please try again in: $_start') : null,
-                      ),
-                      SizedBox(height: 30.h,),
-                      Text('${user.user['settings']['biometric'] ? 'Or just' : ''} enter your 4 digit pin code.', style: TextStyle(color: Colors.grey, fontSize: 15.sp),),
-                      SizedBox(height: 20.h,),
-                      Form(
-                        key: _formKey,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Flexible(
-                              child: CustomPasswordInputWidget(
-                                myController: myController, 
-                                hint: 'Pin', 
-                                validation: pinValidator, 
-                                visible: isPinVisible,
-                                toggler: togglePinVisibility
+                        SizedBox(height: 30.h,),
+                        Text('${user.user['settings']['biometric'] ? 'Or just' : ''} enter your 4 digit pin code.', style: TextStyle(color: Colors.grey, fontSize: 15.sp),),
+                        SizedBox(height: 20.h,),
+                        Form(
+                          key: _formKey,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                child: CustomPasswordInputWidget(
+                                  myController: myController, 
+                                  hint: 'Pin', 
+                                  validation: pinValidator, 
+                                  visible: isPinVisible,
+                                  toggler: togglePinVisibility
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 15.w,),
-                            RawMaterialButton(
-                              onPressed: () => reauthPin(),
-                              elevation: 0,
-                              fillColor: Colors.indigo[700],
-                              child: const Icon(
-                                Icons.keyboard_arrow_right,
-                                color: Colors.white,
-                              ),
-                              padding: EdgeInsets.all(15.r),
-                              shape: const CircleBorder(),
-                            )
-                          ],
-                        )
-                      ),
-                      TextButton(onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false), child: const Text('Logout', style: TextStyle( color: Colors.red ),))
-                    ],
+                              SizedBox(width: 15.w,),
+                              RawMaterialButton(
+                                onPressed: () => reauthPin(),
+                                elevation: 0,
+                                fillColor: Colors.indigo[700],
+                                child: const Icon(
+                                  Icons.keyboard_arrow_right,
+                                  color: Colors.white,
+                                ),
+                                padding: EdgeInsets.all(15.r),
+                                shape: const CircleBorder(),
+                              )
+                            ],
+                          )
+                        ),
+                        TextButton(onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false), child: const Text('Logout', style: TextStyle( color: Colors.red ),))
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
-          elevation: 0,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 35.w, vertical: 15.h),
-            child: Row(
-              children: [
-                const Icon(Icons.warning_rounded, size: 50,),
-                SizedBox(width: 20.w,),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Trouble logging in?', style: TextStyle(color: theme == 'dark' ? Colors.white : Colors.grey),),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      onPressed: (){}, child: const Text('Contact us'))
-                  ],
-                )
-              ],
+          bottomNavigationBar: BottomAppBar(
+            color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
+            elevation: 0,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 35.w, vertical: 15.h),
+              child: Row(
+                children: [
+                  const Icon(Icons.warning_rounded, size: 50,),
+                  SizedBox(width: 20.w,),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Trouble logging in?', style: TextStyle(color: theme == 'dark' ? Colors.white : Colors.grey),),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        onPressed: (){}, child: const Text('Contact us'))
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

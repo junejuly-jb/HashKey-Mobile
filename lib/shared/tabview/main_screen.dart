@@ -136,7 +136,7 @@ class _MainState extends State<Main> {
             ),
           ),
           Expanded(
-            child: widgetType(widget.isRecentLoading, recents, theme),
+            child: widgetType(widget.isRecentLoading, recents, theme, context),
           )
         ],
       ),
@@ -145,7 +145,7 @@ class _MainState extends State<Main> {
 }
 
 
-Widget widgetType(bool isLoading, List recents, String theme){
+Widget widgetType(bool isLoading, List recents, String theme, BuildContext context){
   if(isLoading){
     // return 
     return SkeletonTheme(
@@ -162,10 +162,7 @@ Widget widgetType(bool isLoading, List recents, String theme){
           SizedBox(height: 20.h,),
           Text(
             'Your vault is empty',
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.bold
-            ),
+            style: Theme.of(context).textTheme.headline2,
           ),
           SizedBox(height: 5.h,),
           Text('Add credentials by pressing \'+\'',
