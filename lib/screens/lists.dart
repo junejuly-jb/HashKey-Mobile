@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/lists/contact_list.dart';
+import 'package:hashkey/lists/license_list.dart';
 import 'package:hashkey/lists/password_list.dart';
 import 'package:hashkey/lists/payment_list.dart';
 import 'package:hashkey/lists/wifi_list.dart';
@@ -215,7 +216,10 @@ class _ListsState extends State<Lists> {
     else if(type == 'contact'){
       return ContactList(arrayList: arrayList);
     }
-    //TODO - add listviews on license and notes
+    else if(type == 'license'){
+      return LicenseList(arrayList: arrayList);
+    }
+    //TODO - add listviews on notes
     else{
       return Container();
     }
