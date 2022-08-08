@@ -37,6 +37,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     super.initState();
   }
 
+
+  @override
+  void setState(fn){
+      if(mounted){
+        super.setState(fn);
+      }
+  }
+
   Future initCards() async{
     isCardLoading = false;
     final data = Provider.of<DataProvider>(context, listen: false);

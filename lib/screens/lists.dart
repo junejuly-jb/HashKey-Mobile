@@ -35,15 +35,22 @@ class _ListsState extends State<Lists> {
     });
   }
 
+  @override
+  void setState(fn){
+      if(mounted){
+        super.setState(fn);
+      }
+  }
+
   Future initCredential(Map data) async {
     setState(() => isLoading = true,);
     List array = Provider.of<DataProvider>(context, listen: false).getCategoryType(data['type']);
     setState( () => myArray = array );
-    if(array.isEmpty){
+    if(array.isEmpty){ 
       String endpoint = getEndpoint(data);
       Map result = await App().getCredentials(endpoint);
       setState(() => isLoading = false,);
-      if(result['success']){
+      if(result['success'] && mounted){
         switch (data['type']) {
           case 'password':
             Provider.of<DataProvider>(context, listen: false).setPasswords(result['data']);
@@ -57,7 +64,7 @@ class _ListsState extends State<Lists> {
         }
       }
       else{
-        if(result['status'] == 401){
+        if(result['status'] == 401 && mounted){
           showDialog(
             barrierDismissible: false,
             context: context, builder: (_) => 
@@ -65,14 +72,16 @@ class _ListsState extends State<Lists> {
           );
         }
         else{
-          showDialog(
-            context: context, builder: (_) => 
-            CustomAlert(message: result['message'], type: 'error', statusType: null, callback: () => Navigator.pop(context))
-          );
+          if(mounted){
+            showDialog(
+              context: context, builder: (_) => 
+              CustomAlert(message: result['message'], type: 'error', statusType: null, callback: () => Navigator.pop(context))
+            );
+          }
         }
       }
     }
-    //TODO: check if the localdata and server data is on the same length s
+    //TODO: check if the localdata and server data is on the same lengths
     else{
       setState(() {
         isLoading = false;
