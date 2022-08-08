@@ -12,7 +12,6 @@ class PaymentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(arrayList);
     return ListView.builder(
       shrinkWrap: true,
         itemCount: arrayList.length,
