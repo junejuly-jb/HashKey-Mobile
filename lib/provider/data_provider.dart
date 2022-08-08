@@ -84,6 +84,30 @@ class DataProvider with ChangeNotifier{
     notifyListeners();
   }
 
+  setContacts(List data){
+    for(var el in data){
+      Contact contact = Contact.fromJson(el);
+      contacts.add(contact);
+    }
+    notifyListeners();
+  }
+
+  setLicenses(List data){
+    for(var el in data){
+      License license = License.fromJson(el);
+      licenses.add(license);
+    }
+    notifyListeners();
+  }
+
+  setNotes(List data){
+    for(var el in data){
+      Note note = Note.fromJson(el);
+      notes.add(note);
+    }
+    notifyListeners();
+  }
+
   getCategoryType(String type){
     if(type == 'password'){
        return passwords;
@@ -91,8 +115,17 @@ class DataProvider with ChangeNotifier{
     else if(type == 'wifi'){
       return wifis;
     }
-    else{
+    else if(type == 'payment'){
       return payments;
+    }
+    else if(type == 'contact'){
+      return contacts;
+    }
+    else if(type == 'license'){
+      return licenses;
+    }
+    else{
+      return notes;
     }
   }
 
