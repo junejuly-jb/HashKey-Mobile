@@ -219,7 +219,9 @@ class _ListsState extends State<Lists> {
     else if(type == 'license'){
       return LicenseList(arrayList: arrayList);
     }
-    //TODO - add listviews on notes
+    else if(type == 'note'){
+      return ContactList(arrayList: arrayList);
+    }
     else{
       return Container();
     }

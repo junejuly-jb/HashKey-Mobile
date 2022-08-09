@@ -15,7 +15,7 @@ class LicenseList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context).theme;
-    // TODO: Enhance UI
+    // TODO: Add Flag to the card
     return ListView.builder(
       shrinkWrap: true,
         itemCount: arrayList.length,
@@ -26,7 +26,7 @@ class LicenseList extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 10.h),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: const Color.fromRGBO(54, 54, 54, 1)
+              color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
@@ -35,53 +35,42 @@ class LicenseList extends StatelessWidget {
                 children: [
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 8.h),
-                    color: Colors.grey[900],
+                    color: theme == 'dark' ? Colors.grey[900] : Colors.grey[500],
                     child: Center(
                       child: Text(
                         license.licenseName,
-                        style: TextStyle(
-                          color: theme == 'dark' ? Colors.white : Colors.grey[900]
+                        style: const TextStyle(
+                          color: Colors.white
                         ),  
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-                    child: Column(
+                    child: Row(
                       children: [
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: CircleAvatar(
-                            radius: 10.r,
-                            backgroundImage: NetworkImage(license.licenseFlag),
-                          ),
+                        CircleAvatar(
+                          backgroundColor: Colors.blue,
+                          radius: 25.r,
+                          child: const Icon(FontAwesomeIcons.user),
                         ),
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.blue,
-                              radius: 25.r,
-                              child: const Icon(FontAwesomeIcons.user),
-                            ),
-                            SizedBox(width: 25.w,),
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('License number:', style: Theme.of(context).textTheme.subtitle1,),
-                                  Text(license.licenseNumber, style: Theme.of(context).textTheme.bodyText1!.copyWith(letterSpacing: 2),),
-                            
-                                  SizedBox(height: 5.h,),
-                                  
-                                  Text('Expiry date:', style: Theme.of(context).textTheme.subtitle1,),
-                                  Text(exp,
-                                    style: Theme.of(context).textTheme.bodyText1!.copyWith(letterSpacing: 2),
-                                  ),
-                                ],
+                        SizedBox(width: 25.w,),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('License number:', style: Theme.of(context).textTheme.subtitle1,),
+                              Text(license.licenseNumber, style: Theme.of(context).textTheme.bodyText1!.copyWith(letterSpacing: 2),),
+                        
+                              SizedBox(height: 5.h,),
+                              
+                              Text('Expiry date:', style: Theme.of(context).textTheme.subtitle1,),
+                              Text(exp,
+                                style: Theme.of(context).textTheme.bodyText1!.copyWith(letterSpacing: 2),
                               ),
-                            )
-                          ],
-                        ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
