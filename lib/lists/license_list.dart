@@ -4,6 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/models/license.dart';
 import 'package:hashkey/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+
 
 
 class LicenseList extends StatelessWidget {
@@ -19,6 +21,7 @@ class LicenseList extends StatelessWidget {
         itemCount: arrayList.length,
         itemBuilder: (BuildContext context, int index){
           License license = arrayList[index];
+          String exp = DateFormat("MM/dd/yyyy").format(license.licenseExpDate);
           return Container(
             margin: EdgeInsets.only(bottom: 10.h),
             decoration: BoxDecoration(
@@ -46,10 +49,38 @@ class LicenseList extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.blue,
-                          radius: 25.r,
-                          child: Icon(FontAwesomeIcons.user),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: CircleAvatar(
+                            radius: 10.r,
+                            backgroundImage: NetworkImage(license.licenseFlag),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.blue,
+                              radius: 25.r,
+                              child: const Icon(FontAwesomeIcons.user),
+                            ),
+                            SizedBox(width: 25.w,),
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('License number:', style: Theme.of(context).textTheme.subtitle1,),
+                                  Text(license.licenseNumber, style: Theme.of(context).textTheme.bodyText1!.copyWith(letterSpacing: 2),),
+                            
+                                  SizedBox(height: 5.h,),
+                                  
+                                  Text('Expiry date:', style: Theme.of(context).textTheme.subtitle1,),
+                                  Text(exp,
+                                    style: Theme.of(context).textTheme.bodyText1!.copyWith(letterSpacing: 2),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
                         ),
                       ],
                     ),
