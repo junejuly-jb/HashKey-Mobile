@@ -7,7 +7,9 @@ class NoteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Enhance UI on cards.
     return GridView.builder(
+      itemCount: arrayList.length,
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 200,
         childAspectRatio: 3 / 2,
@@ -26,5 +28,47 @@ class NoteList extends StatelessWidget {
         );
       }
     );
+  }
+
+  //TODO: update color on notes based on noteColor in database
+  Color getNoteColor(String val){
+    Color? color;
+    switch (val) {
+      case 'red':
+        color = Colors.red;
+        break;
+      case 'pink':
+        color = Colors.pink;
+        break;
+      case 'purple':
+        color = Colors.purple;
+        break;
+      case 'indigo':
+        color = Colors.indigo;
+        break;
+      case 'blue':
+        color = Colors.blue;
+        break;
+      case 'cyan':
+        color = Colors.cyan;
+        break;
+      case 'teal':
+        color = Colors.teal;
+        break;
+      case 'green':
+        color = Colors.green;
+        break;
+      case 'lime':
+        color = Colors.lime;
+        break;
+      case 'orange':
+        color = Colors.orange;
+        break;
+      case 'brown':
+        color = Colors.brown;
+        break;
+    }
+
+    return color!;
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/lists/contact_list.dart';
 import 'package:hashkey/lists/license_list.dart';
+import 'package:hashkey/lists/note_list.dart';
 import 'package:hashkey/lists/password_list.dart';
 import 'package:hashkey/lists/payment_list.dart';
 import 'package:hashkey/lists/wifi_list.dart';
@@ -111,7 +112,7 @@ class _ListsState extends State<Lists> {
       case 'wifi':
         endpoint = 'wifis';
         break;
-      case 'notes':
+      case 'note':
         endpoint = 'notes';
         break;
       case 'payment':
@@ -220,7 +221,7 @@ class _ListsState extends State<Lists> {
       return LicenseList(arrayList: arrayList);
     }
     else if(type == 'note'){
-      return ContactList(arrayList: arrayList);
+      return NoteList(arrayList: arrayList);
     }
     else{
       return Container();
