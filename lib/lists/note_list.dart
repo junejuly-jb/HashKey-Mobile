@@ -1,5 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hashkey/models/note.dart';
+import 'package:hashkey/provider/theme_provider.dart';
+import 'package:masonry_grid/masonry_grid.dart';
+import 'package:provider/provider.dart';
 
 class NoteList extends StatelessWidget {
   final List arrayList;
@@ -7,68 +13,78 @@ class NoteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Enhance UI on cards.
-    return GridView.builder(
-      itemCount: arrayList.length,
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 200,
-        childAspectRatio: 3 / 2,
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20
-      ), 
-      itemBuilder: (BuildContext context, index){
-        Note note = arrayList[index];
-        return Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: Colors.amber,
-            borderRadius: BorderRadius.circular(15)
-          ),
-          child: Text(note.noteTitle),
-        );
-      }
+    //TODO: Limit card string length.
+    final theme = Provider.of<ThemeProvider>(context).theme;
+    return MasonryGrid(
+      column: 2,
+      children: List.generate(
+        arrayList.length, (index){
+          Note note = arrayList[index];
+          return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.r)
+            ),
+            color: getNoteColor(note.noteColor, theme),
+            elevation: 0,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    note.noteTitle,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold
+                    ),  
+                  ),
+                  SizedBox(height: 5.h,),
+                  Text(
+                    note.noteContent,
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+      )
     );
   }
 
-  //TODO: update color on notes based on noteColor in database
-  Color getNoteColor(String val){
-    Color? color;
+  Color getNoteColor(String val, String theme){
+    Color? myColor;
     switch (val) {
-      case 'red':
-        color = Colors.red;
+      case 'custom_red':
+        myColor = theme == 'light' ? Colors.red[100] : Colors.red[400];
         break;
-      case 'pink':
-        color = Colors.pink;
+      case 'custom_orange':
+        myColor = theme == 'light' ? Colors.orange[100] : Colors.orange[400];
         break;
-      case 'purple':
-        color = Colors.purple;
+      case 'custom_yellow':
+        myColor = theme == 'light' ? Colors.yellow[100] : Colors.yellow[400];
         break;
-      case 'indigo':
-        color = Colors.indigo;
+      case 'custom_green':
+        myColor = theme == 'light' ? Colors.green[100] : Colors.green[400];
         break;
-      case 'blue':
-        color = Colors.blue;
+      case 'custom_teal':
+        myColor = theme == 'light' ? Colors.teal[100] : Colors.teal[400];
         break;
-      case 'cyan':
-        color = Colors.cyan;
+      case 'custom_blue':
+        myColor = theme == 'light' ? Colors.blue[100] : Colors.blue[400];
         break;
-      case 'teal':
-        color = Colors.teal;
+      case 'custom_darkblue':
+        myColor = theme == 'light' ? Colors.blue[400] :  Colors.blue[900];
         break;
-      case 'green':
-        color = Colors.green;
+      case 'custom_purple':
+        myColor = theme == 'light' ? Colors.purple[100] :  Colors.purple[400];
         break;
-      case 'lime':
-        color = Colors.lime;
+      case 'custom_pink':
+        myColor = theme == 'light' ? Colors.pink[100] :  Colors.pink[400];
         break;
-      case 'orange':
-        color = Colors.orange;
-        break;
-      case 'brown':
-        color = Colors.brown;
+      default:
+        myColor = theme == 'light' ? Colors.lime[100] :  Colors.lime[900];
         break;
     }
-
-    return color!;
+    return myColor!;
   }
 }
