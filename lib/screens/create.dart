@@ -114,7 +114,7 @@ class _CreateNewState extends State<CreateNew> {
         break;
       case 'Note':
         data['endpoint'] = 'add-note';
-        data['note_color'] = string2;
+        data['note_color'] = string2.isEmpty ? 'custom_red' : string2;
         data['note_title'] = controller1.text;
         data['note_content'] = controller2.text;
         break;
