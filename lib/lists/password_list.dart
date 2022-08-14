@@ -19,28 +19,50 @@ class PasswordList extends StatelessWidget {
           child: InkWell(
             splashColor: Colors.blue[200],
             onTap: () => print('Test'),
-            child: ListTile(
-              minLeadingWidth: 55.w,
-              leading: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(100.r)
-                ),
-                child: CircleAvatar(
+            child: Row(
+              children: [
+                CircleAvatar(
                   backgroundColor: Colors.white,
-                  radius: 15.r,
+                  radius: 25.r,
                   child: FaIcon(FontAwesomeIcons.lock, color: Colors.grey[700], 
-                  size: 20,), 
-                  
+                    size: 20,
+                  ), 
+                ),
+                SizedBox(width: 20.w,),
+                Text(
+                  password.logName,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold
+                  )
+                ),
+                const Spacer(),
+                PopupMenuButton(
+                  child: const  Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10, 
+                          vertical: 20
+                        ),
+                        child: Icon(FontAwesomeIcons.ellipsisVertical),
+                      ),
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          child: Text("Copy password"),
+                          value: 1,
+                        ),
+                        const PopupMenuItem(
+                          child: Text("Edit"),
+                          value: 2,
+                        ),
+                        PopupMenuItem(
+                          child: const Text("Delete"),
+                          value: 2,
+                          onTap: (){
+                            print('object');
+                          },
+                        )
+                      ]
                 )
-              ),
-              title: Text(
-                password.logName,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold
-                )
-              ),
+              ],
             ),
           ),
         );
