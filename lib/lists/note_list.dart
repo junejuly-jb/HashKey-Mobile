@@ -12,7 +12,6 @@ class NoteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Limit card string length.
     final theme = Provider.of<ThemeProvider>(context).theme;
     return MasonryGrid(
       column: 2,
@@ -39,7 +38,7 @@ class NoteList extends StatelessWidget {
                   ),
                   SizedBox(height: 5.h,),
                   Text(
-                    note.noteContent,
+                    getNoteContent(note.noteContent)
                   ),
                 ],
               ),
@@ -85,5 +84,10 @@ class NoteList extends StatelessWidget {
         break;
     }
     return myColor!;
+  }
+
+  String getNoteContent(String val){
+    String text = val.length > 140 ? val.substring(0, 140) + '...' : val;
+    return text;
   }
 }

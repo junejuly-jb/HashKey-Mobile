@@ -136,7 +136,7 @@ class _ListsState extends State<Lists> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
+            padding: EdgeInsets.symmetric(horizontal: 30.w),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
