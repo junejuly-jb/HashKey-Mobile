@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/models/password.dart';
+import 'package:hashkey/provider/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class PasswordList extends StatelessWidget {
   final List arrayList;
-  const PasswordList({Key? key, required this.arrayList}) : super(key: key);
+  final Function onDeleteCallback;
+  const PasswordList({Key? key, required this.arrayList, required this.onDeleteCallback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return ListView.builder(
       shrinkWrap: true,
       itemCount: arrayList.length,
@@ -37,6 +41,10 @@ class PasswordList extends StatelessWidget {
                 ),
                 const Spacer(),
                 PopupMenuButton(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0))
+                  ),
+                  color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
                   child: const  Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: 10, 
@@ -57,7 +65,9 @@ class PasswordList extends StatelessWidget {
                           child: const Text("Delete"),
                           value: 2,
                           onTap: (){
-                            print('object');
+                            List<String> ids = [];
+                            ids.add(password.logId);
+                            onDeleteCallback('password', ids);
                           },
                         )
                       ]

@@ -220,4 +220,52 @@ class App{
     }
     return myList;
   }
+
+
+  Future deleteCredential(String endpoint, List<String> ids) async {
+    Map decode;
+    print(ids);
+    try {
+      var url = Uri.parse('$baseURL/$endpoint');
+      print(url);
+      String? token = await Auth().getRefreshToken();
+      if(token != null){
+        var response = await http.post(url,
+        //TODO: fix me
+          body: ids,
+          headers: {'Authorization': 'Bearer $token'}
+        );
+        decode = jsonDecode(response.body);
+      }
+      else{
+        decode = {
+          "success": false,
+          "status": 401,
+          "message": "Invalid token"
+        };
+      }
+    }
+    on SocketException catch (e) {
+      decode = {
+        "success": false,
+        "message": e.message,
+        "status": 000
+      };
+    }
+    on TimeoutException catch (e){
+      decode = {
+        "success": false,
+        "message": e.message,
+        "status": 000
+      };
+    }
+    on Error catch (e){
+      decode = {
+        "success": false,
+        "message": e,
+        "status": 000
+      };
+    }
+    return decode;
+  }
 }

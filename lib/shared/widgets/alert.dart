@@ -17,7 +17,7 @@ class CustomAlert extends StatelessWidget {
     return AlertDialog(
       backgroundColor: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
       shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
       content: Container(
         child: widgetType(type, message, context, theme)
       ),
