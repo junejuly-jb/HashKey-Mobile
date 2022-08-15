@@ -12,6 +12,7 @@ import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/services/app.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
+import 'package:hashkey/shared/widgets/question_alert.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -45,15 +46,35 @@ class _ListsState extends State<Lists> {
       }
   }
 
+  onDeleteCredential(String type, List<String> ids) {
+    Future.delayed(Duration.zero).then((value){
+      showDialog(
+        context: context, builder: (_) => 
+        QuestionDialog(
+          message: 'Delete $type \'s?',
+          onConfirm: (val) async {
+            if(!val){
+              return Navigator.pop(context);
+            }
+            Navigator.pop(context);
+            showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(message: 'Deleting credential please wait.', type: 'loading', statusType: null, callback: null));
+            String endpoint = getDeleteEndpoint(type);
+            Map result = await App().deleteCredential(endpoint, ids);
+            Navigator.pop(context);
+            print(result);
+          },
+        )
+      );
+    });
+  }
+
   Future initCredential(Map data) async {
     setState(() => isLoading = true,);
     List array = Provider.of<DataProvider>(context, listen: false).getCategoryType(data['type']);
     setState( () => myArray = array );
     if(array.isEmpty){ 
-      String endpoint = getEndpoint(data);
-      print(endpoint);
+      String endpoint = getPostEndpoint(data);
       Map result = await App().getCredentials(endpoint);
-      print(result);
       setState(() => isLoading = false,);
       if(result['success'] && mounted){
         switch (data['type']) {
@@ -103,7 +124,7 @@ class _ListsState extends State<Lists> {
     }
   }
 
-  String getEndpoint(Map data){
+  String getPostEndpoint(Map data){
     String endpoint = '';
     switch (data['type']) {
       case 'password':
@@ -123,6 +144,32 @@ class _ListsState extends State<Lists> {
         break;
       case 'contact':
         endpoint = 'contacts';
+        break;
+    }
+    return endpoint;
+  }
+
+
+  String getDeleteEndpoint(String val){
+    String endpoint = '';
+    switch (val) {
+      case 'password':
+        endpoint = 'delete-password';
+        break;
+      case 'wifi':
+        endpoint = 'delete-wifi';
+        break;
+      case 'note':
+        endpoint = 'delete-note';
+        break;
+      case 'payment':
+        endpoint = 'delete-card';
+        break;
+      case 'license':
+        endpoint = 'delete-license';
+        break;
+      case 'contact':
+        endpoint = 'delete-contact';
         break;
     }
     return endpoint;
@@ -198,7 +245,6 @@ class _ListsState extends State<Lists> {
       );
     }
     else{
-      print(array);
       return listViewType(type);
     }
   }
@@ -206,7 +252,7 @@ class _ListsState extends State<Lists> {
   Widget listViewType(String type){
     var arrayList = Provider.of<DataProvider>(context, listen: false).getCategoryType(type);
     if(type == 'password'){
-      return PasswordList(arrayList: arrayList);
+      return PasswordList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids),);
     }
     else if(type == 'wifi'){
       return WifiList(arrayList: arrayList);
