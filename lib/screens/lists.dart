@@ -62,6 +62,8 @@ class _ListsState extends State<Lists> {
             Map result = await App().deleteCredential(endpoint, ids);
             Navigator.pop(context);
             print(result);
+
+            //TODO: if success remove credential from provider and recent
           },
         )
       );

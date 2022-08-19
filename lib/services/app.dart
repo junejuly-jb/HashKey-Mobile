@@ -222,19 +222,23 @@ class App{
   }
 
 
-  Future deleteCredential(String endpoint, List<String> ids) async {
+  Future deleteCredential(String endpoint, List ids) async {
     Map decode;
-    print(ids);
+    final data = jsonEncode({ "ids": ids });
     try {
       var url = Uri.parse('$baseURL/$endpoint');
-      print(url);
       String? token = await Auth().getRefreshToken();
       if(token != null){
         var response = await http.post(url,
-        //TODO: fix me
-          body: ids,
-          headers: {'Authorization': 'Bearer $token'}
+          body: data,
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+          }
         );
+        print(response);
+        print('test');
         decode = jsonDecode(response.body);
       }
       else{
