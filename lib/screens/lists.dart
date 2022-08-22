@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/lists/contact_list.dart';
 import 'package:hashkey/lists/license_list.dart';
@@ -61,9 +62,23 @@ class _ListsState extends State<Lists> {
             String endpoint = getDeleteEndpoint(type);
             Map result = await App().deleteCredential(endpoint, ids);
             Navigator.pop(context);
-            print(result);
-
-            //TODO: if success remove credential from provider and recent
+            if(!result['success']){
+              if(result['status'] == 401){
+                showDialog(
+                  barrierDismissible: false,
+                  context: context, builder: (_) => 
+                  CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false))
+                );
+              }
+              else{
+                showDialog(
+                  context: context, builder: (_) => 
+                  CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pop(context))
+                );
+              }
+            }
+            Provider.of<DataProvider>(context).deleteCredential(type, ids);
+            Fluttertoast.showToast(msg: result['message']);
           },
         )
       );

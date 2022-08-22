@@ -158,4 +158,29 @@ class DataProvider with ChangeNotifier{
     }
   }
 
+  deleteCredential(String type, List<String> ids){
+    switch (type) {
+      case 'password':
+        passwords.removeWhere((element) => ids.contains(element.logId));
+        break;
+      case 'wifi':
+        wifis.removeWhere((element) => ids.contains(element.wifiId));
+        break;
+      case 'payment':
+        payments.removeWhere((element) => ids.contains(element.cardId));
+        break;
+      case 'contact':
+        contacts.removeWhere((element) => ids.contains(element.contactId));
+        break;
+      case 'license':
+        licenses.removeWhere((element) => ids.contains(element.licenseId));
+        break;
+      case 'note':
+        notes.removeWhere((element) => ids.contains(element.noteId));
+        break;
+    }
+    recents.removeWhere((element) => ids.contains(element.id));
+    notifyListeners();
+  }
+
 }
