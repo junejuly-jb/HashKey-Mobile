@@ -47,7 +47,7 @@ class _ListsState extends State<Lists> {
       }
   }
 
-  onDeleteCredential(String type, List<String> ids) {
+  onDeleteCredential(String type, List<String> ids, BuildContext context) {
     Future.delayed(Duration.zero).then((value){
       showDialog(
         context: context, builder: (_) => 
@@ -62,27 +62,52 @@ class _ListsState extends State<Lists> {
             String endpoint = getDeleteEndpoint(type);
             Map result = await App().deleteCredential(endpoint, ids);
             Navigator.pop(context);
-            if(!result['success']){
-              if(result['status'] == 401){
-                showDialog(
+            print(result);
+            if(!result['success'] && mounted){
+              if(result['status'] == 401 && mounted){
+                return showDialog(
                   barrierDismissible: false,
                   context: context, builder: (_) => 
                   CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false))
                 );
               }
               else{
-                showDialog(
+                return showDialog(
                   context: context, builder: (_) => 
                   CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pop(context))
                 );
               }
             }
-            Provider.of<DataProvider>(context).deleteCredential(type, ids);
+            Provider.of<DataProvider>(context, listen: false).deleteCredential(type, ids);
+            removeFromLocalState(type, ids);
             Fluttertoast.showToast(msg: result['message']);
           },
         )
       );
     });
+  }
+
+  removeFromLocalState(String type, List ids){
+    switch (type) {
+      case 'password':
+        setState(()=> myArray.removeWhere((element) => ids.contains(element.logId)));
+        break;
+      case 'wifi':
+        setState(()=> myArray.removeWhere((element) => ids.contains(element.wifiId)));
+        break;
+      case 'payment':
+        setState(()=> myArray.removeWhere((element) => ids.contains(element.cardId)));
+        break;
+      case 'contact':
+        setState(()=> myArray.removeWhere((element) => ids.contains(element.contactId)));
+        break;
+      case 'license':
+        setState(()=> myArray.removeWhere((element) => ids.contains(element.licenseId)));
+        break;
+      case 'note':
+        setState(()=> myArray.removeWhere((element) => ids.contains(element.noteId)));
+        break;
+    }
   }
 
   Future initCredential(Map data) async {
@@ -224,7 +249,7 @@ class _ListsState extends State<Lists> {
                 SizedBox(
                   height: 470.h,
                   // color: Colors.amber,
-                  child: widgetType(isLoading, myArray, arg['type'], theme),
+                  child: widgetType(isLoading, myArray, arg['type'], theme, context),
                 )
               ],
             ),
@@ -234,7 +259,7 @@ class _ListsState extends State<Lists> {
     );
   }
 
-  Widget widgetType(bool state, List array, String type, String theme){
+  Widget widgetType(bool state, List array, String type, String theme, BuildContext context){
     // print(array);
     if(state){
       return SkeletonTheme(
@@ -262,14 +287,14 @@ class _ListsState extends State<Lists> {
       );
     }
     else{
-      return listViewType(type);
+      return listViewType(type, context);
     }
   }
 
-  Widget listViewType(String type){
+  Widget listViewType(String type, BuildContext context){
     var arrayList = Provider.of<DataProvider>(context, listen: false).getCategoryType(type);
     if(type == 'password'){
-      return PasswordList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids),);
+      return PasswordList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);
     }
     else if(type == 'wifi'){
       return WifiList(arrayList: arrayList);
