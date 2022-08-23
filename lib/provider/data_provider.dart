@@ -179,7 +179,7 @@ class DataProvider with ChangeNotifier{
         notes.removeWhere((element) => ids.contains(element.noteId));
         break;
     }
-    recents.removeWhere((element) => ids.contains(element.id));
+    recents.removeWhere((element) => ids.contains(element.parentId));
     notifyListeners();
   }
 

@@ -118,12 +118,10 @@ class App{
       String? token = await Auth().getRefreshToken();
 
       if(token != null){
-         print('test');
         var response = await http.post(url,
           body: data,
           headers: {'Authorization': 'Bearer $token'}
         );
-        print(response.body);
         decode = jsonDecode(response.body);
       }
       else{
@@ -148,12 +146,10 @@ class App{
         "status": 000
       };
     }
-    // ignore: unused_catch_clause
     on Error catch (e){
-      print(e);
       decode = {
         "success": false,
-        "message": 'Server error please try again later',
+        "message": e,
         "status": 000
       };
     }
@@ -227,9 +223,10 @@ class App{
     final data = jsonEncode({ "ids": ids });
     try {
       var url = Uri.parse('$baseURL/$endpoint');
+      print(url);
       String? token = await Auth().getRefreshToken();
       if(token != null){
-        var response = await http.post(url,
+        var response = await http.delete(url,
           body: data,
           headers: {
             'Authorization': 'Bearer $token',
@@ -237,8 +234,6 @@ class App{
             'Accept': 'application/json',
           }
         );
-        print(response);
-        print('test');
         decode = jsonDecode(response.body);
       }
       else{
