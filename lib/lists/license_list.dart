@@ -10,7 +10,8 @@ import 'package:intl/intl.dart';
 
 class LicenseList extends StatelessWidget {
   final List arrayList;
-  const LicenseList({Key? key, required this.arrayList}) : super(key: key);
+  final Function onDeleteCallback;
+  const LicenseList({Key? key, required this.arrayList, required this.onDeleteCallback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +35,49 @@ class LicenseList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 8.h),
                     color: theme == 'dark' ? Colors.grey[900] : Colors.grey[500],
-                    child: Center(
-                      child: Text(
-                        license.licenseName,
-                        style: const TextStyle(
-                          color: Colors.white
-                        ),  
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 8.h),
+                            child: Center(
+                              child: Text(
+                                license.licenseName,
+                                style: const TextStyle(
+                                  color: Colors.white
+                                ),  
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          PopupMenuButton(
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(15.0))
+                            ),
+                            color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
+                            child: const  Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10, 
+                                    vertical: 20
+                                  ),
+                                  child: Icon(FontAwesomeIcons.ellipsisVertical, color: Colors.white,),
+                                ),
+                                itemBuilder: (context) => [
+                                  PopupMenuItem(
+                                    child: const Text("Delete"),
+                                    value: 4,
+                                    onTap: (){
+                                      List<String> ids = [];
+                                      ids.add(license.licenseId);
+                                      print(ids);
+                                      onDeleteCallback('license', ids);
+                                    },
+                                  )
+                                ]
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -70,7 +106,7 @@ class LicenseList extends StatelessWidget {
                               ),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

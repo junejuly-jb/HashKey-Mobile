@@ -21,7 +21,7 @@ class QuestionDialog extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(FontAwesomeIcons.trash),
+              const Icon(FontAwesomeIcons.trash),
               SizedBox(width: 10.w,),
               Text(
                 'Delete', 
@@ -38,8 +38,8 @@ class QuestionDialog extends StatelessWidget {
         ],
       ),
       actions: [
-        TextButton(onPressed: (){ onConfirm(false); }, child: Text('Cancel')),
-        TextButton(onPressed: (){ onConfirm(true); }, child: Text('Delete')),
+        TextButton(onPressed: (){ onConfirm(false); }, child: const Text('Cancel')),
+        TextButton(onPressed: (){ onConfirm(true); }, child: const Text('Delete')),
       ],
     );
   }
