@@ -33,6 +33,9 @@ class DataProvider with ChangeNotifier{
     recents = [];
     passwords = [];
     wifis = [];
+    payments = [];
+    contacts = [];
+    notes = [];
   }
 
   setRecents(List recentList){
@@ -180,6 +183,8 @@ class DataProvider with ChangeNotifier{
         break;
     }
     recents.removeWhere((element) => ids.contains(element.parentId));
+    int index = cards.indexWhere((element) => element.category == type);
+    cards[index].count = cards[index].count - 1;
     notifyListeners();
   }
 

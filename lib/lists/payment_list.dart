@@ -4,14 +4,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hashkey/models/payment.dart';
+import 'package:hashkey/provider/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 
 class PaymentList extends StatelessWidget {
   final List arrayList;
-  const PaymentList({Key? key, required this.arrayList}) : super(key: key);
+  final Function onDeleteCallback;
+  const PaymentList({Key? key, required this.arrayList, required this.onDeleteCallback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return ListView.builder(
       shrinkWrap: true,
         itemCount: arrayList.length,
@@ -31,7 +35,7 @@ class PaymentList extends StatelessWidget {
             ),
             padding: EdgeInsets.symmetric(vertical: 5.w),
             child:  Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 25.h),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -47,16 +51,47 @@ class PaymentList extends StatelessWidget {
                       ),
                       const Spacer(),
                       // TODO: ADD CONTEXT MENU
-                      IconButton(
-                        onPressed: (){},
-                        icon: const Icon(FontAwesomeIcons.ellipsisVertical),
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                      )
+                      PopupMenuButton(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0))
+                        ),
+                        color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
+                        child: const  Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 10, 
+                                vertical: 20
+                              ),
+                              child: Icon(FontAwesomeIcons.ellipsisVertical),
+                            ),
+                            itemBuilder: (context) => [
+                              const PopupMenuItem(
+                                child: Text("Edit"),
+                              ),
+                              const PopupMenuItem(
+                                child: Text("Copy card number"),
+                              ),
+                              const PopupMenuItem(
+                                child: Text("Copy card expiry"),
+                              ),
+                              const PopupMenuItem(
+                                child: Text("Copy card ccv"),
+                              ),
+                              PopupMenuItem(
+                                child: const Text("Delete"),
+                                value: 4,
+                                onTap: (){
+                                  List<String> ids = [];
+                                  ids.add(payment.cardId);
+                                  print(ids);
+                                  onDeleteCallback('payment', ids);
+                                },
+                              )
+                            ]
+                      ),
                     ],
                   ),
                   
-                  SizedBox(height: 25.h,),
+                  SizedBox(height: 15.h,),
                   Text(
                     getCardNumber(payment.cardNumber),
                     style: TextStyle(

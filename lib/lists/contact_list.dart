@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hashkey/models/contact.dart'; 
+import 'package:hashkey/models/contact.dart';
+import 'package:hashkey/provider/theme_provider.dart';
+import 'package:provider/provider.dart'; 
 
 class ContactList extends StatelessWidget {
   final List arrayList;
-  const ContactList({Key? key, required this.arrayList}) : super(key: key);
+  final Function onDeleteCallback;
+  const ContactList({Key? key, required this.arrayList, required this.onDeleteCallback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print(arrayList);
+    final theme = Provider.of<ThemeProvider>(context).theme;
     return ListView.builder(
       itemCount: arrayList.length,
       itemBuilder: (BuildContext context, int index){
@@ -44,12 +47,30 @@ class ContactList extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
-                  IconButton(
-                    onPressed: (){},
-                    icon: const Icon(FontAwesomeIcons.ellipsisVertical),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                  )
+                  PopupMenuButton(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0))
+                    ),
+                    color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
+                    child: const  Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10, 
+                            vertical: 20
+                          ),
+                          child: Icon(FontAwesomeIcons.ellipsisVertical),
+                        ),
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            child: const Text("Delete"),
+                            onTap: (){
+                              List<String> ids = [];
+                              ids.add(contact.contactId);
+                              print(ids);
+                              onDeleteCallback('contact', ids);
+                            },
+                          )
+                        ]
+                  ),
                 ],
               ),
             )
