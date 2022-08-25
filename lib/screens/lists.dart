@@ -68,7 +68,10 @@ class _ListsState extends State<Lists> {
                 return showDialog(
                   barrierDismissible: false,
                   context: context, builder: (_) => 
-                  CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false))
+                  CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () {
+                    Provider.of<DataProvider>(context, listen: false).setEmpty();
+                    Navigator.pushNamedAndRemoveUntil(context, '/authenticate', (route) => false);  
+                  })
                 );
               }
               else{
@@ -145,7 +148,10 @@ class _ListsState extends State<Lists> {
           showDialog(
             barrierDismissible: false,
             context: context, builder: (_) => 
-            CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false))
+            CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: (){
+              Provider.of<DataProvider>(context, listen: false).setEmpty();
+              Navigator.pushNamedAndRemoveUntil(context, '/authenticate', (route) => false);
+            })
           );
         }
         else{
@@ -261,6 +267,7 @@ class _ListsState extends State<Lists> {
 
   Widget widgetType(bool state, List array, String type, String theme, BuildContext context){
     // print(array);
+    print('build');
     if(state){
       return SkeletonTheme(
         themeMode: theme == 'dark' ? ThemeMode.dark : ThemeMode.light,
@@ -297,13 +304,13 @@ class _ListsState extends State<Lists> {
       return PasswordList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);
     }
     else if(type == 'wifi'){
-      return WifiList(arrayList: arrayList);
+      return WifiList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);
     }
     else if(type == 'payment'){
-      return PaymentList(arrayList: arrayList);
+      return PaymentList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);
     }
     else if(type == 'contact'){
-      return ContactList(arrayList: arrayList);
+      return ContactList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);
     }
     else if(type == 'license'){
       return LicenseList(arrayList: arrayList);

@@ -65,7 +65,10 @@ class _CreateNewState extends State<CreateNew> {
         showDialog(
           barrierDismissible: false,
           context: context, builder: (_) => 
-          CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false))
+          CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: (){
+            Provider.of<DataProvider>(context, listen: false).setEmpty();
+            Navigator.pushNamedAndRemoveUntil(context, '/authenticate', (route) => false);
+          })
         );
       }
       else{
