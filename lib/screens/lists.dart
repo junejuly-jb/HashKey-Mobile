@@ -313,10 +313,10 @@ class _ListsState extends State<Lists> {
       return ContactList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);
     }
     else if(type == 'license'){
-      return LicenseList(arrayList: arrayList);
+      return LicenseList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);
     }
     else if(type == 'note'){
-      return NoteList(arrayList: arrayList);
+      return NoteList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);
     }
     else{
       return Container();

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hashkey/models/note.dart';
 import 'package:hashkey/provider/theme_provider.dart';
 import 'package:masonry_grid/masonry_grid.dart';
@@ -8,7 +9,8 @@ import 'package:provider/provider.dart';
 
 class NoteList extends StatelessWidget {
   final List arrayList;
-  const NoteList({Key? key, required this.arrayList}) : super(key: key);
+  final Function onDeleteCallback;
+  const NoteList({Key? key, required this.arrayList, required this.onDeleteCallback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +31,40 @@ class NoteList extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    note.noteTitle,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold
-                    ),  
+                  Row(
+                    children: [
+                      Text(
+                        note.noteTitle,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold
+                        ),  
+                      ),
+                      const Spacer(),
+                      PopupMenuButton(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0))
+                        ),
+                        color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
+                        child: const Icon(
+                              FontAwesomeIcons.ellipsisVertical, color: Colors.black,
+                              size: 20,
+                            ),
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                child: const Text("Delete"),
+                                value: 4,
+                                onTap: (){
+                                  List<String> ids = [];
+                                  ids.add(note.noteId);
+                                  onDeleteCallback('note', ids);
+                                },
+                              )
+                            ]
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 5.h,),
+                  SizedBox(height: 15.h,),
                   Text(
                     getNoteContent(note.noteContent)
                   ),
