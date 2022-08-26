@@ -14,7 +14,9 @@ class CustomHeader extends StatelessWidget {
         Expanded(
           flex: 1,
           child: Container(
-            child: withBackButton ? IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close)) : null,
+            child: withBackButton ? IconButton(onPressed: () {
+              Navigator.pop(context);
+            }, icon: const Icon(Icons.close)) : null,
           ),
         )
       ],
