@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hashkey/models/category.dart';
 import 'package:hashkey/models/contact.dart';
 import 'package:hashkey/models/license.dart';
@@ -187,5 +188,4 @@ class DataProvider with ChangeNotifier{
     cards[index].count = cards[index].count - 1;
     notifyListeners();
   }
-
 }
