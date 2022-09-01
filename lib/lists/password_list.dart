@@ -8,7 +8,8 @@ import 'package:provider/provider.dart';
 class PasswordList extends StatelessWidget {
   final List arrayList;
   final Function onDeleteCallback;
-  const PasswordList({Key? key, required this.arrayList, required this.onDeleteCallback}) : super(key: key);
+  final Function onCopyData;
+  const PasswordList({Key? key, required this.arrayList, required this.onDeleteCallback, required this.onCopyData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +34,15 @@ class PasswordList extends StatelessWidget {
                   ), 
                 ),
                 SizedBox(width: 20.w,),
-                Text(
-                  password.logName,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold
-                  )
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      password.logName,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text('● ● ● ● ● ● ● ●', style: Theme.of(context).textTheme.subtitle1,)
+                  ],
                 ),
                 const Spacer(),
                 PopupMenuButton(
@@ -53,17 +58,19 @@ class PasswordList extends StatelessWidget {
                         child: Icon(FontAwesomeIcons.ellipsisVertical),
                       ),
                       itemBuilder: (context) => [
-                        const PopupMenuItem(
-                          child: Text("Copy password"),
-                          value: 1,
+                        PopupMenuItem(
+                          child: const Text("Copy username"),
+                          onTap: () => onCopyData(password.logName),
+                        ),
+                        PopupMenuItem(
+                          child: const Text("Copy password"),
+                          onTap: () => onCopyData(password.logPassword),
                         ),
                         const PopupMenuItem(
                           child: Text("Edit"),
-                          value: 2,
                         ),
                         PopupMenuItem(
                           child: const Text("Delete"),
-                          value: 2,
                           onTap: (){
                             List<String> ids = [];
                             ids.add(password.logId);
