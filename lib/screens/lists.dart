@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -223,6 +224,11 @@ class _ListsState extends State<Lists> {
     return endpoint;
   }
 
+  void copyData(String val){
+    Clipboard.setData(ClipboardData(text: val))
+    .then((value) => Fluttertoast.showToast(msg: 'Text copied successfully!'));
+  }
+
   @override
   Widget build(BuildContext context) {
     final arg = ModalRoute.of(context)?.settings.arguments as Map;
@@ -301,7 +307,11 @@ class _ListsState extends State<Lists> {
   Widget listViewType(String type, BuildContext context){
     var arrayList = Provider.of<DataProvider>(context, listen: false).getCategoryType(type);
     if(type == 'password'){
-      return PasswordList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);
+      return PasswordList(
+        arrayList: arrayList, 
+        onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),
+        onCopyData: (data) => copyData(data) 
+      );
     }
     else if(type == 'wifi'){
       return WifiList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);

@@ -50,7 +50,6 @@ class PaymentList extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-                      // TODO: ADD CONTEXT MENU
                       PopupMenuButton(
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15.0))
