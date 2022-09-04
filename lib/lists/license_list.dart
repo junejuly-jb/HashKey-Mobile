@@ -16,7 +16,6 @@ class LicenseList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context).theme;
-    // TODO: Add Flag to the card
     return ListView.builder(
       shrinkWrap: true,
         itemCount: arrayList.length,
@@ -50,6 +49,11 @@ class LicenseList extends StatelessWidget {
                                 ),  
                               ),
                             ),
+                          ),
+                          SizedBox(width: 10.w),
+                          CircleAvatar(
+                            radius: 15,
+                            backgroundImage: NetworkImage(license.licenseFlag),
                           ),
                           const Spacer(),
                           PopupMenuButton(
