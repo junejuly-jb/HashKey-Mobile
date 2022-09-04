@@ -12,6 +12,7 @@ import 'package:hashkey/lists/wifi_list.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/services/app.dart';
+import 'package:hashkey/shared/skeletons/list_skeleton.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
 import 'package:hashkey/shared/widgets/question_alert.dart';
@@ -278,7 +279,7 @@ class _ListsState extends State<Lists> {
       return SkeletonTheme(
         themeMode: theme == 'dark' ? ThemeMode.dark : ThemeMode.light,
         //TODO: Configure skeleton listview on each category
-        child: SkeletonListView(padding: EdgeInsets.zero)
+        child: skeletonType(type)
       );
     }
     else if(!state && array.isEmpty){
@@ -314,10 +315,18 @@ class _ListsState extends State<Lists> {
       );
     }
     else if(type == 'wifi'){
-      return WifiList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);
+      return WifiList(
+        arrayList: arrayList, 
+        onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),
+        onCopyData: (data) => copyData(data),
+      );
     }
     else if(type == 'payment'){
-      return PaymentList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);
+      return PaymentList(
+        arrayList: arrayList, 
+        onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),
+        onCopyData: (data) => copyData(data),
+      );
     }
     else if(type == 'contact'){
       return ContactList(arrayList: arrayList, onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),);
@@ -332,5 +341,17 @@ class _ListsState extends State<Lists> {
       return Container();
     }
   }
-}
 
+  Widget skeletonType(String type){
+    if(type == 'password' || type == 'wifi' || type == 'contact'){
+      return const ListSkeleton();
+    }
+    else{
+      // return SkeletonParagraph();
+      return SkeletonAvatar(
+        style: SkeletonAvatarStyle(
+          width: double.infinity, height: 100),
+      );
+    }
+  }
+}

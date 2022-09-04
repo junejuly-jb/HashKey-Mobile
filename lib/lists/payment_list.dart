@@ -11,7 +11,8 @@ import 'package:provider/provider.dart';
 class PaymentList extends StatelessWidget {
   final List arrayList;
   final Function onDeleteCallback;
-  const PaymentList({Key? key, required this.arrayList, required this.onDeleteCallback}) : super(key: key);
+  final Function onCopyData;
+  const PaymentList({Key? key, required this.arrayList, required this.onDeleteCallback, required this.onCopyData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +67,17 @@ class PaymentList extends StatelessWidget {
                               const PopupMenuItem(
                                 child: Text("Edit"),
                               ),
-                              const PopupMenuItem(
-                                child: Text("Copy card number"),
+                              PopupMenuItem(
+                                child: const Text("Copy card number"),
+                                onTap: () => onCopyData(payment.cardNumber),
                               ),
-                              const PopupMenuItem(
-                                child: Text("Copy card expiry"),
+                              PopupMenuItem(
+                                child: const Text("Copy card expiry"),
+                                onTap: () => onCopyData(payment.cardExpiry),
                               ),
-                              const PopupMenuItem(
-                                child: Text("Copy card ccv"),
+                              PopupMenuItem(
+                                child: const Text("Copy card ccv"),
+                                onTap: () => onCopyData(payment.cardCcv),
                               ),
                               PopupMenuItem(
                                 child: const Text("Delete"),

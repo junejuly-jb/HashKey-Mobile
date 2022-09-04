@@ -7,12 +7,14 @@ import 'package:provider/provider.dart';
 
 class WifiList extends StatelessWidget {
   final List arrayList;
-   final Function onDeleteCallback;
-  const WifiList({Key? key, required this.arrayList, required this.onDeleteCallback}) : super(key: key);
+  final Function onDeleteCallback;
+  final Function onCopyData;
+  const WifiList({Key? key, required this.arrayList, required this.onDeleteCallback, required this.onCopyData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context).theme;
+    print(theme);
     return ListView.builder(
         shrinkWrap: true,
         itemCount: arrayList.length,
@@ -23,65 +25,66 @@ class WifiList extends StatelessWidget {
             child: InkWell(
               splashColor: Colors.blue[200],
               onTap: () => print('Test'),
-              child: ListTile(
-                minLeadingWidth: 55.w,
-                leading: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(100.r)
-                  ),
-                  child: CircleAvatar(
+              child: Row(
+                children: [
+                  CircleAvatar(
                     backgroundColor: Colors.white,
-                    radius: 15.r,
+                    radius: 25.r,
                     child: FaIcon(FontAwesomeIcons.wifi, color: Colors.grey[700], 
-                    size: 20,), 
-                    
-                  )
-                ),
-                title: Text(
-                  wifi.wifiSsid,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold
-                  )
-                ),
-                trailing: PopupMenuButton(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0))
+                      size: 20,
+                    ), 
                   ),
-                  color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
-                  child: const  Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 10, 
-                          vertical: 20
-                        ),
-                        child: Icon(FontAwesomeIcons.ellipsisVertical),
+                  SizedBox(width: 20.w,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        wifi.wifiSsid,
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
-                      itemBuilder: (context) => [
-                        const PopupMenuItem(
-                          child: Text("Copy password"),
-                          value: 1,
+                      Text(wifi.wifiSecurity, style: Theme.of(context).textTheme.subtitle1,)
+                    ],
+                  ),
+                  const Spacer(),
+                  PopupMenuButton(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0))
+                    ),
+                    color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
+                    child: const  Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10, 
+                            vertical: 20
+                          ),
+                          child: Icon(FontAwesomeIcons.ellipsisVertical),
                         ),
-                        const PopupMenuItem(
-                          child: Text("Edit"),
-                          value: 2,
-                        ),
-                        const PopupMenuItem(
-                          child: Text("Show QR Code"),
-                          value: 3,
-                        ),
-                        PopupMenuItem(
-                          child: const Text("Delete"),
-                          value: 4,
-                          onTap: (){
-                            List<String> ids = [];
-                            ids.add(wifi.wifiId);
-                            print(ids);
-                            onDeleteCallback('wifi', ids);
-                          },
-                        )
-                      ]
-                ),
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            child: const Text("Copy password"),
+                            value: 1,
+                            onTap: () => onCopyData(wifi.wifiPass),
+                          ),
+                          const PopupMenuItem(
+                            child: Text("Edit"),
+                            value: 2,
+                          ),
+                          const PopupMenuItem(
+                            child: Text("Show QR Code"),
+                            value: 3,
+                          ),
+                          PopupMenuItem(
+                            child: const Text("Delete"),
+                            value: 4,
+                            onTap: (){
+                              List<String> ids = [];
+                              ids.add(wifi.wifiId);
+                              print(ids);
+                              onDeleteCallback('wifi', ids);
+                            },
+                          )
+                        ]
+                  )
+                ],
               ),
             ),
           );
