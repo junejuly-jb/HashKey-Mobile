@@ -31,6 +31,7 @@ class Lists extends StatefulWidget {
 class _ListsState extends State<Lists> {
   bool isLoading = false;
   bool isUpdating = false;
+  bool isRefreshing = false;
   late List myArray = [];
   late Map arg;
 
@@ -64,41 +65,47 @@ class _ListsState extends State<Lists> {
             }
             Navigator.pop(context);
             showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(message: 'Deleting credential please wait.', type: 'loading', statusType: null, callback: null));
-            String endpoint = getDeleteEndpoint(type);
-            Map result = await App().deleteCredential(endpoint, ids);
+            // String endpoint = getDeleteEndpoint(type);
+            // Map result = await App().deleteCredential(endpoint, ids);
             Navigator.pop(context);
-            print(result);
-            if(!result['success'] && mounted){
-              if(result['status'] == 401 && mounted){
-                return showDialog(
-                  barrierDismissible: false,
-                  context: context, builder: (_) => 
-                  CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () {
-                    Provider.of<DataProvider>(context, listen: false).setEmpty();
-                    Navigator.pushNamedAndRemoveUntil(context, '/authenticate', (route) => false);  
-                  })
-                );
-              }
-              else{
-                return showDialog(
-                  context: context, builder: (_) => 
-                  CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pop(context))
-                );
-              }
-            }
-            Provider.of<DataProvider>(context, listen: false).deleteCredential(type, ids);
+            // print(result);
+            // if(!result['success'] && mounted){
+            //   if(result['status'] == 401 && mounted){
+            //     return showDialog(
+            //       barrierDismissible: false,
+            //       context: context, builder: (_) => 
+            //       CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () {
+            //         Provider.of<DataProvider>(context, listen: false).setEmpty();
+            //         Navigator.pushNamedAndRemoveUntil(context, '/authenticate', (route) => false);  
+            //       })
+            //     );
+            //   }
+            //   else{
+            //     return showDialog(
+            //       context: context, builder: (_) => 
+            //       CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pop(context))
+            //     );
+            //   }
+            // }
+            // Provider.of<DataProvider>(context, listen: false).deleteCredential(type, ids);
             removeFromLocalState(type, ids);
-            Fluttertoast.showToast(msg: result['message']);
+            // Fluttertoast.showToast(msg: result['message']);
           },
         )
       );
     });
   }
 
+  // TODO : FIX
   removeFromLocalState(String type, List ids){
+    print('here');
     switch (type) {
       case 'password':
-        setState(()=> myArray.removeWhere((element) => ids.contains(element.logId)));
+        setState(()=> myArray.removeWhere((element) => ids.contains(element['logId'])));
+        final visible = myArray.where((element) => ids.contains(element['logId']));
+        print(ids);
+        print(myArray);
+        print(visible);
         break;
       case 'wifi':
         setState(()=> myArray.removeWhere((element) => ids.contains(element.wifiId)));
@@ -149,6 +156,9 @@ class _ListsState extends State<Lists> {
         }
       }
     }
+    if(myArray.isNotEmpty){
+      Fluttertoast.showToast(msg: 'Credentials are up to date');
+    }
     Provider.of<DataProvider>(context, listen: false).setEmptyByType(data['type']);
     Provider.of<DataProvider>(context, listen: false).setCredentialsFromAPI(result['data'], data['type']);
     setState(() {
@@ -182,7 +192,6 @@ class _ListsState extends State<Lists> {
     }
     return endpoint;
   }
-
 
   String getDeleteEndpoint(String val){
     String endpoint = '';
@@ -232,14 +241,63 @@ class _ListsState extends State<Lists> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconButton(
-                      onPressed: (){}, 
-                      icon: const Icon(Icons.sort)
+                    PopupMenuButton(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0))
+                      ),
+                      color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
+                      child: const  Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10, 
+                              vertical: 20
+                            ),
+                            child: Icon(Icons.sort)
+                          ),
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 30.w,
+                                    child: Icon(Icons.check)
+                                  ),
+                                  SizedBox(width: 10.w,),
+                                  Text('Date added')
+                                ],
+                              ),
+                              onTap: (){},
+                            ),
+                            PopupMenuItem(
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 30.w,
+                                    child: null
+                                  ),
+                                  SizedBox(width: 10.w,),
+                                  Text('Name')
+                                ],
+                              ),
+                              onTap: (){},
+                            )
+                          ]
                     ),
-                    IconButton(
-                      onPressed: (){}, 
-                      icon: const Icon(Icons.refresh_rounded)
-                    )
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: isRefreshing ? 
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: LoadingAnimationWidget.threeArchedCircle(color: Colors.indigo, size: 20),
+                      ) : 
+                      IconButton(
+                        onPressed: () async {
+                          setState(() => isRefreshing = true);
+                          await initCredential(arg);
+                          setState(() => isRefreshing = false);
+                        }, 
+                        icon: const Icon(Icons.refresh_rounded)
+                      ),
+                    ),
                   ],
                 ),
                 AnimatedContainer(
