@@ -12,6 +12,7 @@ import 'package:hashkey/lists/wifi_list.dart';
 import 'package:hashkey/provider/data_provider.dart';
 import 'package:hashkey/provider/theme_provider.dart';
 import 'package:hashkey/services/app.dart';
+import 'package:hashkey/shared/skeletons/card_skeleton.dart';
 import 'package:hashkey/shared/skeletons/list_skeleton.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
@@ -278,7 +279,6 @@ class _ListsState extends State<Lists> {
     if(state){
       return SkeletonTheme(
         themeMode: theme == 'dark' ? ThemeMode.dark : ThemeMode.light,
-        //TODO: Configure skeleton listview on each category
         child: skeletonType(type)
       );
     }
@@ -347,11 +347,7 @@ class _ListsState extends State<Lists> {
       return const ListSkeleton();
     }
     else{
-      // return SkeletonParagraph();
-      return SkeletonAvatar(
-        style: SkeletonAvatarStyle(
-          width: double.infinity, height: 100),
-      );
+      return const CardSkeleton();
     }
   }
 }
