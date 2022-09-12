@@ -17,6 +17,7 @@ import 'package:hashkey/shared/skeletons/list_skeleton.dart';
 import 'package:hashkey/shared/widgets/alert.dart';
 import 'package:hashkey/shared/widgets/appbar.dart';
 import 'package:hashkey/shared/widgets/question_alert.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -29,6 +30,7 @@ class Lists extends StatefulWidget {
 
 class _ListsState extends State<Lists> {
   bool isLoading = false;
+  bool isUpdating = false;
   late List myArray = [];
   late Map arg;
 
@@ -117,62 +119,43 @@ class _ListsState extends State<Lists> {
   }
 
   Future initCredential(Map data) async {
-    setState(() => isLoading = true,);
     List array = Provider.of<DataProvider>(context, listen: false).getCategoryType(data['type']);
     setState( () => myArray = array );
-    if(array.isEmpty){ 
-      String endpoint = getPostEndpoint(data);
-      Map result = await App().getCredentials(endpoint);
-      setState(() => isLoading = false,);
-      if(result['success'] && mounted){
-        switch (data['type']) {
-          case 'password':
-            Provider.of<DataProvider>(context, listen: false).setPasswords(result['data']);
-            break;
-          case 'wifi':
-            Provider.of<DataProvider>(context, listen: false).setWifis(result['data']);
-            break;
-          case 'payment':
-            Provider.of<DataProvider>(context, listen: false).setPayments(result['data']);
-            break;
-          case 'contact':
-            Provider.of<DataProvider>(context, listen: false).setContacts(result['data']);
-            break;
-          case 'license':
-            Provider.of<DataProvider>(context, listen: false).setLicenses(result['data']);
-            break;
-          case 'note':
-            Provider.of<DataProvider>(context, listen: false).setNotes(result['data']);
-            break;
-        }
+    if(myArray.isNotEmpty){
+      setState(() => isUpdating = true );
+    }
+    else{
+      setState(() => isLoading = true );
+    }
+    String endpoint = getPostEndpoint(data);
+    Map result = await App().getCredentials(endpoint);
+    if(!result['success'] && mounted){
+      if(result['status'] == 401 && mounted){
+        return showDialog(
+          barrierDismissible: false,
+          context: context, builder: (_) => 
+          CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: (){
+            Provider.of<DataProvider>(context, listen: false).setEmpty();
+            Navigator.pushNamedAndRemoveUntil(context, '/authenticate', (route) => false);
+          })
+        );
       }
       else{
-        if(result['status'] == 401 && mounted){
-          showDialog(
-            barrierDismissible: false,
+        if(mounted){
+          return showDialog(
             context: context, builder: (_) => 
-            CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: (){
-              Provider.of<DataProvider>(context, listen: false).setEmpty();
-              Navigator.pushNamedAndRemoveUntil(context, '/authenticate', (route) => false);
-            })
+            CustomAlert(message: result['message'], type: 'error', statusType: null, callback: () => Navigator.pop(context))
           );
-        }
-        else{
-          if(mounted){
-            showDialog(
-              context: context, builder: (_) => 
-              CustomAlert(message: result['message'], type: 'error', statusType: null, callback: () => Navigator.pop(context))
-            );
-          }
         }
       }
     }
-    //TODO: check if the localdata and server data is on the same lengths
-    else{
-      setState(() {
-        isLoading = false;
-      });
-    }
+    Provider.of<DataProvider>(context, listen: false).setEmptyByType(data['type']);
+    Provider.of<DataProvider>(context, listen: false).setCredentialsFromAPI(result['data'], data['type']);
+    setState(() {
+      myArray = result['data'];
+      isLoading = false;
+      isUpdating = false;
+    });
   }
 
   String getPostEndpoint(Map data){
@@ -258,6 +241,19 @@ class _ListsState extends State<Lists> {
                       icon: const Icon(Icons.refresh_rounded)
                     )
                   ],
+                ),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 500),
+                  height: isUpdating ? 30.h : 0.0,
+                  width: double.infinity,
+                  child: isUpdating ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      LoadingAnimationWidget.horizontalRotatingDots(color: Colors.indigo, size: 30),
+                      SizedBox(width: 10.w,),
+                      Text('Updating credentials...', style: Theme.of(context).textTheme.subtitle1,)
+                    ],
+                  ) : null,
                 ),
                 SizedBox(height: 5.h,),
                 SizedBox(
