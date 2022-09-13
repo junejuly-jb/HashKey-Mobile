@@ -65,62 +65,54 @@ class _ListsState extends State<Lists> {
             }
             Navigator.pop(context);
             showDialog(barrierDismissible: false, context: context, builder: (_) => const CustomAlert(message: 'Deleting credential please wait.', type: 'loading', statusType: null, callback: null));
-            // String endpoint = getDeleteEndpoint(type);
-            // Map result = await App().deleteCredential(endpoint, ids);
+            String endpoint = getDeleteEndpoint(type);
+            Map result = await App().deleteCredential(endpoint, ids);
             Navigator.pop(context);
-            // print(result);
-            // if(!result['success'] && mounted){
-            //   if(result['status'] == 401 && mounted){
-            //     return showDialog(
-            //       barrierDismissible: false,
-            //       context: context, builder: (_) => 
-            //       CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () {
-            //         Provider.of<DataProvider>(context, listen: false).setEmpty();
-            //         Navigator.pushNamedAndRemoveUntil(context, '/authenticate', (route) => false);  
-            //       })
-            //     );
-            //   }
-            //   else{
-            //     return showDialog(
-            //       context: context, builder: (_) => 
-            //       CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pop(context))
-            //     );
-            //   }
-            // }
-            // Provider.of<DataProvider>(context, listen: false).deleteCredential(type, ids);
+            if(!result['success'] && mounted){
+              if(result['status'] == 401 && mounted){
+                return showDialog(
+                  barrierDismissible: false,
+                  context: context, builder: (_) => 
+                  CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () {
+                    Provider.of<DataProvider>(context, listen: false).setEmpty();
+                    Navigator.pushNamedAndRemoveUntil(context, '/authenticate', (route) => false);  
+                  })
+                );
+              }
+              else{
+                return showDialog(
+                  context: context, builder: (_) => 
+                  CustomAlert(message: result['message'], type: 'error', statusType: 'error', callback: () => Navigator.pop(context))
+                );
+              }
+            }
+            Provider.of<DataProvider>(context, listen: false).deleteCredential(type, ids);
             removeFromLocalState(type, ids);
-            // Fluttertoast.showToast(msg: result['message']);
+            Fluttertoast.showToast(msg: result['message']);
           },
         )
       );
     });
   }
-
-  // TODO : FIX
   removeFromLocalState(String type, List ids){
-    print('here');
     switch (type) {
       case 'password':
-        setState(()=> myArray.removeWhere((element) => ids.contains(element['logId'])));
-        final visible = myArray.where((element) => ids.contains(element['logId']));
-        print(ids);
-        print(myArray);
-        print(visible);
+        setState(()=> myArray.removeWhere((element) => ids.contains(element['log_id'])));
         break;
       case 'wifi':
-        setState(()=> myArray.removeWhere((element) => ids.contains(element.wifiId)));
+        setState(()=> myArray.removeWhere((element) => ids.contains(element['wifi_id'])));
         break;
       case 'payment':
-        setState(()=> myArray.removeWhere((element) => ids.contains(element.cardId)));
+        setState(()=> myArray.removeWhere((element) => ids.contains(element['card_id'])));
         break;
       case 'contact':
-        setState(()=> myArray.removeWhere((element) => ids.contains(element.contactId)));
+        setState(()=> myArray.removeWhere((element) => ids.contains(element['contact_id'])));
         break;
       case 'license':
-        setState(()=> myArray.removeWhere((element) => ids.contains(element.licenseId)));
+        setState(()=> myArray.removeWhere((element) => ids.contains(element['license_id'])));
         break;
       case 'note':
-        setState(()=> myArray.removeWhere((element) => ids.contains(element.noteId)));
+        setState(()=> myArray.removeWhere((element) => ids.contains(element['note_id'])));
         break;
     }
   }
@@ -257,12 +249,12 @@ class _ListsState extends State<Lists> {
                             PopupMenuItem(
                               child: Row(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 30.w,
-                                    child: Icon(Icons.check)
+                                    child: const Icon(Icons.check)
                                   ),
                                   SizedBox(width: 10.w,),
-                                  Text('Date added')
+                                  const Text('Date added')
                                 ],
                               ),
                               onTap: (){},
@@ -270,12 +262,12 @@ class _ListsState extends State<Lists> {
                             PopupMenuItem(
                               child: Row(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 30.w,
                                     child: null
                                   ),
                                   SizedBox(width: 10.w,),
-                                  Text('Name')
+                                  const Text('Name')
                                 ],
                               ),
                               onTap: (){},
@@ -328,8 +320,6 @@ class _ListsState extends State<Lists> {
   }
 
   Widget widgetType(bool state, List array, String type, String theme, BuildContext context){
-    // print(array);
-    print('build');
     if(state){
       return SkeletonTheme(
         themeMode: theme == 'dark' ? ThemeMode.dark : ThemeMode.light,
@@ -363,7 +353,7 @@ class _ListsState extends State<Lists> {
     var arrayList = Provider.of<DataProvider>(context, listen: false).getCategoryType(type);
     if(type == 'password'){
       return PasswordList(
-        arrayList: arrayList, 
+        arrayList: arrayList,
         onDeleteCallback: (type, ids) => onDeleteCredential(type, ids, context),
         onCopyData: (data) => copyData(data) 
       );

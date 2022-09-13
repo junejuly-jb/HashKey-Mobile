@@ -64,54 +64,6 @@ class DataProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  setPasswords(List data){
-    for(var el in data){
-      Password password = Password.fromJson(el);
-      passwords.add(password);
-    }
-    notifyListeners();
-  }
-
-  setWifis(List data){
-    for(var el in data){
-      Wifi wifi = Wifi.fromJson(el);
-      wifis.add(wifi);
-    }
-    notifyListeners();
-  }
-
-  setPayments(List data){
-    for(var el in data){
-      Payment payment = Payment.fromJson(el);
-      payments.add(payment);
-    }
-    notifyListeners();
-  }
-
-  setContacts(List data){
-    for(var el in data){
-      Contact contact = Contact.fromJson(el);
-      contacts.add(contact);
-    }
-    notifyListeners();
-  }
-
-  setLicenses(List data){
-    for(var el in data){
-      License license = License.fromJson(el);
-      licenses.add(license);
-    }
-    notifyListeners();
-  }
-
-  setNotes(List data){
-    for(var el in data){
-      Note note = Note.fromJson(el);
-      notes.add(note);
-    }
-    notifyListeners();
-  }
-
   setCredentialsFromAPI(List data, String type){
     switch (type) {
       case 'password':
