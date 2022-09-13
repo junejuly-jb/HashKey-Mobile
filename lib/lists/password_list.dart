@@ -1,4 +1,3 @@
-import 'package:automatic_animated_list/automatic_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,90 +14,76 @@ class PasswordList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context).theme;
-    List<Password> myList = arrayList.cast<Password>();
-
-    return AutomaticAnimatedList<Password>(
-      items: myList,
-      insertDuration: Duration(seconds: 1),
-      removeDuration: Duration(seconds: 1),
-      keyingFunction: (Password password) => Key(password.logId),
-      itemBuilder: (BuildContext context, Password password, Animation<double> animation) {
-        return FadeTransition(
-          key: Key(password.logId),
-          opacity: animation,
-          child: SizeTransition(
-            sizeFactor: CurvedAnimation(
-              parent: animation,
-              curve: Curves.easeOut,
-              reverseCurve: Curves.easeIn,
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5.h),
-              child: InkWell(
-                splashColor: Colors.blue[200],
-                onTap: () => print('Test'),
-                child: Row(
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: arrayList.length,
+      itemBuilder: (BuildContext context, int index){
+        Password password = arrayList[index];
+        return Padding(
+          padding: EdgeInsets.symmetric(vertical: 5.h),
+          child: InkWell(
+            splashColor: Colors.blue[200],
+            onTap: () => print('Test'),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 25.r,
+                  child: FaIcon(FontAwesomeIcons.lock, color: Colors.grey[700], 
+                    size: 20,
+                  ), 
+                ),
+                SizedBox(width: 20.w,),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 25.r,
-                      child: FaIcon(FontAwesomeIcons.lock, color: Colors.grey[700], 
-                        size: 20,
-                      ), 
+                    Text(
+                      password.logName,
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    SizedBox(width: 20.w,),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          password.logName,
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                        Text('● ● ● ● ● ● ● ●', style: Theme.of(context).textTheme.subtitle1,)
-                      ],
-                    ),
-                    const Spacer(),
-                    PopupMenuButton(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15.0))
-                      ),
-                      color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
-                      child: const  Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10, 
-                              vertical: 20
-                            ),
-                            child: Icon(FontAwesomeIcons.ellipsisVertical),
-                          ),
-                          itemBuilder: (context) => [
-                            PopupMenuItem(
-                              child: const Text("Copy username"),
-                              onTap: () => onCopyData(password.logName),
-                            ),
-                            PopupMenuItem(
-                              child: const Text("Copy password"),
-                              onTap: () => onCopyData(password.logPassword),
-                            ),
-                            const PopupMenuItem(
-                              child: Text("Edit"),
-                            ),
-                            PopupMenuItem(
-                              child: const Text("Delete"),
-                              onTap: (){
-                                List<String> ids = [];
-                                ids.add(password.logId);
-                                onDeleteCallback('password', ids);
-                              },
-                            )
-                          ]
-                    )
+                    Text('● ● ● ● ● ● ● ●', style: Theme.of(context).textTheme.subtitle1,)
                   ],
                 ),
-              ),
+                const Spacer(),
+                PopupMenuButton(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0))
+                  ),
+                  color: theme == 'dark' ? const Color.fromRGBO(54, 54, 54, 1) : Colors.white,
+                  child: const  Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10, 
+                          vertical: 20
+                        ),
+                        child: Icon(FontAwesomeIcons.ellipsisVertical),
+                      ),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: const Text("Copy username"),
+                          onTap: () => onCopyData(password.logName),
+                        ),
+                        PopupMenuItem(
+                          child: const Text("Copy password"),
+                          onTap: () => onCopyData(password.logPassword),
+                        ),
+                        const PopupMenuItem(
+                          child: Text("Edit"),
+                        ),
+                        PopupMenuItem(
+                          child: const Text("Delete"),
+                          onTap: (){
+                            List<String> ids = [];
+                            ids.add(password.logId);
+                            onDeleteCallback('password', ids);
+                          },
+                        )
+                      ]
+                )
+              ],
             ),
           ),
         );
-      },
+      }
     );
   }
 }
